@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 			{
 				
 				hudman.hidePanels ();
-				hudman.hideTooltip ();
+				hudman.HideTooltip ();
 			}
 		}
 

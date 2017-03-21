@@ -40,7 +40,7 @@ public class InventoryUI : MonoBehaviour
 	{
 		foreach (Transform child in slots) 
 		{
-			if (child.GetChild (0).GetComponent<Text> ().text.Equals (i.Name)) 
+			if(i.Name == child.GetComponent<Item>().Name)
 			{
 				Destroy (child.gameObject);
 			}
@@ -50,6 +50,7 @@ public class InventoryUI : MonoBehaviour
 	private void SetUpNewItemSlot(Item i)
 	{
 		GameObject slotCreated = GameObject.Instantiate (INVENTORY_SLOT,slots);
+		slotCreated.name = i.Name;
 		Transform transf = slotCreated.transform;
 		transf.GetChild (0).GetComponent<Text> ().text = i.Name;
 		transf.GetChild (1).GetComponent<Text> ().text = "x"+i.Amt;
@@ -57,13 +58,25 @@ public class InventoryUI : MonoBehaviour
 		rect.rotation = slots.rotation;
 		rect.localScale = new Vector3 (1f, 1f, 1f);
 		rect.transform.localPosition = new Vector3(0,0,0);
+		Item item = slotCreated.AddComponent<Item> ();
+		CopyItemComponent (i, item);
+	}
+	//Copies i1's attributes to i2
+	private void CopyItemComponent(Item i1,Item i2)
+	{
+		Debug.Log (i1.Name);
+		i2.Name = i1.Name;
+		i2.Description = i1.Description;
+		i2.ItemIDNumber = i1.ItemIDNumber;
+		i2.Amt = i1.Amt;
+		i2.DropRate = i1.DropRate;
 	}
 
 	private Transform GetItemInventorySlot(Item i)
 	{
 		foreach (Transform child in slots) 
 		{
-			if (child.GetChild (0).GetComponent<Text> ().text.Equals (i.Name)) 
+			if (i.Name == child.GetComponent<Item>().Name) 
 			{
 				return child;
 			}

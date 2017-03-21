@@ -92,16 +92,16 @@ public class SkillTreePiece : MonoBehaviour
 		{
 			string description = "Upgrade ";
 			description += skill.Upgrades [skill.UpgradeCount].AttributeToUpgrade + " by " + skill.Upgrades [skill.UpgradeCount].UpgradeAmt;
-			hudman.showTooltip (skill.Name, description, ""+skill.Upgrades[skill.UpgradeCount].LvlRequirement);
+			hudman.ShowSkillTooltip (skill.Name, description, ""+skill.Upgrades[skill.UpgradeCount].LvlRequirement);
 		} else
 		{
-			hudman.showTooltip (skill.Name, skill.Description, skill.LvlRequirement.ToString ());
+			hudman.ShowSkillTooltip (skill.Name, skill.Description, skill.LvlRequirement.ToString ());
 		}
 	}
 
 	public void hideTooltip()
 	{
-		hudman.hideTooltip ();
+		hudman.HideTooltip ();
 	}
 
     public bool getUnlocked()

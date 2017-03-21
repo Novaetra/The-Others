@@ -1,24 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Item : MonoBehaviour 
+public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 {
-	private string name;
+	private string name, description;
 	private int itemIDNumber, amt, dropRate;
-	[SerializeField]
 	private Inventory inv;
+	private HUDManager hudMan;
+	private bool isPickedUp;
 
 	void Start()
 	{
+		isPickedUp = false;
 		name = gameObject.name;
 		inv = GameObject.Find ("InventoryManager").GetComponent<Inventory> ();
+		hudMan = GameObject.Find ("Player").GetComponent<HUDManager> ();
 		foreach (Item i in inv._inventory) 
 		{
 			if (i.Name.Equals (name)) 
 			{
 				ItemIDNumber = i.ItemIDNumber;
+				description = i.Description;
 				DropRate = i.DropRate;
+				Debug.Log ("Name: " + name);
 			}
 		}
 	}
@@ -30,15 +36,17 @@ public class Item : MonoBehaviour
 
 	void OnTriggerEnter(Collider col)
 	{
-		if (col.tag == "Player") 
+		if (col.tag == "Player" && !isPickedUp) 
 		{
+			isPickedUp = true;
 			PickUpItem ();
 		}
 	}
 
-	public Item(string n, int id,int dr)
+	public Item(string n, string desc, int id,int dr)
 	{
 		name = n;
+		description = desc;
 		itemIDNumber = id;
 		amt = 0;
 		dropRate = dr;
@@ -69,6 +77,15 @@ public class Item : MonoBehaviour
 		}
 	}
 
+	public string Description {
+		get {
+			return description;
+		}
+		set {
+			description = value;
+		}
+	}
+
 	public int ItemIDNumber {
 		get {
 			return itemIDNumber;
@@ -85,5 +102,15 @@ public class Item : MonoBehaviour
 		set {
 			dropRate = value;
 		}
+	}
+
+	public void OnPointerEnter(PointerEventData data)
+	{
+		hudMan.ShowItemTooltip (name, description, false);
+	}
+
+	public void OnPointerExit(PointerEventData data)
+	{
+		hudMan.HideTooltip ();
 	}
 }

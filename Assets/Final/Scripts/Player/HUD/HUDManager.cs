@@ -272,20 +272,27 @@ public class HUDManager : MonoBehaviour
     }
 
 	//Fills in tooltip information and adds it to screen
-	public void showTooltip(string name, string desc, string lvlRequired)
+	public void ShowSkillTooltip(string name, string desc, string lvlRequired)
 	{
 		tooltipName.text = name;
 		tooltipDesc.text = desc;
 		tooltipLvl.text = "Level: " + lvlRequired;
 		tooltip.SetActive(true);
-
 	}
 
 	//Hides tooltip
-	public void hideTooltip()
+	public void HideTooltip()
 	{
 		//Hides tooltip 
 		tooltip.SetActive(false);
+	}
+
+	public void ShowItemTooltip(string name, string desc, bool equipable)
+	{
+		tooltipName.text = name;
+		tooltipDesc.text = desc;
+		tooltipLvl.text = "";
+		tooltip.SetActive(true);
 	}
 
 	//Shows currentPanel
