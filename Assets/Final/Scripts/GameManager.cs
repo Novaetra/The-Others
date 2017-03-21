@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     //{
        // yield return new WaitForSeconds(0.5f);
         //currentplayer.transform.BroadcastMessage("postSetUp");
-
     //}
 
 	//Checks if there's a player still alive. If there isn't, then end the game.

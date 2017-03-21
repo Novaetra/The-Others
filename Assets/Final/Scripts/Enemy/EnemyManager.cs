@@ -20,6 +20,8 @@ public class EnemyManager : MonoBehaviour
 	private Coroutine startWaveCouroutine;
 
     private Transform currentRoom; //This is to detect which room the player is in, and spawn enemies accordingly
+	[SerializeField]
+	private GameObject readyBtn;
 
 	//This dictionary holds all the spawn points per room
     private Dictionary<string, Transform[]> spawnPointsInRoom = new Dictionary<string, Transform[]>();
@@ -197,6 +199,7 @@ public class EnemyManager : MonoBehaviour
 	public void startNextRound()
     {
 		StopCoroutine (startWaveCouroutine);
+		readyBtn.SetActive (false);
 		startWaveCouroutine = null;
         updateSpawnsAvailable();
         currentWaveCount++;
@@ -300,6 +303,7 @@ public class EnemyManager : MonoBehaviour
 	//Waits x seconds before starting the next round
     private IEnumerator waitToStartNewRound()
     {
+		readyBtn.SetActive (true);
         yield return new WaitForSeconds(timeBetweenRounds);
         startNextRound();
     }
