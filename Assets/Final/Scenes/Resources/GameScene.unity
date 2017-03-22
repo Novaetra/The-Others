@@ -9601,8 +9601,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SPAWNER: {fileID: 157532, guid: 980f3ffec38eb471dbc7ba35fb8b08fe, type: 2}
-  FIREBALL: {fileID: 0}
-  SPARK: {fileID: 0}
+  FIREBALL: {fileID: 1160324345552774, guid: 79cc4d8bf8c394f439d3b2ea1ecc9613, type: 2}
+  SPARK: {fileID: 1248693892794528, guid: 977d673150a7c3046afc6098aebfb5b2, type: 2}
   FLAMETHROWER: {fileID: 199602, guid: e0d9a5405ae152845a7f1680492c2b47, type: 2}
   HEAL: {fileID: 128142, guid: 5e3b5c6e7e2ff8d4c9abacf15f9d4d94, type: 2}
   leftSpawner: {fileID: 2115290398}

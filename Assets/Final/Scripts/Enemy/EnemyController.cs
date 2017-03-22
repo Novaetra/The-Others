@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
 
 	protected bool doneSettingUp = false;
 	protected bool isAlive = true;
+	private bool alreadySpawnedItem = false;
 
 	protected Raycaster[] casters;
 
@@ -150,8 +151,9 @@ public class EnemyController : MonoBehaviour
 	private void PossiblySpawnPowerup()
 	{
 		int randNum = Random.Range (0, inventory[0].DropRate);
-		if (randNum == 1) 
+		if (randNum == 1 && !alreadySpawnedItem) 
 		{
+			alreadySpawnedItem = true;
 			GameObject.Instantiate(Resources.Load("SkillCharge"),new Vector3(transform.position.x,transform.position.y+.5f,transform.position.z),Quaternion.Euler(new Vector3(-90f,0f,0f)));
 		}
 	}

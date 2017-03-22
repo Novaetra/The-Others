@@ -17,7 +17,6 @@ public class HUDManager : MonoBehaviour
 
 	private GameObject currentPlayer;
 	private GameObject canvasObj;
-	private GameObject currentPanel;
 	private GameObject tooltip;
 	private List<GameObject> panels;
 	private Transform panelsOBJ;
@@ -34,7 +33,6 @@ public class HUDManager : MonoBehaviour
 
 	private bool setUpDone = false;
 
-	private int currentPanelIndex = 1;
 
 	private List<Message> queuedMessages;
 
@@ -54,12 +52,11 @@ public class HUDManager : MonoBehaviour
 		pc = currentPlayer.GetComponent<PlayerController>();
 		sm = currentPlayer.GetComponent<StatsManager> ();
 		canvasObj = GameObject.Find("Canvas");
-		currentPanel = GameObject.Find ("SkillTree Panel").gameObject;
 		roundsTxt = canvasObj.transform.FindChild("RoundsTxt").GetComponent<Text>();
 		roundsTxt.enabled = false;
 		messageObj = canvasObj.transform.FindChild ("ShortMessage").GetComponent<Text>();
-		upgradePnts = currentPanel.transform.FindChild("UpgradePoints").GetComponent<Text>();
-		currentLvlTxt = currentPanel.transform.FindChild ("CurrentLevelText").GetComponent<Text> ();
+		upgradePnts = GameObject.Find ("SkillTree Panel").transform.FindChild("UpgradePoints").GetComponent<Text>();
+		currentLvlTxt = GameObject.Find ("SkillTree Panel").transform.FindChild ("CurrentLevelText").GetComponent<Text> ();
 		revivingBarBG = canvasObj.transform.FindChild("ReviveBarBG").GetComponent<Image>();
 		revivingTxt = revivingBarBG.transform.FindChild("Text").GetComponent<Text>();
 		revivingBar = revivingBarBG.transform.FindChild("Image").GetComponent<Image>();
@@ -93,25 +90,6 @@ public class HUDManager : MonoBehaviour
 		{
 			panels.Add (t.gameObject);
 		}
-	}
-
-	public void GoToNextPanel()
-	{
-		if (currentPanelIndex + 1 > panels.Count - 1) 
-		{
-			currentPanelIndex = 0;
-		} 
-		else
-		{
-			currentPanelIndex++;
-		}
-		currentPanel = panels[currentPanelIndex];
-		MoveCurrentPanelToFront ();
-	}
-
-	private void MoveCurrentPanelToFront ()
-	{
-		currentPanel.transform.SetAsLastSibling ();
 	}
 
 	//Increments message's timer and hides message when message's current time = message's timer/max time
@@ -262,10 +240,15 @@ public class HUDManager : MonoBehaviour
 		panelsOBJ.gameObject.SetActive (false);
 	}
 
+	public List<GameObject> Panels {
+		get {
+			return panels;
+		}
+	}
 
-	//returns refrence to the currentPanel
-	public GameObject getcurrentPanel()
-	{
-		return currentPanel;
+	public Transform PanelsOBJ {
+		get {
+			return panelsOBJ;
+		}
 	}
 }

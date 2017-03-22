@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DisplayPanelHotkey : ControlHotkey 
 {
-
+	private GameObject currentPanel;
+	private int currentPanelIndex = 1;
+	
 	public DisplayPanelHotkey(KeyCode[] c,PlayerController cntrl)
 	{
 		codes = c; 
@@ -43,13 +45,15 @@ public class DisplayPanelHotkey : ControlHotkey
 
 	private void GoToNextPanel()
 	{
-		controller.toggleCursorLock (!controller.cursorLocked);
-		if (controller.cursorLocked == false) {
-			controller.Hudman.showPanels ();
-		} else {
-
-			controller.Hudman.HidePanels ();
-			controller.Hudman.HideTooltip ();
+		if (currentPanelIndex + 1 > controller.Hudman.Panels.Count - 1) 
+		{
+			currentPanelIndex = 0;
+		} 
+		else
+		{
+			currentPanelIndex++;
 		}
+		currentPanel = controller.Hudman.Panels[currentPanelIndex];
+		currentPanel.transform.SetAsLastSibling ();
 	}
 }
