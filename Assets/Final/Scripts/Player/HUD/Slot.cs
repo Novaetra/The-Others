@@ -82,7 +82,7 @@ public class Slot : MonoBehaviour, IDropHandler
 		{
 			//Assigns the image and skill to the slot
 			GetComponent<SkillTreePiece> ().setSkill (DraggableItem.skillBeingDragged);
-			GetComponent<SkillTreePiece> ().getSkill ().Hotkey = new Hotkey (key, GetComponent<SkillTreePiece> ().getSkill());
+			GetComponent<SkillTreePiece> ().getSkill ().Hotkey = new SkillHotkey (key, GetComponent<SkillTreePiece> ().getSkill());
 			GetComponent<Image> ().sprite = DraggableItem.imgBeingDragged;
 			bg.GetComponent<Image>().sprite = DraggableItem.imgBeingDragged;
 		} 
@@ -125,7 +125,7 @@ public class Slot : MonoBehaviour, IDropHandler
 	{
 		skillTreePieceOfDragged.setSkill(thisSlotsSkills);
 		skillTreePieceOfDragged.getSkill().SlotAssignedTo = (gameObject);
-		skillTreePieceOfDragged.getSkill ().Hotkey = new Hotkey (DraggableSlot.originalSlot.GetComponent<Slot>().key, thisSlotsSkills);
+		skillTreePieceOfDragged.getSkill ().Hotkey = new SkillHotkey (DraggableSlot.originalSlot.GetComponent<Slot>().key, thisSlotsSkills);
 		DraggableSlot.originalSlot.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
 		DraggableSlot.originalParent.GetChild(0).GetComponent<Image>().sprite = GetComponent<Image>().sprite;
 	}
@@ -139,6 +139,6 @@ public class Slot : MonoBehaviour, IDropHandler
 		GetComponent<Image>().sprite = img;
 		bg.GetComponent<Image>().sprite = img;
 		GetComponent<SkillTreePiece>().setSkill(dragged);
-		GetComponent<SkillTreePiece>().getSkill().Hotkey = new Hotkey(key,dragged);
+		GetComponent<SkillTreePiece>().getSkill().Hotkey = new SkillHotkey(key,dragged);
 	}
 }

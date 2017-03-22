@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hotkey 
+public class SkillHotkey 
 {
 	private KeyCode code;
 	private Skill skill;
 
-	public Hotkey(KeyCode c, Skill s)
+	public SkillHotkey(KeyCode c, Skill s)
 	{
 		code = c;
 		skill = s;

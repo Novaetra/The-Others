@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -24,15 +25,17 @@ public class PlayerController : MonoBehaviour
 	private float MinimumY = 80f;
 	private float MaximumY = 70f;
 	private float meleeDistance = 1.75f;
-    private float interactDistance = 2f;
-    private StatsManager sm;
+	private float interactDistance = 2f;
+	private StatsManager sm;
 	private HUDManager hudman;
 
-    private Raycaster[] raycasters;
+	private Raycaster[] raycasters;
 
     private GameObject personReviving;
 
     private bool isSettingUp = true;
+	[SerializeField]
+	private List<ControlHotkey> controlHotkeys;
 
 	public void set_Up () 
 	{
@@ -46,7 +49,9 @@ public class PlayerController : MonoBehaviour
         isReviving = false;
         personReviving = null;
         raycasters = GetComponentsInChildren<Raycaster>();
-        isSettingUp = false;
+		isSettingUp = false;
+		controlHotkeys = new List<ControlHotkey> ();
+		SetUpControlHotkeys ();
     }
 
 	private void Update()
@@ -54,46 +59,69 @@ public class PlayerController : MonoBehaviour
         if(sm.getAlive() == true)
         {
             if (!isSettingUp)
-            {
-                checkClick();
-                checkSprint();
-				if (canMove) 
-				{
-					checkMovement();
-				}
-                updateCursorLock();
-                checkInteract();
-				CheckPanelControls ();
-				debugControls();
-				checkLvlUp ();
+			{
+				CheckAllControlHotkeys();
+				updateCursorLock();
+				debugControls(); //Temporary
             }
         }
     }
 
-	private void CheckPanelControls()
+	//Sets up all control hotkeys
+	private void SetUpControlHotkeys ()
 	{
-		if (Input.GetButtonUp ("Tab")) 
+		controlHotkeys.Add(new DisplayPanelHotkey(new KeyCode[2]{KeyCode.Tab,KeyCode.Q},this));
+		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[4]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L}, this));
+	}
+
+	//Checks all control hotkeys
+	private void CheckAllControlHotkeys()
+	{
+		foreach (ControlHotkey ch in controlHotkeys) 
 		{
-			toggleCursorLock (!cursorLocked);
-			if (cursorLocked == false) 
+			ch.CheckKeys ();
+		}
+	}
+
+	//Checks to see if 'interact' rays hit anything and call the 'interact' method 
+	//If it hit something interactable
+	public void checkInteract(RaycastHit hit)
+	{
+		if (hit.transform.parent != null) 
+		{
+			if ((hit.transform.parent.name.Substring(0,hit.transform.parent.name.Length-1)) != "Room")
 			{
-				hudman.showPanels ();
+				hit.transform.parent.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
 			}
-			else 
+			else
 			{
-				
-				hudman.hidePanels ();
-				hudman.HideTooltip ();
+				hit.transform.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
 			}
 		}
+	}
 
-		if (Input.GetKeyUp (KeyCode.Return)) 
+	public void checkMelee()
+	{
+		RaycastHit hit;
+		if(raycasters != null)
 		{
-			hudman.GoToNextPanel ();
+			foreach (Raycaster caster in raycasters)
+			{
+				Debug.DrawRay(caster.transform.position, -caster.transform.forward * meleeDistance, Color.red, 1);
+				if (Physics.Raycast(caster.transform.position, -caster.transform.forward, out hit, meleeDistance))
+				{
+					if (hit.transform.tag == "Enemy")
+					{
+						sm.dealMeleeDamage (hit);
+						return;
+					}
+				}
+			}
 		}
 	}
     
-    void debugControls()
+	//temporary
+    private void debugControls()
     {
         if (Input.GetKeyUp(KeyCode.M))
         {
@@ -119,6 +147,7 @@ public class PlayerController : MonoBehaviour
 		}
     }
 		
+	//Updates camera rotation at the end of each frame to avoid issues
 	void LateUpdate ()
     {
         if (sm.getAlive() == true)
@@ -127,142 +156,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	private void checkClick()
-	{
-		if (Input.GetButtonUp ("Click")&& (cursorLocked)) 
-		{
-            //Attack
-            if (sm.getCurrentStamina() - sm.getMeleeCost() >= 0 && anim.GetInteger("Skill") != (int)Skills.BasicAttack)  
-			{
-				sm.useStamina (sm.getMeleeCost(),false);
-				anim.SetInteger("Skill",(int)Skills.BasicAttack);
-			}
-		}
-	}
-
-    private void checkInteract()
-    {
-        //Check if E is pressed down
-        if(Input.GetKey(KeyCode.E) )
-        {
-            throwRays();
-        }
-        //If its not, then set anything that relies on it to false
-        else
-        {
-            isReviving = false;
-        }
-    }
-
-	private void checkLvlUp()
-	{
-		if (Input.GetKeyUp (KeyCode.L) && sm.getCurrentExp() - sm.getGoalExp() >=0) 
-		{
-			//Level up
-			sm.lvlUp(sm.getCurrentExp() - sm.getGoalExp());
-		}
-	}
-
-    private void throwRays()
-    {
-        RaycastHit hit;
-        foreach (Raycaster caster in raycasters)
-        {
-            Transform raycaster = caster.transform;
-            Debug.DrawRay(raycaster.transform.position, -raycaster.transform.forward * interactDistance, Color.blue);
-            if (Physics.Raycast(raycaster.transform.position, -raycaster.transform.forward, out hit, interactDistance))
-            {
-                //Has to check these two separately because each one has their own specific protocols
-               // checkRevive(hit);
-                checkInteract(hit);
-            }
-        }
-    }
-
-    private void checkInteract(RaycastHit hit)
-    {
-		if (hit.transform.parent != null) 
-		{
-			if ((hit.transform.parent.name.Substring(0,hit.transform.parent.name.Length-1)) != "Room")
-			{
-				hit.transform.parent.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
-			}
-			else
-			{
-				hit.transform.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
-			}
-		}
-    }
-
-    /*
-	private void checkRevive(RaycastHit hit)
-    {
-        if (hit.transform.tag == "Player")
-        {
-            if (hit.transform.GetComponent<StatsManager>().getAlive() == false)
-            {
-                isReviving = true;
-                personReviving = hit.transform.gameObject;
-                hit.transform.GetComponent<StatsManager>().startRevive(gameObject);
-            }
-        }
-    }
-    */
-
-    public void checkMelee()
-    {
-        RaycastHit hit;
-        if(raycasters != null)
-        {
-            foreach (Raycaster caster in raycasters)
-            {
-                Debug.DrawRay(caster.transform.position, -caster.transform.forward * meleeDistance, Color.red, 1);
-                if (Physics.Raycast(caster.transform.position, -caster.transform.forward, out hit, meleeDistance))
-                {
-                    if (hit.transform.tag == "Enemy")
-                    {
-						sm.dealMeleeDamage (hit);
-                        return;
-                    }
-                }
-            }
-        }
-       
-    }
-
-	private void checkSprint()
-	{
-		if (Input.GetButton ("Sprint"))
-		{
-			//Sprint
-			if (sm.getCurrentStamina() > 0) 
-			{
-				currentSpeed = runSpeed;
-				sm.useStamina ((sm.getSprintStamCost() /* - (sm.sprintStaminaCost  (sm.dexterity / 100))*/),true);
-			} 
-			else 
-			{
-				currentSpeed = walkSpeed;
-			}
-		}
-
-        if(Input.GetButtonUp("Sprint"))
-        {
-            currentSpeed = walkSpeed;
-        }
-	}
-
-	private void checkMovement()
-	{
-        float speed = Input.GetAxis("Vertical") * currentSpeed;
-    	float direction = Input.GetAxis("Horizontal") * currentSpeed;
-		anim.SetFloat("Speed", speed);
-		anim.SetFloat("Direction", direction);
-		Vector3 finalMove = new Vector3 (direction, 0f, speed);
-		finalMove = transform.rotation * finalMove;
-		cs.Move(finalMove * Time.deltaTime);
-    }
-
+	//Rotates camera according to mouse
 	private void cameraRot()
 	{
 		if (cursorLocked == true) 
@@ -316,6 +210,7 @@ public class PlayerController : MonoBehaviour
 		anim.SetInteger ("Skill", -1);
 	}
 
+	#region GettersAndProperties
 	public bool CanMove {
 		get {
 			return canMove;
@@ -330,4 +225,41 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
+
+	public HUDManager Hudman {
+		get {
+			return hudman;
+		}
+	}
+
+	public Animator Anim {
+		get {
+			return anim;
+		}
+	}
+
+	public CharacterController Cs {
+		get {
+			return cs;
+		}
+	}
+
+	public StatsManager Sm {
+		get {
+			return sm;
+		}
+	}
+
+	public Raycaster[] Raycasters {
+		get {
+			return raycasters;
+		}
+	}
+
+	public float InteractDistance {
+		get {
+			return interactDistance;
+		}
+	}
+	#endregion
 }

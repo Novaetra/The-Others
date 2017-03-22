@@ -22,7 +22,7 @@ public class Skill
 	//Refrence to stats manager to modify and read player's stats
 	private StatsManager stats;
 	//Hotkey assigned to it
-	private Hotkey hotkey;
+	private SkillHotkey hotkey;
 
 	private List<Upgrade> upgrades;
 
@@ -97,7 +97,7 @@ public class Skill
 	}
 
 	#region getters/setters
-	public Hotkey Hotkey {
+	public SkillHotkey Hotkey {
 		get {
 			return hotkey;
 		}

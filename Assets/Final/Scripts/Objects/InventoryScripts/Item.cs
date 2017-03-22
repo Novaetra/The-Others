@@ -24,7 +24,6 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 				ItemIDNumber = i.ItemIDNumber;
 				description = i.Description;
 				DropRate = i.DropRate;
-				Debug.Log ("Name: " + name);
 			}
 		}
 	}

@@ -20,6 +20,7 @@ public class HUDManager : MonoBehaviour
 	private GameObject currentPanel;
 	private GameObject tooltip;
 	private List<GameObject> panels;
+	private Transform panelsOBJ;
 
 	private Text messageObj;
     private Text revivingTxt;
@@ -74,6 +75,7 @@ public class HUDManager : MonoBehaviour
 		messageCurrentTime = 0;
 		messageTimer = 0;
 		queuedMessages = new List<Message> ();
+		HidePanels ();
 	}
 
 	void Update()
@@ -85,40 +87,16 @@ public class HUDManager : MonoBehaviour
 	private void SetUpPanels()
 	{
 		panels = new List<GameObject> ();
+		panelsOBJ = GameObject.Find("Panels").transform;
 		GameObject pnls = GameObject.Find("Panels");
 		foreach (Transform t in pnls.transform) 
 		{
 			panels.Add (t.gameObject);
 		}
-		HideAllPanels ();
 	}
 
-    private void HideOtherPanels()
-    {
-		foreach(GameObject go in panels)
-        {
-			if(currentPanel!=go)
-            {
-				go.SetActive(false);
-            }
-            else
-            {
-				go.SetActive(true);
-            }
-        }
-    
-    }
-
-	private void HideAllPanels()
+	public void GoToNextPanel()
 	{
-		foreach(GameObject go in panels)
-		{
-			go.SetActive(false);
-		}
-	}
-    
-    public void GoToNextPanel()
-    {
 		if (currentPanelIndex + 1 > panels.Count - 1) 
 		{
 			currentPanelIndex = 0;
@@ -128,9 +106,14 @@ public class HUDManager : MonoBehaviour
 			currentPanelIndex++;
 		}
 		currentPanel = panels[currentPanelIndex];
-        HideOtherPanels();
-    }
-    
+		MoveCurrentPanelToFront ();
+	}
+
+	private void MoveCurrentPanelToFront ()
+	{
+		currentPanel.transform.SetAsLastSibling ();
+	}
+
 	//Increments message's timer and hides message when message's current time = message's timer/max time
 	//If there is a message queued, it will play the next one too
 	private void UpdateMessageTimer()
@@ -164,35 +147,6 @@ public class HUDManager : MonoBehaviour
 			staminabar.fillAmount = sm.getCurrentStamina () / sm.getTotalStamina ();
 			expbar.fillAmount = sm.getCurrentExp () / sm.getGoalExp ();
 			expText.text = (int)sm.getCurrentExp () + " / " + (int)sm.getGoalExp ();
-            
-            /*
-            if(pc.getReviving() == true)
-            {
-                StatsManager personReviving = pc.getPersonReviving().GetComponent<StatsManager>();
-                if (personReviving.getCurrentReviveTimer() / personReviving.getTotalReviveTimer() < 1)
-                {
-                    revivingBarBG.enabled = true;
-                    revivingTxt.enabled = true;
-                    revivingBar.enabled = true;
-                    revivingBar.fillAmount = personReviving.getCurrentReviveTimer() / personReviving.getTotalReviveTimer();
-                }
-                else
-                {
-
-                    revivingBarBG.enabled = false;
-                    revivingTxt.enabled = false;
-                    revivingBar.enabled = false;
-                }
-               
-            }
-            else
-            {
-                revivingBarBG.enabled = false;
-                revivingTxt.enabled = false;
-                revivingBar.enabled = false;
-            }
-            */
-
 		}
 	}
 
@@ -298,14 +252,16 @@ public class HUDManager : MonoBehaviour
 	//Shows currentPanel
 	public void showPanels()
 	{
-		HideOtherPanels ();
+		panelsOBJ.gameObject.SetActive (true);
 	}
 
+
 	//Hides currentPanel
-	public void hidePanels()
+	public void HidePanels()
 	{
-		HideAllPanels ();
+		panelsOBJ.gameObject.SetActive (false);
 	}
+
 
 	//returns refrence to the currentPanel
 	public GameObject getcurrentPanel()
