@@ -64,7 +64,6 @@ public class InventoryUI : MonoBehaviour
 	//Copies i1's attributes to i2
 	private void CopyItemComponent(Item i1,Item i2)
 	{
-		Debug.Log (i1.Name);
 		i2.Name = i1.Name;
 		i2.Description = i1.Description;
 		i2.ItemIDNumber = i1.ItemIDNumber;

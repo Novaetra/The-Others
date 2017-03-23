@@ -53,7 +53,6 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		
 	public void PickUpItem()
 	{
-		Debug.Log ("Picking up");
 		inv.AddItemToInventory (this);
 		inv.UpdateInventoryUI ();
 		Destroy (gameObject);
