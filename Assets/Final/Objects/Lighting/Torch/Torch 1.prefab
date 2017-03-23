@@ -84,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126538}
   m_LocalRotation: {x: 2.9309888e-14, y: 1, z: 0.00000008146034, w: 0.00000035762787}
-  m_LocalPosition: {x: 0.36, y: 2.94, z: 0.11}
+  m_LocalPosition: {x: 0.36, y: 2.94, z: 8.11}
   m_LocalScale: {x: 0.111209996, y: 0.111209996, z: 0.111209996}
   m_Children:
   - {fileID: 443640}
@@ -157,8 +157,8 @@ Light:
   serializedVersion: 7
   m_Type: 2
   m_Color: {r: 0.5735294, g: 0.22824843, b: 0.10121107, a: 1}
-  m_Intensity: 3.9
-  m_Range: 4
+  m_Intensity: 2.1
+  m_Range: 3
   m_SpotAngle: 85.3
   m_CookieSize: 10
   m_Shadows:
@@ -166,8 +166,8 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
+    m_Bias: 0
+    m_NormalBias: 0
     m_NearPlane: 0.2
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
@@ -236,7 +236,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 0
+  randomSeed: 1915898693
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2844,7 +2844,7 @@ ParticleSystemRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
