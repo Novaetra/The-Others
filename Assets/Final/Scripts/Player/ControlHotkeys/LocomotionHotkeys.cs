@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LocomotionHotkeys : ControlHotkey 
 {
@@ -77,6 +78,7 @@ public class LocomotionHotkeys : ControlHotkey
 
 		finalMove = controller.transform.rotation * finalMove;
 		controller.Cs.Move(finalMove * Time.deltaTime);
+		//controller.GetComponent<NavMeshAgent> ().Move(finalMove * Time.deltaTime);
 
 		/*
 

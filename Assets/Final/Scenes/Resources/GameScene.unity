@@ -9435,6 +9435,7 @@ GameObject:
   - component: {fileID: 1647034022}
   - component: {fileID: 1647034021}
   - component: {fileID: 1647034020}
+  - component: {fileID: 1647034032}
   m_Layer: 13
   m_Name: Player
   m_TagString: Player
@@ -9570,7 +9571,7 @@ CharacterController:
   m_Radius: 0.61
   m_SlopeLimit: 1
   m_StepOffset: 0
-  m_SkinWidth: 1
+  m_SkinWidth: 0.1
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 2.03, z: -0.32}
 --- !u!114 &1647034028
@@ -9618,7 +9619,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1647034019}
   m_LocalRotation: {x: -0, y: -0.69869876, z: -0, w: 0.7154161}
-  m_LocalPosition: {x: 11.93, y: 0.229, z: -0.21}
+  m_LocalPosition: {x: 11.93, y: 0.229, z: -0.25}
   m_LocalScale: {x: 0.64974695, y: 0.64974666, z: 0.64974666}
   m_Children:
   - {fileID: 571843181}
@@ -9627,6 +9628,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: -88.645004, z: 0}
+--- !u!208 &1647034032
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1647034019}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.61, y: 2.185, z: 0.61}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.03, z: -0.32}
+  m_TimeToStationary: 0.5
 --- !u!1 &1674361903
 GameObject:
   m_ObjectHideFlags: 0
