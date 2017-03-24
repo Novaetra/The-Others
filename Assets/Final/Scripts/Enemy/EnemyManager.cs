@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class EnemyManager : MonoBehaviour
 {
     public bool spawnEnemies;
+	private bool roundHasStarted;
     public GameObject[] ENEMY_OBJECTS;
     private MeteorManager meteorMan;
     private StatsManager playerSM;
@@ -48,6 +49,7 @@ public class EnemyManager : MonoBehaviour
 		//This if statement is for development purposes
 		if (spawnEnemies == true) 
 		{
+			roundHasStarted = false;
 			//Sets all the starting values for the variables
 			hudMan = GameManager.currentplayer.GetComponent<HUDManager> ();
 			enemysToSpawn = 1;
@@ -198,7 +200,11 @@ public class EnemyManager : MonoBehaviour
 	//The number of enemies to spawn increases as well
 	public void startNextRound()
     {
-		StopCoroutine (startWaveCouroutine);
+		roundHasStarted = true;
+		if (startWaveCouroutine != null) 
+		{
+			StopCoroutine (startWaveCouroutine);
+		}
 		readyBtn.SetActive (false);
 		startWaveCouroutine = null;
         updateSpawnsAvailable();
@@ -303,6 +309,7 @@ public class EnemyManager : MonoBehaviour
 	//Waits x seconds before starting the next round
     private IEnumerator waitToStartNewRound()
     {
+		roundHasStarted = false;
 		readyBtn.SetActive (true);
         yield return new WaitForSeconds(timeBetweenRounds);
         startNextRound();
@@ -313,4 +320,10 @@ public class EnemyManager : MonoBehaviour
     {
         currentRoom = room;
     }
+
+	public bool RoundHasStarted {
+		get {
+			return roundHasStarted;
+		}
+	}
 }

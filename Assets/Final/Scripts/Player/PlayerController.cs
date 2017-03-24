@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
 	private void SetUpControlHotkeys ()
 	{
 		controlHotkeys.Add(new DisplayPanelHotkey(new KeyCode[2]{KeyCode.Tab,KeyCode.Q},this));
-		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[4]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L}, this));
+		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[5]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L,KeyCode.R}, this));
 	}
 
 	//Checks all control hotkeys

@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class LocomotionHotkeys : ControlHotkey 
 {
+	private EnemyManager em;
+
 	public LocomotionHotkeys(KeyCode[] c,PlayerController cntrl)
 	{
 		codes = c; 
 		controller = cntrl;
+		em = GameObject.Find ("Managers").GetComponent<EnemyManager> ();
 	}
 
 	//codes[0] = sprint
@@ -43,7 +46,13 @@ public class LocomotionHotkeys : ControlHotkey
 				{
 					controller.Sm.lvlUp(controller.Sm.getCurrentExp() - controller.Sm.getGoalExp());
 				}
-			}
+			} else if (c==Codes[4])
+				{
+				if (Input.GetKeyUp (c) && em.RoundHasStarted == false) 
+					{
+						em.startNextRound ();
+					}
+				}
 		}
 	}
 

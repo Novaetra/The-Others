@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
 	private void SetUpAllItemsList()
 	{
 		inventory = new List<Item> ();
-		inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,2));
+		inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,20));
 	}
 
 	public void AddItemToInventory(Item i)
