@@ -5,6 +5,8 @@ using UnityEngine;
 public class LocomotionHotkeys : ControlHotkey 
 {
 	private EnemyManager em;
+	private float gravity = 9.8f;
+	private float vSpeed = 0;
 
 	public LocomotionHotkeys(KeyCode[] c,PlayerController cntrl)
 	{
@@ -63,8 +65,37 @@ public class LocomotionHotkeys : ControlHotkey
 		controller.Anim.SetFloat("Speed", speed);
 		controller.Anim.SetFloat("Direction", direction);
 		Vector3 finalMove = new Vector3 (direction, 0f, speed);
+		if (controller.GetComponent<CharacterController> ().isGrounded) 
+		{
+			vSpeed = 0; // grounded character has vSpeed = 0...
+		} 
+		else 
+		{
+			vSpeed -= gravity * Time.deltaTime;
+			finalMove.y = vSpeed; // include vertical speed in vel
+		}
+
 		finalMove = controller.transform.rotation * finalMove;
 		controller.Cs.Move(finalMove * Time.deltaTime);
+
+		/*
+
+	   transform.Rotate(0, Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime, 0);
+	   var vel: Vector3 = transform.forward * Input.GetAxis("Vertical") * speed;
+	   var controller = GetComponent(CharacterController);
+	   if (controller.isGrounded){
+	     vSpeed = 0; // grounded character has vSpeed = 0...
+	     if (Input.GetKeyDown("space")){ // unless it jumps:
+	       vSpeed = jumpSpeed;
+	     }
+	   }
+	   // apply gravity acceleration to vertical speed:
+	   vSpeed -= gravity * Time.deltaTime;
+	   vel.y = vSpeed; // include vertical speed in vel
+	   // convert vel to displacement and Move the character:
+	   controller.Move(vel * Time.deltaTime);
+
+		*/
 	}
 
 	private void Interact()

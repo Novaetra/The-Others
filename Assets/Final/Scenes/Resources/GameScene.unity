@@ -7961,6 +7961,7 @@ GameObject:
   - component: {fileID: 1338097136}
   - component: {fileID: 1338097135}
   - component: {fileID: 1338097134}
+  - component: {fileID: 1338097133}
   m_Layer: 0
   m_Name: Elevator
   m_TagString: Untagged
@@ -7981,6 +7982,18 @@ Transform:
   m_Father: {fileID: 1106743242}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1338097133
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338097131}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!111 &1338097134
 Animation:
   m_ObjectHideFlags: 0
@@ -9480,7 +9493,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75513c0d1aabb4820a5bfcd2e3e6f99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprintStamCost: 0
+  meleeCost: 0
   baseMeleeDamage: 0
+  healthUpgradeAmntOnLvlUp: 5
+  staminaUpgradeAmtOnLvlUp: 10
+  totalExpRequiredToLvlUp: 0
+  upgradePoints: 0
+  healthRegen: 0
+  manaRegen: 0
+  staminaRegen: 0
   trees: []
 --- !u!114 &1647034024
 MonoBehaviour:

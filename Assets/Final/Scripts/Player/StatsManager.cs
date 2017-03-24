@@ -9,26 +9,35 @@ public class StatsManager : MonoBehaviour
     private float totalMana;
     private float currentMana;
     private float totalStamina;
-    private float currentStamina;
-    private float sprintStamCost;
+	private float currentStamina;
+	[SerializeField]
+	private float sprintStamCost;
+	[SerializeField]
 	private float meleeCost;
     [SerializeField]
 	private float baseMeleeDamage;
+	[SerializeField]
 	private float healthUpgradeAmntOnLvlUp = 5f;
+	[SerializeField]
 	private float staminaUpgradeAmtOnLvlUp = 10f;
 
 	private int currentLvl;
-    private float currentExp;
+	private float currentExp;
+	[SerializeField]
     private float totalExpRequiredToLvlUp;
-    private float expGained;
+	private float expGained;
+	[SerializeField]
     private int upgradePoints;
     private bool isAlive;
 
     //private bool isReviving;
     //private float reviveDistance;
-    //Multipliers
-    private float healthRegen;
-    private float manaRegen;
+	//Multipliers
+	[SerializeField]
+	private float healthRegen;
+	[SerializeField]
+	private float manaRegen;
+	[SerializeField]
     private float staminaRegen;
 
     //Timers
@@ -63,7 +72,7 @@ public class StatsManager : MonoBehaviour
 		baseMeleeDamage = 120f;
         currentLvl = 1;
         currentExp = 0f;
-        totalExpRequiredToLvlUp = 100f;
+        totalExpRequiredToLvlUp = 500f;
         upgradePoints = 0;
         expGained = 0f;
         //reviveDistance = 3.5f;
