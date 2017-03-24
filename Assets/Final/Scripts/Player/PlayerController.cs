@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 		}
+		//Uses stamina for the attack
+		Sm.useStamina (Sm.getMeleeCost(),false);
 	}
     
 	//temporary

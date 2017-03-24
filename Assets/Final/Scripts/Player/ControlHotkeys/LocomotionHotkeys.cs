@@ -106,7 +106,6 @@ public class LocomotionHotkeys : ControlHotkey
 	{
 		if (controller.Sm.getCurrentStamina() - controller.Sm.getMeleeCost() >= 0 && controller.Anim.GetInteger("Skill") != (int)Skills.BasicAttack)  
 		{
-			controller.Sm.useStamina (controller.Sm.getMeleeCost(),false);
 			controller.Anim.SetInteger("Skill",(int)Skills.BasicAttack);
 		}
 	}
