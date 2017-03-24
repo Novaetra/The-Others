@@ -15,6 +15,8 @@ public class SkillTreePiece : MonoBehaviour
     private StatsManager sm;
 	private HUDManager hudman;
     private bool isUnlocked;
+
+	private string originalDescription;
     
     public void Start()
     {
@@ -40,6 +42,7 @@ public class SkillTreePiece : MonoBehaviour
 			if (s.Name.Equals (skillName)) 
 			{
 				skill = s;
+				originalDescription = s.Description;
 				return;
 			}
 		}
@@ -86,16 +89,19 @@ public class SkillTreePiece : MonoBehaviour
 
 	#endregion
 
-	public void showTooltip()
+	public void showTooltip(PointerEventData data, GameObject go)
 	{
-		if (skill.IsUnlocked && skill.UpgradeCount<skill.Upgrades.Count) 
-		{
-			string description = "Upgrade ";
-			description += skill.Upgrades [skill.UpgradeCount].AttributeToUpgrade + " by " + skill.Upgrades [skill.UpgradeCount].UpgradeAmt;
-			hudman.ShowSkillTooltip (skill.Name, description, ""+skill.Upgrades[skill.UpgradeCount].LvlRequirement);
-		} else
-		{
-			hudman.ShowSkillTooltip (skill.Name, skill.Description, skill.LvlRequirement.ToString ());
+		if (skill.IsUnlocked && skill.UpgradeCount < skill.Upgrades.Count) {
+			string description = "Upgrades ";
+			description += SkillAttributeToString(skill.Upgrades [skill.UpgradeCount].AttributeToUpgrade) + " by " + skill.Upgrades [skill.UpgradeCount].UpgradeAmt;
+			skill.Description = description;
+			skill.LvlRequirement = skill.Upgrades [skill.UpgradeCount].LvlRequirement;
+			hudman.ShowSkillTooltip (skill, data,go);
+		} else if (skill.IsUnlocked && skill.UpgradeCount > skill.Upgrades.Count) {
+			skill.Description = originalDescription;
+			hudman.ShowSkillTooltip (skill, data,go);
+		} else {
+			hudman.ShowSkillTooltip (skill, data,go);
 		}
 	}
 
@@ -109,6 +115,23 @@ public class SkillTreePiece : MonoBehaviour
         return isUnlocked;
     }
 
+	private string SkillAttributeToString(SkillAttribute sa)
+	{
+		switch (sa) {
+		case SkillAttribute.cooldown:
+		case SkillAttribute.cost:
+		case SkillAttribute.duration:
+			return sa.ToString();
+			break;
+		case SkillAttribute.effectAmount:
+			return "effect amount";
+			break;
+		case SkillAttribute.maxEnemiesHit:
+			return "max enemies hit";
+			break;
+		}
+		return "";
+	}
 
     public void setSkill(Skill s)
 	{

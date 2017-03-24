@@ -110,11 +110,17 @@ public class Skill
 		get {
 			return effectAmount;
 		}
+		set{
+			effectAmount = value;
+		}
 	}
 
 	public float Cost {
 		get {
 			return cost;
+		}
+		set{
+			cost = value;
 		}
 	}
 
@@ -122,11 +128,17 @@ public class Skill
 		get {
 			return cooldown;
 		}
+		set{
+			cooldown = value;
+		}
 	}
 
 	public float Duration {
 		get {
 			return duration;
+		}
+		set{
+			duration = value;
 		}
 	}
 
@@ -134,11 +146,17 @@ public class Skill
 		get {
 			return lvlRequirement;
 		}
+		set{
+			lvlRequirement = value;
+		}
 	}
 
 	public int MaxEnemiesHit {
 		get {
 			return maxEnemiesHit;
+		}
+		set{
+			maxEnemiesHit = value;
 		}
 	}
 
@@ -161,6 +179,9 @@ public class Skill
 		get {
 			return description;
 		}
+		set{
+			description = value;
+		} 
 	}
 
 	public SkillType SkillType {

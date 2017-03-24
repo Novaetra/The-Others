@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler 
+public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
 	public static Skill skillBeingDragged;
@@ -18,11 +18,13 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 	private Vector3 startPos;
 	private Transform background;
 	private static GameObject currentPlayer;
+	private HUDManager hudman;
     private Skill skill;
 
 	public void Start()
 	{
-        currentPlayer = GameManager.currentplayer;
+		currentPlayer = GameObject.Find ("Player");
+		hudman = currentPlayer.GetComponent<HUDManager> ();
         planeDistance = GameObject.Find("Canvas").GetComponent<Canvas>().planeDistance;
     }
 
@@ -103,6 +105,30 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 		imgBeingDragged = null;
 		originalSlot = null;
 		originalParent = null;
+	}
+
+	public void OnPointerEnter(PointerEventData data)
+	{
+		skill = GetComponent<SkillTreePiece>().getSkill();
+		if (skill.Name != "") 
+		{
+			hudman.ShowSkillTooltip (skill, data,gameObject);
+		}	
+	}
+
+	public void OnPointerExit(PointerEventData data)
+	{
+		StartCoroutine (StartHide());
+	}
+
+	IEnumerator StartHide()
+	{
+		yield return new WaitForSeconds(.1f);
+		skill = GetComponent<SkillTreePiece>().getSkill();
+		if (skill.Name != "" && hudman.IsOnTooltip == false) 
+		{
+			hudman.HideTooltip ();
+		}
 	}
 
 }

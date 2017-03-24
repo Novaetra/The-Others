@@ -86,11 +86,20 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
 	public void OnPointerEnter(PointerEventData data)
 	{
-		GetComponent<SkillTreePiece> ().showTooltip ();
+		GetComponent<SkillTreePiece> ().showTooltip (data,gameObject);
 	}
 
 	public void OnPointerExit(PointerEventData data)
 	{
-		GetComponent<SkillTreePiece> ().hideTooltip ();
+		StartCoroutine (StartHide());
+	}
+
+	IEnumerator StartHide()
+	{
+		yield return new WaitForSeconds(.1f);
+		if (currentPlayer.GetComponent<HUDManager>().IsOnTooltip == false) 
+		{
+			GetComponent<SkillTreePiece> ().hideTooltip ();
+		}
 	}
 }

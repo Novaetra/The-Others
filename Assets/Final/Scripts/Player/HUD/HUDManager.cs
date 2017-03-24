@@ -2,9 +2,12 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class HUDManager : MonoBehaviour 
 {
+	private float tooltipOffset = 20;
+
 	public Image healthbar;
 	public Image manabar;
 	public Image staminabar;
@@ -29,10 +32,12 @@ public class HUDManager : MonoBehaviour
 	private Text tooltipName;
 	private Text tooltipDesc;
 	private Text tooltipLvl;
+	private Text tooltipNextUpgrade;
 	private Text currentLvlTxt;
 
 	private bool setUpDone = false;
-
+	[SerializeField]
+	private bool isOnTooltip = false;
 
 	private List<Message> queuedMessages;
 
@@ -64,6 +69,7 @@ public class HUDManager : MonoBehaviour
 		tooltipName = tooltip.transform.FindChild ("Name").GetComponent<Text> ();;
 		tooltipDesc = tooltip.transform.FindChild ("Description").GetComponent<Text> ();
 		tooltipLvl = tooltip.transform.FindChild ("LvlRequired").GetComponent<Text> ();
+		tooltipNextUpgrade = tooltip.transform.FindChild ("NextUpgrade").GetComponent<Text> ();
 		expText = canvasObj.transform.FindChild ("Exp Counter").GetComponent<Text> ();
 		SetUpPanels ();
 		tooltip.SetActive (false);
@@ -204,12 +210,40 @@ public class HUDManager : MonoBehaviour
     }
 
 	//Fills in tooltip information and adds it to screen
-	public void ShowSkillTooltip(string name, string desc, string lvlRequired)
+	public void ShowSkillTooltip(Skill skill,PointerEventData data,GameObject go)
 	{
-		tooltipName.text = name;
-		tooltipDesc.text = desc;
-		tooltipLvl.text = "Level: " + lvlRequired;
+		tooltipName.text = skill.Name;
+		tooltipDesc.text = skill.Description;
+		tooltipLvl.text = "Level: " + skill.LvlRequirement;
+		if (skill.IsUnlocked && skill.UpgradeCount < skill.Upgrades.Count) {
+			tooltipNextUpgrade.enabled = true;
+		} else {
+			tooltipNextUpgrade.enabled = false;
+		}
+		RepositionTooltip (data,go);
 		tooltip.SetActive(true);
+	}
+
+
+	private void RepositionTooltip(PointerEventData data,GameObject go)
+	{
+		Transform originalParent = tooltip.transform.parent;
+		RectTransform rect = tooltip.GetComponent<RectTransform> ();
+		tooltip.transform.parent = go.transform;
+		tooltip.transform.localPosition = new Vector2 (0+tooltipOffset, 0);
+		tooltip.transform.parent = originalParent;
+
+		if ((rect.anchoredPosition.x+(rect.rect.width)) > Screen.currentResolution.width) 
+		{
+			tooltip.transform.parent = go.transform;
+			tooltip.transform.localPosition = new Vector2 (-tooltipOffset - rect.rect.width * 2, 0f);
+			tooltip.transform.parent = originalParent;
+		}
+
+		if ((rect.anchoredPosition.y-(rect.rect.height)) < -Screen.currentResolution.height) 
+		{
+			tooltip.transform.localPosition = new Vector2 (tooltip.transform.localPosition.x,  tooltip.transform.transform.localPosition.y + rect.rect.height*2);//12.5f*(rect.rect.height*2));
+		}
 	}
 
 	//Hides tooltip
@@ -219,11 +253,13 @@ public class HUDManager : MonoBehaviour
 		tooltip.SetActive(false);
 	}
 
-	public void ShowItemTooltip(string name, string desc, bool equipable)
+	public void ShowItemTooltip(Item i, PointerEventData data,GameObject go)
 	{
-		tooltipName.text = name;
-		tooltipDesc.text = desc;
-		tooltipLvl.text = "";
+		tooltipName.text = i.Name;
+		tooltipDesc.text = i.Description;
+		RepositionTooltip (data,go);
+		tooltipNextUpgrade.enabled = false;
+		tooltipLvl.enabled = false;
 		tooltip.SetActive(true);
 	}
 
@@ -232,7 +268,6 @@ public class HUDManager : MonoBehaviour
 	{
 		panelsOBJ.gameObject.SetActive (true);
 	}
-
 
 	//Hides currentPanel
 	public void HidePanels()
@@ -249,6 +284,19 @@ public class HUDManager : MonoBehaviour
 	public Transform PanelsOBJ {
 		get {
 			return panelsOBJ;
+		}
+	}
+
+	public bool IsOnTooltip {
+		get {
+			return isOnTooltip;
+		}
+		set {
+			if (value == false) 
+			{
+				HideTooltip ();
+			}
+			isOnTooltip = value;
 		}
 	}
 }

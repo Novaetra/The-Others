@@ -105,11 +105,20 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public void OnPointerEnter(PointerEventData data)
 	{
-		hudMan.ShowItemTooltip (name, description, false);
+		hudMan.ShowItemTooltip (this, data,gameObject);
 	}
 
 	public void OnPointerExit(PointerEventData data)
 	{
-		hudMan.HideTooltip ();
+		StartCoroutine (StartHide());
+	}
+
+	IEnumerator StartHide()
+	{
+		yield return new WaitForSeconds(.1f);
+		if (hudMan.IsOnTooltip == false) 
+		{
+			hudMan.HideTooltip ();
+		}
 	}
 }
