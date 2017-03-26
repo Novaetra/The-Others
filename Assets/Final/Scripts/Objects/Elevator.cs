@@ -10,6 +10,7 @@ public class Elevator : MonoBehaviour
     private GameObject player;
 	private Animation anim;
     private EnemyManager enemyMan;
+    private HUDManager hudman;
 
     public float waitTime;
 
@@ -21,7 +22,9 @@ public class Elevator : MonoBehaviour
 
 	public void interact(object[] paramtrs)
     {
+        Debug.Log(canMove + " butt " + isMoving);
         player = (GameObject)paramtrs[1];
+        hudman = player.GetComponent<HUDManager>();
 		//If the elevator isn't moving
 		if (!isMoving && canMove) 
 		{
@@ -43,6 +46,12 @@ public class Elevator : MonoBehaviour
 			}
             StartCoroutine(StartWaitTime());
 		}
+
+        else if(!isMoving && !canMove)
+        {
+            hudman.displayMsg("Must wait for elevator to cooldown", 1f);
+            Debug.Log("showing mesasge");
+        }
     }
 
     private IEnumerator StartWaitTime()
