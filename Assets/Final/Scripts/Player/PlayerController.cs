@@ -28,8 +28,10 @@ public class PlayerController : MonoBehaviour
 	private float interactDistance = 2f;
 	private StatsManager sm;
 	private HUDManager hudman;
+    [SerializeField]
+    private LayerMask lyrMask;
 
-	private Raycaster[] raycasters;
+    private Raycaster[] raycasters;
 
     private GameObject personReviving;
 
@@ -39,7 +41,8 @@ public class PlayerController : MonoBehaviour
 
 	public void set_Up () 
 	{
-		cs = GetComponent<CharacterController> ();
+        lyrMask = ~lyrMask;
+        cs = GetComponent<CharacterController> ();
 		hudman = GetComponent<HUDManager> ();
 		currentSpeed = walkSpeed;
 		anim = GetComponent<Animator> ();
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
 	private void SetUpControlHotkeys ()
 	{
 		controlHotkeys.Add(new DisplayPanelHotkey(new KeyCode[2]{KeyCode.Tab,KeyCode.Q},this));
-		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[5]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L,KeyCode.R}, this));
+		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[5]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L,KeyCode.R}, this, lyrMask));
 	}
 
 	//Checks all control hotkeys
@@ -89,14 +92,14 @@ public class PlayerController : MonoBehaviour
 	{
 		if (hit.transform.parent != null) 
 		{
-			if ((hit.transform.parent.name.Substring(0,hit.transform.parent.name.Length-1)) != "Room")
-			{
-				hit.transform.parent.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
+            if (hit.transform.parent.tag.Equals("Room") || hit.transform.parent.tag.Equals("Spawn Room"))
+            {
+                hit.transform.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
 			}
 			else
-			{
-				hit.transform.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
-			}
+            {
+                hit.transform.parent.SendMessage("interact", new object[2] { hit, gameObject }, SendMessageOptions.DontRequireReceiver);
+            }
 		}
 	}
 

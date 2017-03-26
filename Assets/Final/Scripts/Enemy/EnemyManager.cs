@@ -18,7 +18,7 @@ public class EnemyManager : MonoBehaviour
     private float timeBetweenRounds;
     private float timeBetweenSpawns;
 
-	private Coroutine startWaveCouroutine;
+	private Coroutine startWaveCouroutine, spawningWaveCouroutine;
 
     private Transform currentRoom; //This is to detect which room the player is in, and spawn enemies accordingly
 	[SerializeField]
@@ -37,6 +37,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private List<Transform> spawnPointsAvailable = new List<Transform>();
 
+    private List<GameObject> allEnemies = new List<GameObject>();
+
 	//List of doors so we can figure out the adjacent rooms
     private Door[] doors;
 
@@ -47,12 +49,12 @@ public class EnemyManager : MonoBehaviour
     public void setUp()
     {
 		//This if statement is for development purposes
-		if (spawnEnemies == true) 
-		{
-			roundHasStarted = false;
+		if (spawnEnemies == true)
+        {
+            CurrentRoom = (GameObject.FindGameObjectWithTag("Spawn Room").transform);
+            roundHasStarted = false;
 			//Sets all the starting values for the variables
 			hudMan = GameManager.currentplayer.GetComponent<HUDManager> ();
-			enemysToSpawn = 1;
 			maxEnemies = 20;
 			currentWaveCount = 0;
 			enemiesSpawned = 0;
@@ -61,7 +63,6 @@ public class EnemyManager : MonoBehaviour
 			setupSpawnLists ();
 			startWaveCouroutine = StartCoroutine (waitToStartNewRound ());
 			doors = GameObject.FindObjectsOfType<Door> ();
-            setCurrentRoom(GameObject.FindGameObjectWithTag("Spawn Room").transform);
 		}
         playerSM = GameManager.currentplayer.GetComponent<StatsManager>();
         enemiesKilled = 0;
@@ -160,7 +161,7 @@ public class EnemyManager : MonoBehaviour
                 for (int a = 0; a < adjacentRooms[i].Length-1; a++)
                 {
                     //If a room in the list == player current room
-                    if (adjacentRooms[i][a] == currentRoom)
+                    if (adjacentRooms[i][a] == CurrentRoom)
                     {
                         //If the door linking the two rooms is open, then it adds the spawn points of that adjacent room to the list of available points
                         //(The last element in array will always be the door)
@@ -184,12 +185,14 @@ public class EnemyManager : MonoBehaviour
             }
         }
         //Add current room's spawn points
-        if(spawnPointsInRoom[currentRoom.name] != null)
+        if(spawnPointsInRoom[CurrentRoom.name] != null)
         {
-            foreach (Transform spawn in spawnPointsInRoom[currentRoom.name])
+            foreach (Transform spawn in spawnPointsInRoom[CurrentRoom.name])
             {
                 if (!spawnPointsAvailable.Contains(spawn))
                 {
+                    //Spawn is added twice to make it more likely for enemy to spawn in that room
+                    spawnPointsAvailable.Add(spawn);
                     spawnPointsAvailable.Add(spawn);
                 }
             }
@@ -210,15 +213,16 @@ public class EnemyManager : MonoBehaviour
         updateSpawnsAvailable();
         currentWaveCount++;
         hudMan.updateRoundsTxt(currentWaveCount);
-        enemysToSpawn = Mathf.RoundToInt(enemysToSpawn * 1.5f);
+        enemysToSpawn = Mathf.RoundToInt(currentWaveCount * 1.75f);
         currentEnemyCount = enemysToSpawn;
-        StartCoroutine(spawnWave());
+        spawningWaveCouroutine = StartCoroutine(spawnWave());
     }
     
 	//Checks if there are any enemies left
 	//If there are no more enemies left, then start the next round
     private void checkIfRoundEnd()
     {
+        Debug.Log("Checking if round ended " + currentEnemyCount);
         if (currentEnemyCount <= 0)
         {
             UpdateEnemyValues();
@@ -247,6 +251,11 @@ public class EnemyManager : MonoBehaviour
         checkIfRoundEnd();
     }
 
+    public void RemoveEnemyFromList(GameObject go)
+    {
+        allEnemies.Remove(go);
+    }
+
 	//Spawns an enemy at a random spawn point
     public void spawnEnemy()
     {
@@ -257,6 +266,7 @@ public class EnemyManager : MonoBehaviour
         GameObject enemy = (GameObject)GameObject.Instantiate(ENEMY_OBJECTS[randIndx], spawn.position, spawn.rotation);
         string enemytype = (string)enemyNames[randIndx];
         setStartingStats(enemy.GetComponent<EnemyController>(),enemytype);
+        allEnemies.Add(enemy);
     }
 
     private void setStartingStats(EnemyController enemy, string enemyName)
@@ -295,15 +305,40 @@ public class EnemyManager : MonoBehaviour
 	//Spawns the whole wave of enemies
     private IEnumerator spawnWave()
     {
-		enemiesSpawned = 0;
-        for (int x = 0; x<enemysToSpawn; x++)
+        int tempEnemiesToSpawn = enemysToSpawn;
+        for (int x = 0; x< tempEnemiesToSpawn; x++)
         {
-			if (enemiesSpawned < maxEnemies) 
+            if (enemiesSpawned < maxEnemies) 
 			{
+                while(currentRoom==null)
+                {
+                    yield return null;
+                }
 				yield return new WaitForSeconds(timeBetweenSpawns);
+                enemiesSpawned++;
+                enemysToSpawn--;
 				spawnEnemy();
 			}
         }
+    }
+
+    private void KillAllEnemies()
+    {
+        int count = allEnemies.Count;
+        for(int i = 0;i<count;i++)
+        {
+            GameObject go = allEnemies[i];
+            if (go.GetComponent<EnemyController>().IsAlive)
+            {
+                go.GetComponent<EnemyController>().Kill();
+                enemysToSpawn++;
+            }
+            else
+            {
+                Destroy(go);
+            }
+        }
+        allEnemies.Clear();
     }
 
 	//Waits x seconds before starting the next round
@@ -315,15 +350,34 @@ public class EnemyManager : MonoBehaviour
         startNextRound();
     }
 
-	//Sets the room the player is currently in
-    public void setCurrentRoom(Transform room)
-    {
-        currentRoom = room;
-    }
-
 	public bool RoundHasStarted {
 		get {
 			return roundHasStarted;
 		}
 	}
+
+    public Transform CurrentRoom
+    {
+        get
+        {
+            return currentRoom;
+        }
+
+        set
+        {
+            if(value == null)
+            {
+                KillAllEnemies();
+                if(spawningWaveCouroutine != null)
+                    StopCoroutine(spawningWaveCouroutine);
+            }
+
+            if(currentRoom == null && value != null)
+            {
+                startWaveCouroutine = StartCoroutine(spawnWave());
+            }
+
+            currentRoom = value;
+        }
+    }
 }

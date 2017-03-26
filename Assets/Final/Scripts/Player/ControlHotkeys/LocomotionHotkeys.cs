@@ -8,13 +8,15 @@ public class LocomotionHotkeys : ControlHotkey
 	private EnemyManager em;
 	private float gravity = 9.8f;
 	private float vSpeed = 0;
-
-	public LocomotionHotkeys(KeyCode[] c,PlayerController cntrl)
+    private LayerMask lyrMask;
+	public LocomotionHotkeys(KeyCode[] c,PlayerController cntrl, LayerMask mask)
 	{
 		codes = c; 
 		controller = cntrl;
 		em = GameObject.Find ("Managers").GetComponent<EnemyManager> ();
-	}
+        lyrMask = mask;
+
+    }
 
 	//codes[0] = sprint
 	//codes[1] = interact
@@ -107,7 +109,7 @@ public class LocomotionHotkeys : ControlHotkey
 		{
 			Transform raycaster = caster.transform;
 			Debug.DrawRay(raycaster.transform.position, -raycaster.transform.forward * controller.InteractDistance, Color.blue);
-			if (Physics.Raycast(raycaster.transform.position, -raycaster.transform.forward, out hit, controller.InteractDistance))
+			if (Physics.Raycast(raycaster.transform.position, -raycaster.transform.forward, out hit, controller.InteractDistance,lyrMask))
 			{
 				//Has to check these two separately because each one has their own specific protocols
 				// checkRevive(hit);

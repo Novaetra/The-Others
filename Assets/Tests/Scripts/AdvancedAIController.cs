@@ -48,7 +48,7 @@ public class AdvancedAIController : EnemyController
 
 	public override void checkAttack()
 	{
-		if (isAlive)
+		if (IsAlive)
 		{
 			RaycastHit hit;
 			foreach (Raycaster caster in casters)

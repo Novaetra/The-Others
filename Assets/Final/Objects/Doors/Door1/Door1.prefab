@@ -157,9 +157,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119240}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000014901163}
-  m_LocalPosition: {x: 7.1, y: 7.301, z: -24}
-  m_LocalScale: {x: 2.9085016, y: 5.4, z: 2.9085016}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 16.843, y: 13.721, z: 1.01}
+  m_LocalScale: {x: 0.99999976, y: 1.819, z: 0.99999976}
   m_Children:
   - {fileID: 423972}
   - {fileID: 474088}
@@ -167,7 +167,7 @@ Transform:
   - {fileID: 473204}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &465022
 Transform:
   m_ObjectHideFlags: 1
@@ -506,10 +506,10 @@ BoxCollider:
   m_GameObject: {fileID: 119240}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 3.9599252, y: 1.5842333, z: 1.6722952}
-  m_Center: {x: -0.20499907, y: -0.29211667, z: 0.0966061}
+  m_Size: {x: 3.9599252, y: 1.5842334, z: 2.5490713}
+  m_Center: {x: -0.20499903, y: -0.29211673, z: 0.53492683}
 --- !u!111 &11116196
 Animation:
   m_ObjectHideFlags: 1
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd3e2ac81d1a6e4e8be9007022a4294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorCost: 200
+  doorCost: 400
   adjacentRooms:
   - {fileID: 0}
   - {fileID: 0}

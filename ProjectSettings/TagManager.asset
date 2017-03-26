@@ -9,6 +9,7 @@ TagManager:
   - Floor
   - CraftMaterial
   - Spawn Room
+  - Room
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - 4
   - Testing
   - Door
-  - 
+  - Interactable
   - 
   - 
   - 

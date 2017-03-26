@@ -22,12 +22,14 @@ public class EnemyController : MonoBehaviour
 	protected float expOnKill;
 
 	protected bool doneSettingUp = false;
-	protected bool isAlive = true;
-	private bool alreadySpawnedItem = false;
+    private bool isAlive = true;
+    private bool alreadySpawnedItem = false;
 
 	protected Raycaster[] casters;
 
 	private List<Item> inventory;
+
+    private EnemyManager enemyMan;
 
     //Assigns the enemy's nav agent, animator, and list of players
     public void Start()
@@ -43,6 +45,7 @@ public class EnemyController : MonoBehaviour
         movementSpeed = 1.5f;
 		inventory = GameObject.Find ("InventoryManager").GetComponent<Inventory> ()._inventory;
 		DoAdditionalSetup ();
+        enemyMan = GameObject.Find("Managers").transform.GetComponent<EnemyManager>();
 
     }
 
@@ -56,7 +59,7 @@ public class EnemyController : MonoBehaviour
 	//Check if enemy is alive
     void Update()
     {
-        if (doneSettingUp == true && isAlive == true)
+        if (doneSettingUp == true && IsAlive == true)
         {
             chasePlayer();
         }
@@ -69,7 +72,7 @@ public class EnemyController : MonoBehaviour
 		//Get closest player and assign it as the target
         //targetPlayer = GetClosestEnemy(livePlayers.ToList());
 
-        if (targetPlayer != null && isAlive == true)
+        if (targetPlayer != null && IsAlive == true)
         {
 			//Gets the distance between the player and the enemy
             playerDistance = Vector3.Distance(targetPlayer.transform.position, gameObject.transform.position);
@@ -114,7 +117,7 @@ public class EnemyController : MonoBehaviour
     //If it hit a player, then apply damage
     public virtual void checkAttack()
     {
-        if (isAlive)
+        if (IsAlive)
         {
             RaycastHit hit;
             foreach (Raycaster caster in casters)
@@ -145,7 +148,18 @@ public class EnemyController : MonoBehaviour
     public void startDeath()
     {
 		PossiblySpawnPowerup ();
-        StartCoroutine(die());
+        die();
+    }
+
+    public void Kill()
+    {
+        IsAlive = false;
+        agent.enabled = false;
+
+        Destroy(GetComponent<CapsuleCollider>());
+        Destroy(GetComponent<Rigidbody>());
+        anim.SetFloat("Health", -1);
+        StartCoroutine(destroy(5f));
     }
 
 	private void PossiblySpawnPowerup()
@@ -159,19 +173,24 @@ public class EnemyController : MonoBehaviour
 	}
 
 	//Firsts starts the death animation, waits x seconds, and then destroys the enemy
-    private IEnumerator die()
+    private void die()
     {
-        if (isAlive == true)
+        if (IsAlive == true)
         {
-            isAlive = false;
+            IsAlive = false;
             agent.enabled = false;
 
             Destroy(GetComponent<CapsuleCollider>());
             Destroy(GetComponent<Rigidbody>());
             sendPlayersExp();
-            GameObject.Find("Managers").transform.GetComponent<EnemyManager>().decreaseEnemyCount();
+            enemyMan.decreaseEnemyCount();
+            enemyMan.RemoveEnemyFromList(gameObject);
         }
-        yield return new WaitForSeconds(30f);
+        StartCoroutine(destroy(20f));
+    }
+    private IEnumerator destroy(float sec)
+    {
+        yield return new WaitForSeconds(sec);
         Destroy(gameObject);
     }
 
@@ -230,5 +249,18 @@ public class EnemyController : MonoBehaviour
 	protected void idleAnim()
     {
         GetComponent<Animator>().SetFloat("Speed", 0);
+    }
+
+    public bool IsAlive
+    {
+        get
+        {
+            return isAlive;
+        }
+
+        set
+        {
+            isAlive = value;
+        }
     }
 }
