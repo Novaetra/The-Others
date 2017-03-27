@@ -73,8 +73,9 @@ public class PlayerController : MonoBehaviour
 	//Sets up all control hotkeys
 	private void SetUpControlHotkeys ()
 	{
-		controlHotkeys.Add(new DisplayPanelHotkey(new KeyCode[2]{KeyCode.Tab,KeyCode.Q},this));
 		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[5]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L,KeyCode.R}, this, lyrMask));
+	    controlHotkeys.Add(new DisplayPanelHotkey(new KeyCode[2]{KeyCode.Tab,KeyCode.Q},this));
+
 	}
 
 	//Checks all control hotkeys
@@ -230,6 +231,11 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}
+
+    public List<ControlHotkey> ControlHotkeys
+    {
+        get { return controlHotkeys; }
+    }
 
 	public HUDManager Hudman {
 		get {

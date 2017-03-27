@@ -45,6 +45,8 @@ public class EnemyManager : MonoBehaviour
 	//Refrence to the player's HUD Manager
     private HUDManager hudMan;
 
+    private PlayerController controller;
+
     //Sets starting values
     public void setUp()
     {
@@ -54,7 +56,8 @@ public class EnemyManager : MonoBehaviour
             CurrentRoom = (GameObject.FindGameObjectWithTag("Spawn Room").transform);
             roundHasStarted = false;
 			//Sets all the starting values for the variables
-			hudMan = GameManager.currentplayer.GetComponent<HUDManager> ();
+			hudMan = GameObject.Find("Player").GetComponent<HUDManager> ();
+            controller = GameObject.Find("Player").GetComponent<PlayerController> ();
 			maxEnemies = 20;
 			currentWaveCount = 0;
 			enemiesSpawned = 0;
@@ -344,6 +347,9 @@ public class EnemyManager : MonoBehaviour
 	//Waits x seconds before starting the next round
     private IEnumerator waitToStartNewRound()
     {
+        yield return new WaitForSeconds(2f);
+        Debug.Log(hudMan);
+        hudMan.displayMsg("Press " + controller.ControlHotkeys[0].Codes[4] + " to start next round",5f);
 		roundHasStarted = false;
 		readyBtn.SetActive (true);
         yield return new WaitForSeconds(timeBetweenRounds);

@@ -50,18 +50,20 @@ public class HUDManager : MonoBehaviour
 	//Assigns all the variables to their correspinding values
 	void Start()
 	{
-		SetStartingValues ();
+	    if(!setUpDone)
+		    SetStartingValues ();
 	}
 
 	private void SetStartingValues()
 	{
+	    canvasObj = GameObject.Find("Canvas");
+	    messageObj = canvasObj.transform.FindChild ("ShortMessage").GetComponent<Text>();
+	    Debug.Log("set message oject to " + messageObj);
 		currentPlayer = gameObject;
 		pc = currentPlayer.GetComponent<PlayerController>();
 		sm = currentPlayer.GetComponent<StatsManager> ();
-		canvasObj = GameObject.Find("Canvas");
 		roundsTxt = canvasObj.transform.FindChild("RoundsTxt").GetComponent<Text>();
 		roundsTxt.enabled = false;
-		messageObj = canvasObj.transform.FindChild ("ShortMessage").GetComponent<Text>();
 		upgradePnts = GameObject.Find ("SkillTree Panel").transform.FindChild("UpgradePoints").GetComponent<Text>();
 		currentLvlTxt = GameObject.Find ("SkillTree Panel").transform.FindChild ("CurrentLevelText").GetComponent<Text> ();
 		revivingBarBG = canvasObj.transform.FindChild("ReviveBarBG").GetComponent<Image>();
@@ -77,11 +79,11 @@ public class HUDManager : MonoBehaviour
 		SetUpPanels ();
 		tooltip.SetActive (false);
 		upgradePnts.enabled = false;
-		setUpDone = true;
 		messageCurrentTime = 0;
 		messageTimer = 0;
 		queuedMessages = new List<Message> ();
 		HidePanels ();
+	    setUpDone = true;
 	}
 
 	void Update()
@@ -108,10 +110,14 @@ public class HUDManager : MonoBehaviour
 		if (messageCurrentTime < messageTimer) 
 		{
 			messageCurrentTime += Time.deltaTime;
-		} else 
+		} else if (queuedMessages.Count > 0)
 		{
-			messageDisplaying = false;
-			PlayNextMessage ();
+		    messageDisplaying = false;
+		    PlayNextMessage();
+		}
+		else
+		{
+		    hideMessage();
 		}
 	}
 
@@ -154,27 +160,35 @@ public class HUDManager : MonoBehaviour
 	//Displays message on screeen
 	public void displayMsg(string msg, float dur)
 	{
-		//If a message is already displaying, but the next message's text is the same, just reset the timer
-		//Otherwise queue the message to display after
-		if (messageDisplaying) 
-		{
-			if (messageObj.text.Equals (msg)) 
-			{
-				messageCurrentTime = 0f;	
-			} else 
-			{
-				QueueMessage (msg, dur);
-			}
-		} 
-		//If a message is not displaying, display one
-		else 
-		{
-			messageObj.text = msg;
-			messageObj.enabled = true;
-			messageTimer = dur;
-			messageCurrentTime = 0;
-			messageDisplaying = true;
-		}
+	    if (setUpDone)
+	    {
+	        //If a message is already displaying, but the next message's text is the same, just reset the timer
+	        //Otherwise queue the message to display after
+	        if (messageDisplaying)
+	        {
+	            if (messageObj.text.Equals (msg))
+	            {
+	                messageCurrentTime = 0f;
+	            } else
+	            {
+	                QueueMessage (msg, dur);
+	            }
+	        }
+	        //If a message is not displaying, display one
+	        else
+	        {
+	            messageObj.text = msg;
+	            messageObj.enabled = true;
+	            messageTimer = dur;
+	            messageCurrentTime = 0;
+	            messageDisplaying = true;
+	        }
+	    }
+	    else
+	    {
+	        SetStartingValues();
+	        displayMsg(msg,dur);
+	    }
 	}
 	
 	//Adds a message to the queue
@@ -186,16 +200,9 @@ public class HUDManager : MonoBehaviour
 	//Plays next message in queue and deletes it from queue
 	private void PlayNextMessage()
 	{
-		if (queuedMessages.Count > 0) 
-		{
-			Message msg = queuedMessages [0];
-			displayMsg (msg._Message, msg.Duration);
-			queuedMessages.Remove (msg);
-		} 
-		else 
-		{
-			hideMessage ();
-		}
+        Message msg = queuedMessages [0];
+        displayMsg (msg._Message, msg.Duration);
+        queuedMessages.Remove (msg);
 	}
 
 	//hides message
