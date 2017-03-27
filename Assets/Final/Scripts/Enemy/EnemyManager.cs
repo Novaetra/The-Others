@@ -225,7 +225,6 @@ public class EnemyManager : MonoBehaviour
 	//If there are no more enemies left, then start the next round
     private void checkIfRoundEnd()
     {
-        Debug.Log("Checking if round ended " + currentEnemyCount);
         if (currentEnemyCount <= 0)
         {
             UpdateEnemyValues();

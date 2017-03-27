@@ -58,7 +58,6 @@ public class HUDManager : MonoBehaviour
 	{
 	    canvasObj = GameObject.Find("Canvas");
 	    messageObj = canvasObj.transform.FindChild ("ShortMessage").GetComponent<Text>();
-	    Debug.Log("set message oject to " + messageObj);
 		currentPlayer = gameObject;
 		pc = currentPlayer.GetComponent<PlayerController>();
 		sm = currentPlayer.GetComponent<StatsManager> ();

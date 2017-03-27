@@ -192,7 +192,6 @@ public class StatsManager : MonoBehaviour
         currentHealth -= dmg;
         hudman.updateBars();
         checkDeath();
-        Debug.Log("RECIEVED DAMAGE");
         hudman.RecieveDamage();
     }
 
