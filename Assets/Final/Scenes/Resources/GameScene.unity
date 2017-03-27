@@ -5914,7 +5914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396bcb555fc4fe7409b850b2114519aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnEnemies: 1
+  spawnEnemies: 0
   ENEMY_OBJECTS:
   - {fileID: 1645946678479904, guid: e430cf1f34aecae4fb52d0eb3121411a, type: 2}
   readyBtn: {fileID: 578136084}
