@@ -18,6 +18,8 @@ public class HUDManager : MonoBehaviour
 	private StatsManager sm;
 	private PlayerController pc;
 
+    private Animator damageIndicator;
+
 	private GameObject currentPlayer;
 	private GameObject canvasObj;
 	private GameObject tooltip;
@@ -71,6 +73,7 @@ public class HUDManager : MonoBehaviour
 		tooltipLvl = tooltip.transform.FindChild ("LvlRequired").GetComponent<Text> ();
 		tooltipNextUpgrade = tooltip.transform.FindChild ("NextUpgrade").GetComponent<Text> ();
 		expText = canvasObj.transform.FindChild ("Exp Counter").GetComponent<Text> ();
+	    damageIndicator = canvasObj.transform.FindChild("Damage Indicator").GetComponent<Animator>();
 		SetUpPanels ();
 		tooltip.SetActive (false);
 		upgradePnts.enabled = false;
@@ -207,6 +210,11 @@ public class HUDManager : MonoBehaviour
     {
         roundsTxt.enabled = true;
         roundsTxt.text = "Round " + round;
+    }
+
+    public void RecieveDamage()
+    {
+        damageIndicator.SetTrigger("recievedDamage");
     }
 
 	//Fills in tooltip information and adds it to screen
