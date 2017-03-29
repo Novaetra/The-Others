@@ -16,7 +16,8 @@ public class EnemyController : MonoBehaviour
 	protected float meleeDamage;
     protected float movementSpeed;
     //private float totalHealth;
-	protected float totalHealth = 100;
+    [SerializeField]
+    protected float totalHealth = 100;
     [SerializeField]
 	protected float currentHealth;
 	protected float expOnKill;
@@ -77,7 +78,7 @@ public class EnemyController : MonoBehaviour
 			//Gets the distance between the player and the enemy
             playerDistance = Vector3.Distance(targetPlayer.transform.position, gameObject.transform.position);
             //If the distance is greater than the enemy's melee range, then walk toward the target player
-                if (playerDistance > proximityRange)
+            if (playerDistance > proximityRange)
                 {
 					DoNotWithinProximity ();
                 }

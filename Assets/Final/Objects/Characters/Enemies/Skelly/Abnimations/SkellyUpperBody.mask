@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1011 &101100000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SkellyUpperBody
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: body001
+    m_Weight: 0
+  - m_Path: CC_ALL
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_Hips
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_L_Elbow
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_L_Foot
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_L_Foot/L_Leg_IK
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_L_Hand
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_L_Knee
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_R_Elbow
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_R_Foot
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_R_Foot/R_Leg_IK
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_R_Hand
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_R_Hand/HAND
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_R_Hand/HAND/FullSword
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_R_Knee
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_L_Leg
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_L_Leg/Bn_L_Calf
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_L_Leg/Bn_L_Calf/Be_L_Leg
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_R_Leg
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_R_Leg/Bn_R_Calf
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_R_Leg/Bn_R_Calf/Be_R_Leg
+    m_Weight: 0
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Be_L_hand
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_ForeBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_ForeBase/Bn_L_ForeMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_ForeBase/Bn_L_ForeMiddle/Be_L_Fore
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_IndexBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_IndexBase/Bn_L_IndexMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_IndexBase/Bn_L_IndexMiddle/Be_L_Index
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_MiddleBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_MiddleBase/Bn_L_MiddleMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_MiddleBase/Bn_L_MiddleMiddle/Be_R_Middle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_ThumbBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_ThumbBase/Bn_L_ThumbMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/Bn_L_ThumbBase/Bn_L_ThumbMiddle/Be_L_Thumb
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger00
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger00/CC_Finger04
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger01
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger01/CC_Finger05
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger02
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger02/CC_Finger06
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger03
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_L_Arm/Bn_L_Forearm/Bn_L_Hand/CC_Finger03/CC_Finger07
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_Neck
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_Neck/Bn_Head
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Be_R_Hand
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_ForeBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_ForeBase/Bn_R_ForeMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_ForeBase/Bn_R_ForeMiddle/Be_R_Fore
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_IndexBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_IndexBase/Bn_R_IndexMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_IndexBase/Bn_R_IndexMiddle/Be_R_Index
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_MiddleBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_MiddleBase/Bn_R_MiddleBase 1
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_MiddleBase/Bn_R_MiddleBase 1/Be_R_Middle 1
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_ThumbBase
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_ThumbBase/Bn_R_ThumbMiddle
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/Bn_R_ThumbBase/Bn_R_ThumbMiddle/Be_R_Thumb
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger08
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger08/CC_Finger12
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger09
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger09/CC_Finger13
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger10
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger10/CC_Finger14
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger11
+    m_Weight: 1
+  - m_Path: CC_ALL/CC_SOG/Bn_Hips/Bn_Spine01/Bn_Spine02/Bn_Spine03/Bn_R_Arm/Bn_R_Forearm/Bn_L_Hand
+      1/CC_Finger11/CC_Finger15
+    m_Weight: 1
+  - m_Path: CC_Global01
+    m_Weight: 0
+  - m_Path: CC_Global01/CC_R_Arm001
+    m_Weight: 0
+  - m_Path: L_Arm_IK
+    m_Weight: 0
+  - m_Path: R_Arm_IK
+    m_Weight: 0
+  - m_Path: SCALE
+    m_Weight: 0
