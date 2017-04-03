@@ -347,7 +347,6 @@ public class EnemyManager : MonoBehaviour
     private IEnumerator waitToStartNewRound()
     {
         yield return new WaitForSeconds(2f);
-        Debug.Log(hudMan);
         hudMan.displayMsg("Press " + controller.ControlHotkeys[0].Codes[4] + " to start next round",5f);
 		roundHasStarted = false;
 		readyBtn.SetActive (true);

@@ -12,8 +12,6 @@ public class HUDManager : MonoBehaviour
 	public Image manabar;
 	public Image staminabar;
 	public Image expbar;
-    public Image revivingBar;
-    public Image revivingBarBG;
 
 	private StatsManager sm;
 	private PlayerController pc;
@@ -65,9 +63,6 @@ public class HUDManager : MonoBehaviour
 		roundsTxt.enabled = false;
 		upgradePnts = GameObject.Find ("SkillTree Panel").transform.FindChild("UpgradePoints").GetComponent<Text>();
 		currentLvlTxt = GameObject.Find ("SkillTree Panel").transform.FindChild ("CurrentLevelText").GetComponent<Text> ();
-		revivingBarBG = canvasObj.transform.FindChild("ReviveBarBG").GetComponent<Image>();
-		revivingTxt = revivingBarBG.transform.FindChild("Text").GetComponent<Text>();
-		revivingBar = revivingBarBG.transform.FindChild("Image").GetComponent<Image>();
 		tooltip = canvasObj.transform.FindChild ("Tooltip").gameObject;
 		tooltipName = tooltip.transform.FindChild ("Name").GetComponent<Text> ();;
 		tooltipDesc = tooltip.transform.FindChild ("Description").GetComponent<Text> ();
@@ -82,6 +77,7 @@ public class HUDManager : MonoBehaviour
 		messageTimer = 0;
 		queuedMessages = new List<Message> ();
 		HidePanels ();
+	    updateCurrentLvlTxt();
 	    setUpDone = true;
 	}
 
@@ -123,7 +119,7 @@ public class HUDManager : MonoBehaviour
 	//Updates the string that display's player's current level
 	public void updateCurrentLvlTxt()
 	{
-        if(currentLvlTxt != null && sm.getCurrentLvl() != null)
+	    if(currentLvlTxt != null && sm.getCurrentLvl() != null)
         {
             currentLvlTxt.text = "Level " + sm.getCurrentLvl();
         }
