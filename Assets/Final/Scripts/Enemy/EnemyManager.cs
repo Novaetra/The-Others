@@ -4,22 +4,27 @@ using System.Collections.Generic;
 
 public class EnemyManager : MonoBehaviour
 {
+    [SerializeField]
     public bool spawnEnemies;
 	private bool roundHasStarted;
     public GameObject[] ENEMY_OBJECTS;
     private MeteorManager meteorMan;
     private StatsManager playerSM;
+    [SerializeField]
     private int currentEnemyCount;
     private int currentWaveCount;
 	private int maxEnemies;
+    [SerializeField]
     private int enemysToSpawn;
-	private int enemiesSpawned;
+    [SerializeField]
+    private int enemiesSpawned;
     private int enemiesKilled;
     private float timeBetweenRounds;
     private float timeBetweenSpawns;
 
 	private Coroutine startWaveCouroutine, spawningWaveCouroutine;
 
+    [SerializeField]
     private Transform currentRoom; //This is to detect which room the player is in, and spawn enemies accordingly
 	[SerializeField]
 	private GameObject readyBtn;
@@ -73,10 +78,10 @@ public class EnemyManager : MonoBehaviour
 		{
 			meteorMan = GameObject.Find("MeteorManager").GetComponent<MeteorManager>();   
 		}
-        //health, exp, melee damagem, attack distance, movement speed
-		statsPerEnemy["Grunt"] = new float[5]{100f, 20f, 10f, 2.6f, 1.75f};
-        enemyNames.Add("Grunt");
-        statsPerEnemy["Weakling"] = new float[5] { 100f, 20f, 10f, 2.6f,1.25f};
+        //health, exp, melee damagem, 
+		statsPerEnemy["Skelly"] = new float[3]{100f, 20f, 10f};
+        enemyNames.Add("Skelly");
+        statsPerEnemy["Weakling"] = new float[3] { 50f, 20f, 5f};
         enemyNames.Add("Weakling");
     }
     
@@ -205,7 +210,8 @@ public class EnemyManager : MonoBehaviour
 	//Increases the current round by one, and starts spawning more enemies.
 	//The number of enemies to spawn increases as well
 	public void startNextRound()
-    {
+	{
+	    enemiesSpawned = 0;
 		roundHasStarted = true;
 		if (startWaveCouroutine != null) 
 		{
@@ -249,6 +255,7 @@ public class EnemyManager : MonoBehaviour
     public void decreaseEnemyCount()
     {
         currentEnemyCount--;
+        enemiesSpawned--;
         enemiesKilled++;
         checkIfRoundEnd();
     }
@@ -276,8 +283,8 @@ public class EnemyManager : MonoBehaviour
         enemy.setTotalHealth(statsPerEnemy[enemyName][0]);
         enemy.setExpOnKill(statsPerEnemy[enemyName][1]);
         enemy.setMeleeDamage(statsPerEnemy[enemyName][2]);
-        enemy.setAttackProximity(statsPerEnemy[enemyName][3]);
-        enemy.setMovementSpeed(statsPerEnemy[enemyName][4]);
+        //enemy.setAttackProximity(statsPerEnemy[enemyName][3]);
+        //enemy.setMovementSpeed(statsPerEnemy[enemyName][3]);
     }
 
     //Every round increase enemy health, exp value, and dmg
