@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d07637a48f215ff4fb4712712ad58201
-timeCreated: 1490757937
+guid: acb48ac04ea8a8a46849d0788d88806b
+timeCreated: 1492898336
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -204,7 +204,7 @@ ModelImporter:
       name: Death
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 15
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -224,7 +224,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.05120482
+      - time: 0.005494505
         functionName: startDeath
         data: 
         objectReferenceParameter: {instanceID: 0}

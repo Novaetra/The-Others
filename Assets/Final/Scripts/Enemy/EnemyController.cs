@@ -25,8 +25,12 @@ public class EnemyController : MonoBehaviour
 	protected bool doneSettingUp = false;
     private bool isAlive = true;
     private bool alreadySpawnedItem = false;
+    //Keeps track of how many times been hit to trigger hit response every 4th hit
+    private int hitResponseFrequency = 4;
+    private int tookDamageCount = 0;
+    //-------------
 
-	protected Raycaster[] casters;
+    protected Raycaster[] casters;
 
 	private List<Item> inventory;
 
@@ -142,7 +146,12 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth -= dmg;
         anim.SetFloat("Health", currentHealth);
-        anim.SetTrigger("TakeDamage");
+        if (tookDamageCount>=hitResponseFrequency)
+        {
+            anim.SetTrigger("TakeDamage");
+            tookDamageCount = 0;
+        }
+        tookDamageCount++;
     }
 
 	//Is called from animation event and starts the die coroutine
