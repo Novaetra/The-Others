@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     //------------
 	public float walkSpeed = 4f;
 	public float runSpeed = 6f;
+    public float dashSpeed = 15f;
 	public float currentSpeed;
     public Transform upperBody;
 	public float lastUpperRot;
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
 	//Sets up all control hotkeys
 	private void SetUpControlHotkeys ()
 	{
-		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[5]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L,KeyCode.R}, this, lyrMask));
+		controlHotkeys.Add (new LocomotionHotkeys (new KeyCode[6]{KeyCode.LeftShift,KeyCode.E,KeyCode.Mouse0,KeyCode.L,KeyCode.R, KeyCode.Space}, this, lyrMask));
 	    controlHotkeys.Add(new DisplayPanelHotkey(new KeyCode[2]{KeyCode.Tab,KeyCode.Q},this));
 
 	}
@@ -143,7 +144,7 @@ public class PlayerController : MonoBehaviour
 		{
 			toggleCursorLock(!cursorLocked);
 		}
-
+        /*
 		if (Input.GetKeyUp (KeyCode.P)) 
 		{
 			UnityEditor.EditorApplication.isPaused = true;
@@ -151,6 +152,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyUp (KeyCode.O)) {
 			UnityEditor.EditorApplication.isPaused = false;
 		}
+        */
     }
 		
 	//Updates camera rotation at the end of each frame to avoid issues
@@ -272,5 +274,13 @@ public class PlayerController : MonoBehaviour
 			return interactDistance;
 		}
 	}
+
+    public float DashSpeed
+    {
+        get
+        {
+            return dashSpeed;
+        }
+    }
 	#endregion
 }

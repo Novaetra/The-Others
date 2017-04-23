@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class LocomotionHotkeys : ControlHotkey 
 {
@@ -9,6 +10,13 @@ public class LocomotionHotkeys : ControlHotkey
 	private float gravity = 9.8f;
 	private float vSpeed = 0;
     private LayerMask lyrMask;
+
+    private float dashDuration = .15f;
+
+    private float currentDashtime = 1f;
+
+    private bool isDashing = false;
+
 	public LocomotionHotkeys(KeyCode[] c,PlayerController cntrl, LayerMask mask)
 	{
 		codes = c; 
@@ -28,6 +36,19 @@ public class LocomotionHotkeys : ControlHotkey
 			Move ();
 		}
 
+	    if (isDashing)
+	    {
+	        if (currentDashtime < dashDuration)
+	        {
+	            currentDashtime += Time.deltaTime;
+	        }
+	        else
+	        {
+	            ResetMoveSpeed();
+	            isDashing = false;
+	        }
+	    }
+
 		foreach (KeyCode c in Codes) 
 		{
 			if (c == Codes [0]) {
@@ -36,7 +57,7 @@ public class LocomotionHotkeys : ControlHotkey
 				}
 
 				if (Input.GetKeyUp (c)) {
-					StopSprint ();
+					ResetMoveSpeed ();
 				}
 			} else if (c == Codes [1]) {
 				if (Input.GetKey (c)) {
@@ -58,7 +79,14 @@ public class LocomotionHotkeys : ControlHotkey
 						em.startNextRound ();
 					}
 				}
-		}
+            else if (c == Codes[5])
+            {
+                if (Input.GetKeyUp(c))
+                {
+                    Dash();
+                }
+            }
+        }
 	}
 
 	private void Move()
@@ -83,7 +111,6 @@ public class LocomotionHotkeys : ControlHotkey
 		//controller.GetComponent<NavMeshAgent> ().Move(finalMove * Time.deltaTime);
 
 		/*
-
 	   transform.Rotate(0, Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime, 0);
 	   var vel: Vector3 = transform.forward * Input.GetAxis("Vertical") * speed;
 	   var controller = GetComponent(CharacterController);
@@ -111,8 +138,6 @@ public class LocomotionHotkeys : ControlHotkey
 			Debug.DrawRay(raycaster.transform.position, -raycaster.transform.forward * controller.InteractDistance, Color.blue);
 			if (Physics.Raycast(raycaster.transform.position, -raycaster.transform.forward, out hit, controller.InteractDistance,lyrMask))
 			{
-				//Has to check these two separately because each one has their own specific protocols
-				// checkRevive(hit);
 				controller.checkInteract(hit);
 			}
 		}
@@ -128,16 +153,28 @@ public class LocomotionHotkeys : ControlHotkey
 		} 
 		else 
 		{
-			StopSprint ();
+			ResetMoveSpeed ();
 		}
 	}
 
-	private void StopSprint()
+	private void ResetMoveSpeed()
 	{
 		controller.currentSpeed = controller.walkSpeed;
 	}
 
-	private void Melee()
+    private void Dash()
+    {
+        if (controller.Sm.getCurrentStamina() - controller.Sm.DashStamCost > 0 && !isDashing)
+        {
+            controller.currentSpeed = controller.dashSpeed;
+            controller.Sm.useStamina((controller.Sm.DashStamCost /* - (sm.sprintStaminaCost  (sm.dexterity / 100))*/), false);
+            controller.Anim.SetTrigger("Dash");
+            currentDashtime = 0;
+            isDashing = true;
+        }
+    }
+
+    private void Melee()
 	{
 		if (controller.Sm.getCurrentStamina() - controller.Sm.getMeleeCost() >= 0 && controller.Anim.GetInteger("Skill") != (int)Skills.BasicAttack)  
 		{

@@ -17412,6 +17412,7 @@ MonoBehaviour:
   expIncreaseAmt: 10000
   walkSpeed: 4
   runSpeed: 6
+  dashSpeed: 15
   currentSpeed: 0
   upperBody: {fileID: 386238954}
   lastUpperRot: 0

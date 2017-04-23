@@ -12,7 +12,9 @@ public class StatsManager : MonoBehaviour
 	private float currentStamina;
 	[SerializeField]
 	private float sprintStamCost;
-	[SerializeField]
+    [SerializeField]
+    public float DashStamCost { get; private set; }
+    [SerializeField]
 	private float meleeCost;
     [SerializeField]
 	private float baseMeleeDamage;
@@ -68,6 +70,7 @@ public class StatsManager : MonoBehaviour
         totalStamina = 300f;
         currentStamina = totalStamina;
         sprintStamCost = 20f;
+        DashStamCost = .3f * totalStamina;
         meleeCost = 40f;
 		baseMeleeDamage = 120f;
         currentLvl = 1;
@@ -185,7 +188,9 @@ public class StatsManager : MonoBehaviour
 			baseMeleeDamage += baseMeleeDamage * .05f;
 			totalMana += totalMana * .05f;
 		}
-	}
+
+        DashStamCost = .3f * totalStamina;
+    }
 
     public void recieveDamage(float dmg)
     {
