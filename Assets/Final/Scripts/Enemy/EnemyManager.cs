@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
     private StatsManager playerSM;
     [SerializeField]
     private int currentEnemyCount;
+    [SerializeField]
     private int currentWaveCount;
 	private int maxEnemies;
     [SerializeField]
@@ -63,7 +64,7 @@ public class EnemyManager : MonoBehaviour
 			//Sets all the starting values for the variables
 			hudMan = GameObject.Find("Player").GetComponent<HUDManager> ();
             controller = GameObject.Find("Player").GetComponent<PlayerController> ();
-			maxEnemies = 20;
+			maxEnemies = 25;
 			currentWaveCount = 0;
 			enemiesSpawned = 0;
 			timeBetweenRounds = 30f;
@@ -78,13 +79,18 @@ public class EnemyManager : MonoBehaviour
 		{
 			meteorMan = GameObject.Find("MeteorManager").GetComponent<MeteorManager>();   
 		}
-        //health, exp, melee damagem, 
-		statsPerEnemy["Skelly"] = new float[3]{100f, 20f, 10f};
+        setUpEnemyStartingStats();
+    }
+
+    private void setUpEnemyStartingStats()
+    {
+        //health, exp,  damagem, 
+        statsPerEnemy["Skelly"] = new float[3] { 100f, 20f, 10f };
         enemyNames.Add("Skelly");
-        statsPerEnemy["Weakling"] = new float[3] { 50f, 20f, 5f};
+        statsPerEnemy["Weakling"] = new float[3] { 50f, 20f, 5f };
         enemyNames.Add("Weakling");
     }
-    
+
     //Fills the list that contains all adjacent rooms and links the room to its spawn points
     private void setupSpawnLists()
     {
@@ -222,11 +228,27 @@ public class EnemyManager : MonoBehaviour
         updateSpawnsAvailable();
         currentWaveCount++;
         hudMan.updateRoundsTxt(currentWaveCount);
-        enemysToSpawn = Mathf.RoundToInt(currentWaveCount * 1.75f);
+	    enemysToSpawn = getNumberOfEnemysToSpawnInWave(currentWaveCount,enemysToSpawn);
         currentEnemyCount = enemysToSpawn;
-        spawningWaveCouroutine = StartCoroutine(spawnWave());
+        spawningWaveCouroutine = StartCoroutine(spawnWave(true));
     }
-    
+
+    private int getNumberOfEnemysToSpawnInWave(int waveNumber, int enemiesSpawnedLastWave)
+    {
+        if (currentWaveCount < 10)
+        {
+            return enemiesSpawnedLastWave += 3;
+        }
+        else
+        {
+            //C = cap, P = principle, K = growth rate
+            //float C=401f, P=2f, B=1.2f, K=.0007f, O=50f;
+            //int count = (int)C / (1 + Mathf.Pow((((C / P) - 1) * B),(-K*C * (waveNumber + O))));
+
+            return (int)(.15f * currentWaveCount * 24f);
+        }
+    }
+
 	//Checks if there are any enemies left
 	//If there are no more enemies left, then start the next round
     private void checkIfRoundEnd()
@@ -290,7 +312,7 @@ public class EnemyManager : MonoBehaviour
     //Every round increase enemy health, exp value, and dmg
     private void UpdateEnemyValues()
     {
-        if (currentWaveCount < 5)
+        if (currentWaveCount < 10)
         {
             for(int i = 0;i<enemyNames.Count;i++)
             {
@@ -304,30 +326,35 @@ public class EnemyManager : MonoBehaviour
             for (int i = 0; i < enemyNames.Count; i++)
             {
                 //Temporary values....These will escalate out of control in higher rounds
-                statsPerEnemy[(string)enemyNames[i]][0] += statsPerEnemy[(string)enemyNames[i]][0] * .05f;
-                statsPerEnemy[(string)enemyNames[i]][2] += statsPerEnemy[(string)enemyNames[i]][2] * .05f;
+                statsPerEnemy[(string)enemyNames[i]][0] += statsPerEnemy[(string)enemyNames[i]][0] * .02f;
+                statsPerEnemy[(string)enemyNames[i]][1] += statsPerEnemy[(string)enemyNames[i]][0] * .02f;
+                statsPerEnemy[(string)enemyNames[i]][2] += statsPerEnemy[(string)enemyNames[i]][2] * .02f;
             }
         }
     }
 
 
 	//Spawns the whole wave of enemies
-    private IEnumerator spawnWave()
+    private IEnumerator spawnWave(bool spawnWithDelays)
     {
         int tempEnemiesToSpawn = enemysToSpawn;
         for (int x = 0; x< tempEnemiesToSpawn; x++)
         {
-            if (enemiesSpawned < maxEnemies) 
-			{
-                while(currentRoom==null)
-                {
-                    yield return null;
-                }
-				yield return new WaitForSeconds(timeBetweenSpawns);
-                enemiesSpawned++;
-                enemysToSpawn--;
-				spawnEnemy();
-			}
+            while (enemiesSpawned >= maxEnemies)
+            {
+                yield return null;
+            }
+
+            while(currentRoom==null)
+            {
+                yield return null;
+            }
+            if(spawnWithDelays)
+			    yield return new WaitForSeconds(timeBetweenSpawns);
+
+            enemiesSpawned++;
+            enemysToSpawn--;
+			spawnEnemy();
         }
     }
 
@@ -385,7 +412,7 @@ public class EnemyManager : MonoBehaviour
 
             if(currentRoom == null && value != null)
             {
-                startWaveCouroutine = StartCoroutine(spawnWave());
+                startWaveCouroutine = StartCoroutine(spawnWave(false));
             }
 
             currentRoom = value;

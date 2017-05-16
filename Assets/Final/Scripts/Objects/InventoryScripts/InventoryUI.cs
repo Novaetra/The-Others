@@ -16,7 +16,7 @@ public class InventoryUI : MonoBehaviour
 		slots = GameObject.Find ("Inventory Slots").transform;
 		INVENTORY_SLOT = (GameObject)Resources.Load ("InventorySlot");
 	}
-
+    
 	public void UpdateInventoryUI()
 	{
 		foreach (Item i in inv._inventory) 
@@ -25,7 +25,7 @@ public class InventoryUI : MonoBehaviour
 			{
 				Transform itemSlot = GetItemInventorySlot (i);
 				if (itemSlot != null) {
-					itemSlot.GetChild (1).GetComponent<Text> ().text = "x" + inv._inventory [i.ItemIDNumber].Amt;
+					itemSlot.GetChild (1).GetComponent<Text> ().text = "x" + i.Amt;
 				} else {
 					SetUpNewItemSlot (i);
 				}

@@ -6,28 +6,19 @@ using UnityEngine.EventSystems;
 public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 {
 	private string name, description;
-	private int itemIDNumber, amt, dropRate;
+    [SerializeField]
+	private int itemIDNumber, amt, dropRate, maxNum;
 	private Inventory inv;
 	private HUDManager hudMan;
 	private bool isPickedUp;
-
+    
 	void Start()
 	{
 		isPickedUp = false;
-		name = gameObject.name;
 		inv = GameObject.Find ("InventoryManager").GetComponent<Inventory> ();
 		hudMan = GameObject.Find ("Player").GetComponent<HUDManager> ();
-		foreach (Item i in inv._inventory) 
-		{
-			if (i.Name.Equals (name)) 
-			{
-				ItemIDNumber = i.ItemIDNumber;
-				description = i.Description;
-				DropRate = i.DropRate;
-			}
-		}
 	}
-
+    
 	public override string ToString()
 	{
 		return this.name;
@@ -42,14 +33,16 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		}
 	}
 
-	public Item(string n, string desc, int id,int dr)
+	public Item(string n, string desc, int id,int dr, int max)
 	{
 		name = n;
 		description = desc;
 		itemIDNumber = id;
 		amt = 0;
 		dropRate = dr;
-	}
+        maxNum = max;
+
+    }
 		
 	public void PickUpItem()
 	{
@@ -103,7 +96,15 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		}
 	}
 
-	public void OnPointerEnter(PointerEventData data)
+    public int Max
+    {
+        get
+        {
+            return maxNum;
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData data)
 	{
 		hudMan.ShowItemTooltip (this, data,gameObject);
 	}

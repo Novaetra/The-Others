@@ -174,13 +174,25 @@ public class EnemyController : MonoBehaviour
 
 	private void PossiblySpawnPowerup()
 	{
-		int randNum = Random.Range (0, inventory[0].DropRate);
-		if (randNum == 1 && !alreadySpawnedItem) 
-		{
-			alreadySpawnedItem = true;
-			GameObject.Instantiate(Resources.Load("SkillCharge"),new Vector3(transform.position.x,transform.position.y+.5f,transform.position.z),Quaternion.Euler(new Vector3(-90f,0f,0f)));
-		}
-	}
+        if(!alreadySpawnedItem)
+        {
+            int randNum = (int)Random.Range(0, 100);
+            int lastDropRate = 0;
+            foreach(Item i in inventory)
+            {
+               // Debug.Log(" I want to spawn a " + i.Name + " because the number is " + randNum + " and the droprate is " + i.DropRate + " and the last drop was " + lastDropRate);
+                if (randNum >= lastDropRate && randNum < i.DropRate+lastDropRate)
+                {
+                    GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load(i.Name), new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+                    Item item = obj.GetComponent<Item>();
+                    item.ItemIDNumber = i.ItemIDNumber;
+                    alreadySpawnedItem = true;
+                    return;
+                }
+                lastDropRate = i.DropRate+1;
+            }
+        }
+    }
 
 	//Firsts starts the death animation, waits x seconds, and then destroys the enemy
     private void die()
