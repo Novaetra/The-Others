@@ -22,7 +22,6 @@ public class Elevator : MonoBehaviour
 
 	public void interact(object[] paramtrs)
     {
-        Debug.Log(canMove + " butt " + isMoving);
         player = (GameObject)paramtrs[1];
         hudman = player.GetComponent<HUDManager>();
 		//If the elevator isn't moving

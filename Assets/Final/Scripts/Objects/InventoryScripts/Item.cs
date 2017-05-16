@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 {
+    public ArrayList rooms;
+
 	private string name, description;
     [SerializeField]
 	private int itemIDNumber, amt, dropRate, maxNum;
@@ -18,6 +20,28 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		inv = GameObject.Find ("InventoryManager").GetComponent<Inventory> ();
 		hudMan = GameObject.Find ("Player").GetComponent<HUDManager> ();
 	}
+
+    public void AddRoom(string roomName)
+    {
+        Transform room = GameObject.Find(roomName).transform;
+        rooms.Add(room);
+    }
+
+    public void AddRoom(Transform t)
+    {
+        Debug.Log(this.name + " added " + t);
+        rooms.Add(t);
+    }
+
+    public void AddFloor(string floorName)
+    {
+        Transform floor = GameObject.Find(floorName).transform;
+        foreach(Transform room in floor.FindChild("Rooms"))
+        {
+            AddRoom(room);
+        }
+    }
+
     
 	public override string ToString()
 	{
@@ -41,6 +65,7 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		amt = 0;
 		dropRate = dr;
         maxNum = max;
+        rooms = new ArrayList();
 
     }
 		

@@ -52,6 +52,7 @@ public class EnemyManager : MonoBehaviour
     private HUDManager hudMan;
 
     private PlayerController controller;
+    private Inventory inv;
 
     //Sets starting values
     public void setUp()
@@ -72,7 +73,8 @@ public class EnemyManager : MonoBehaviour
 			setupSpawnLists ();
 			startWaveCouroutine = StartCoroutine (waitToStartNewRound ());
 			doors = GameObject.FindObjectsOfType<Door> ();
-		}
+        }
+        inv = GameObject.Find("InventoryManager").GetComponent<Inventory>();
         playerSM = GameManager.currentplayer.GetComponent<StatsManager>();
         enemiesKilled = 0;
 		if (Meteor.Accounts.IsLoggedIn) 
@@ -164,6 +166,7 @@ public class EnemyManager : MonoBehaviour
     //Updates the list of spawns available
     public void updateSpawnsAvailable()
     {
+        inv.UpdateItemsAvailableToSpawn();
         //first it clears the list
         spawnPointsAvailable.Clear();
         if (adjacentRooms.Count > 0)
@@ -403,7 +406,7 @@ public class EnemyManager : MonoBehaviour
 
         set
         {
-            if(value == null)
+            if (value == null)
             {
                 KillAllEnemies();
                 if(spawningWaveCouroutine != null)

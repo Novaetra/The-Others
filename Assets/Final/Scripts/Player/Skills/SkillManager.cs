@@ -34,7 +34,7 @@ public class SkillManager : MonoBehaviour
 		sm = GetComponent<StatsManager>();
 		anim = GetComponent<Animator>();
 		inventoryClassRefrence = GameObject.Find ("InventoryManager").GetComponent<Inventory> ();
-		inventoryList = inventoryClassRefrence._inventory;
+		inventoryList = inventoryClassRefrence.InventoryList;
 		setUpList();
 	}
 

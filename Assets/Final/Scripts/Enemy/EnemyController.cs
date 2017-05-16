@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
         targetPlayer = GameObject.Find("Player").transform;
         //proximityRange = agent.stoppingDistance + 1f;
         movementSpeed = 1.5f;
-		inventory = GameObject.Find ("InventoryManager").GetComponent<Inventory> ()._inventory;
+		inventory = GameObject.Find ("InventoryManager").GetComponent<Inventory> ().AvailableItemsList;
 		DoAdditionalSetup ();
         enemyMan = GameObject.Find("Managers").transform.GetComponent<EnemyManager>();
 

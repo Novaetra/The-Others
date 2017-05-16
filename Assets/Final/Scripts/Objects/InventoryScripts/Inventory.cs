@@ -10,35 +10,48 @@ public class Inventory : MonoBehaviour
 
     private InventoryUI ui;
 	private HUDManager hudman;
+    private EnemyManager em;
 
 	void Awake()
 	{
 		SetUpAllItemsList ();
 		ui = GetComponent<InventoryUI> ();
 		hudman = GameObject.Find ("Player").GetComponent<HUDManager> ();
-	}
+        em = GameObject.Find("Managers").GetComponent<EnemyManager>();
+
+    }
 
 	private void SetUpAllItemsList()
 	{
 		availableItemsList = new List<Item> ();
         inventory = new List<Item>();
-        inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,40,5));
+        inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,50,5));
         inventory.Add(new Item("Key", "Mysterious looking key...", 1, 50,2));
+        inventory[1].AddFloor("DungeonFloor01");
         SortInventoryListByDropRate();
-        PopulateAvailableItemsList();
     }
 
     //This puts all items available to spawn based on location and events so that the correct items can spawn in the correct places
-    private void PopulateAvailableItemsList()
+    public void UpdateItemsAvailableToSpawn()
     {
+        availableItemsList.Clear();
         //Temporary
         //Adds all items from master list to available
         foreach (Item i in inventory)
         {
-            availableItemsList.Add(i);
+            if (i.rooms.Count > 0 && em.CurrentRoom!=null)
+            {
+                if (i.rooms.Contains(em.CurrentRoom))
+                {
+                    availableItemsList.Add(i);
+                }
+            }
+            else
+            {
+                availableItemsList.Add(i);
+            }
         }
     }
-
     //Removes any item that has reach
     private void CheckIfItemMaxReached(Item i)
     {
@@ -98,9 +111,17 @@ public class Inventory : MonoBehaviour
 		GetComponent<InventoryUI>().UpdateInventoryUI();
 	}
 
-	public List<Item> _inventory {
+	public List<Item> AvailableItemsList {
 		get {
 			return availableItemsList;
 		}
 	}
+
+    public List<Item> InventoryList
+    {
+        get
+        {
+            return inventory;
+        }
+    }
 }
