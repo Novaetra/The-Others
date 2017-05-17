@@ -25,8 +25,8 @@ public class Inventory : MonoBehaviour
 	{
 		availableItemsList = new List<Item> ();
         inventory = new List<Item>();
-        inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,50,5));
-        inventory.Add(new Item("Key", "Mysterious looking key...", 1, 50,2));
+        inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,5));
+        inventory.Add(new Item("Key", "Mysterious looking key...", 1, 20,2));
         inventory[1].AddFloor("DungeonFloor01");
         SortInventoryListByDropRate();
     }

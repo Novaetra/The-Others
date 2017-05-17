@@ -183,7 +183,7 @@ public class EnemyController : MonoBehaviour
                // Debug.Log(" I want to spawn a " + i.Name + " because the number is " + randNum + " and the droprate is " + i.DropRate + " and the last drop was " + lastDropRate);
                 if (randNum >= lastDropRate && randNum < i.DropRate+lastDropRate)
                 {
-                    GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load(i.Name), new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z), Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+                    GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load(i.Name), new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
                     Item item = obj.GetComponent<Item>();
                     item.ItemIDNumber = i.ItemIDNumber;
                     alreadySpawnedItem = true;
