@@ -11,11 +11,17 @@ public class Door : MonoBehaviour
     [SerializeField]
     private Transform[] adjacentRooms;
 
+    private Unlockable lockComponent;
+
 	//Sets starting values
     void Start()
     {
         anim = GetComponent<Animation>();
         isOpen = false;
+        if (GetComponent<Unlockable>() != null)
+        {
+            lockComponent = GetComponent<Unlockable>();
+        }
     }
 
 	//Opens the door upon user interaction
@@ -25,11 +31,28 @@ public class Door : MonoBehaviour
         GameObject player = (GameObject)parameters[1];
         StatsManager sm = player.GetComponent<StatsManager>();
 		//If the player has enough to buy the door, open the door (on all clients)
-        if (sm.getCurrentExp() - hit.transform.GetComponentInParent<Door>().getCost() >= 0 && hit.transform.GetComponentInParent<Door>().getOpen() == false)
+
+        if (lockComponent != null)
         {
-            openDoor();
-			//Subtract the exp from the player
-            sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
+            if (lockComponent.IsUnlocked)
+            {
+
+                if (sm.getCurrentExp() - hit.transform.GetComponentInParent<Door>().getCost() >= 0 && hit.transform.GetComponentInParent<Door>().getOpen() == false)
+                {
+                    openDoor();
+                    //Subtract the exp from the player
+                    sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
+                }
+            }
+        }
+        else
+        {
+            if (sm.getCurrentExp() - hit.transform.GetComponentInParent<Door>().getCost() >= 0 && hit.transform.GetComponentInParent<Door>().getOpen() == false)
+            {
+                openDoor();
+                //Subtract the exp from the player
+                sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
+            }
         }
     }
     
