@@ -200,15 +200,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.30220747
-        functionName: checkMelee
+      - time: 0.08848409
+        functionName: resetAnimator
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.33755276
-        functionName: resetAnimator
+      - time: 0.19489041
+        functionName: checkMelee
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

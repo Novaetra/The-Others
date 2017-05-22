@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a64bffd1c87d42fb9738568c5584383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIDNumber: 0
+  itemIDNumber: 1
   amt: 0
   dropRate: 0
   maxNum: 0

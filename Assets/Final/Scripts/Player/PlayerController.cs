@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour 
 {
-
-	//Temp
-	public int expIncreaseAmt;
+    public float TIME_SCALE;
+    //Temp
+    public int expIncreaseAmt;
     //------------
 	public float walkSpeed = 4f;
 	public float runSpeed = 6f;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 	private float YSensitivity = 2f;
 	private float MinimumY = 80f;
 	private float MaximumY = 70f;
-	private float meleeDistance = 1.75f;
+	private float meleeDistance = 1.95f;
 	private float interactDistance = 2f;
 	private StatsManager sm;
 	private HUDManager hudman;
@@ -144,15 +144,22 @@ public class PlayerController : MonoBehaviour
 		{
 			toggleCursorLock(!cursorLocked);
 		}
-        /*
+        
 		if (Input.GetKeyUp (KeyCode.P)) 
 		{
 			UnityEditor.EditorApplication.isPaused = true;
 		}
 		if (Input.GetKeyUp (KeyCode.O)) {
-			UnityEditor.EditorApplication.isPaused = false;
-		}
-        */
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = TIME_SCALE;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
+        }
+        
     }
 		
 	//Updates camera rotation at the end of each frame to avoid issues
@@ -217,7 +224,7 @@ public class PlayerController : MonoBehaviour
 	{
 		anim.SetInteger ("Skill", -1);
 	}
-
+    
 	#region GettersAndProperties
 	public bool CanMove {
 		get {

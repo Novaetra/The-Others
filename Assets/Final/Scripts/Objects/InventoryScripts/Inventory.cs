@@ -25,11 +25,7 @@ public class Inventory : MonoBehaviour
 	{
 		availableItemsList = new List<Item> ();
         inventory = new List<Item>();
-<<<<<<< Updated upstream
-        inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,5));
-=======
         inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,4));
->>>>>>> Stashed changes
         inventory.Add(new Item("Key", "Mysterious looking key...", 1, 10,2));
         inventory[1].AddFloor("DungeonFloor01");
         SortInventoryListByDropRate();
@@ -109,7 +105,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
-	public void UpdateInventoryUI()
+    public void SubtractItemToInventory(int indx, int used)
+    {
+        inventory[indx].Amt -= used;
+        ui.UpdateInventoryUI();
+    }
+
+
+    public void UpdateInventoryUI()
 	{
 		ui.UpdateInventoryUI ();
 	}

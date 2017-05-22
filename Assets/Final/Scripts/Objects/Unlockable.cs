@@ -25,8 +25,30 @@ public class Unlockable : MonoBehaviour
         if (CheckIfPlayerHasAllItems())
         {
             Unlock();
+            subtractItems();
         }
 
+    }
+
+    public void subtractItems()
+    {
+        foreach(Item i in itemsRequired)
+        {
+            int indx = getIndxOfItem(i);
+            inv.SubtractItemToInventory(indx,amtRequired);
+        }
+    }
+
+    private int getIndxOfItem(Item i)
+    {
+        foreach (Item item in inv.InventoryList)
+        {
+            if (i.ItemIDNumber == i.ItemIDNumber)
+            {
+                return i.ItemIDNumber;
+            }
+        }
+        return -1;
     }
 
     private bool CheckIfPlayerHasAllItems()
@@ -37,7 +59,6 @@ public class Unlockable : MonoBehaviour
             {
                 if (itemRequired.ItemIDNumber == i.ItemIDNumber)
                 {
-                    Debug.Log(i.Amt + " " + i.Name);
                     if (i.Amt >= amtRequired)
                     {
                         return true;

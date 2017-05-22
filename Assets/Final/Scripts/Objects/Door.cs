@@ -47,17 +47,12 @@ public class Door : MonoBehaviour
         }
         else
         {
-<<<<<<< Updated upstream
             if (sm.getCurrentExp() - hit.transform.GetComponentInParent<Door>().getCost() >= 0 && hit.transform.GetComponentInParent<Door>().getOpen() == false)
             {
                 openDoor();
                 //Subtract the exp from the player
                 sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
             }
-=======
-            openDoor();
-            sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
->>>>>>> Stashed changes
         }
     }
     
@@ -77,8 +72,6 @@ public class Door : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<UnityEngine.AI.NavMeshObstacle>().enabled = false;
         isOpen = true;
-        //Update rooms list in enemy manager
-        useUpItems();
     }
 	#region getters
     public float getCost()
