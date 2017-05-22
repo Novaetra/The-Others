@@ -25,7 +25,11 @@ public class Inventory : MonoBehaviour
 	{
 		availableItemsList = new List<Item> ();
         inventory = new List<Item>();
+<<<<<<< Updated upstream
         inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,5));
+=======
+        inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,4));
+>>>>>>> Stashed changes
         inventory.Add(new Item("Key", "Mysterious looking key...", 1, 10,2));
         inventory[1].AddFloor("DungeonFloor01");
         SortInventoryListByDropRate();
@@ -39,28 +43,39 @@ public class Inventory : MonoBehaviour
         //Adds all items from master list to available
         foreach (Item i in inventory)
         {
-            if (i.rooms.Count > 0 && em.CurrentRoom!=null)
+            //If tthe item has room requirements and the current room isnt null
+            if (i.rooms.Count > 0)
             {
-                if (i.rooms.Contains(em.CurrentRoom))
+                if(em.CurrentRoom != null)
+                {
+                    if (i.rooms.Contains(em.CurrentRoom) && !itemHasReachedMax(i))
+                    {
+                        availableItemsList.Add(i);
+                    }
+                }
+            }
+            //If the room doesn't have room requirements...
+            else
+            {
+                if (!itemHasReachedMax(i))
                 {
                     availableItemsList.Add(i);
                 }
             }
-            else
-            {
-                availableItemsList.Add(i);
-            }
         }
     }
+
     //Removes any item that has reach
-    private void CheckIfItemMaxReached(Item i)
+    private bool itemHasReachedMax(Item i)
     {
         //Temporary
-        if (inventory[i.ItemIDNumber].Max > 0 && inventory[i.ItemIDNumber].Amt >= inventory[i.ItemIDNumber].Max)
+        if (inventory[i.ItemIDNumber].Max > 0 && inventory[i.ItemIDNumber].Amt > inventory[i.ItemIDNumber].Max)
         {
-            availableItemsList.RemoveAt(i.ItemIDNumber);
+            return true;
         }
+        return false;
     }
+
 
     //Sorts inventory list by rarity
     private void SortInventoryListByDropRate()
@@ -88,7 +103,10 @@ public class Inventory : MonoBehaviour
 		ui.UpdateInventoryUI();
 		hudman.displayMsg ("You picked up a " + inventory[i.ItemIDNumber].Name + "!",2.5f);
 
-        CheckIfItemMaxReached(i);
+        if(itemHasReachedMax(i))
+        {
+            availableItemsList.RemoveAt(i.ItemIDNumber);
+        }
     }
 
 	public void UpdateInventoryUI()

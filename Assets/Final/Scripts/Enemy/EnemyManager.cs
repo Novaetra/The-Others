@@ -319,7 +319,7 @@ public class EnemyManager : MonoBehaviour
         {
             for(int i = 0;i<enemyNames.Count;i++)
             {
-                statsPerEnemy[(string)enemyNames[i]][0] += 20f;
+                statsPerEnemy[(string)enemyNames[i]][0] += 40f;
                 statsPerEnemy[(string)enemyNames[i]][1] += 5f;
                 statsPerEnemy[(string)enemyNames[i]][2] += 5f;
             }

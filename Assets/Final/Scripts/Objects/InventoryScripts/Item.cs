@@ -29,7 +29,6 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void AddRoom(Transform t)
     {
-        Debug.Log(this.name + " added " + t);
         rooms.Add(t);
     }
 

@@ -200,14 +200,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.01471661
-        functionName: resetAnimator
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.24470627
+      - time: 0.18987341
         functionName: resetAnimator
         data: 
         objectReferenceParameter: {instanceID: 0}

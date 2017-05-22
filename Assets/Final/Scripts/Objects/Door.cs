@@ -47,22 +47,26 @@ public class Door : MonoBehaviour
         }
         else
         {
+<<<<<<< Updated upstream
             if (sm.getCurrentExp() - hit.transform.GetComponentInParent<Door>().getCost() >= 0 && hit.transform.GetComponentInParent<Door>().getOpen() == false)
             {
                 openDoor();
                 //Subtract the exp from the player
                 sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
             }
+=======
+            openDoor();
+            sm.subtractExp(hit.transform.GetComponentInParent<Door>().getCost());
+>>>>>>> Stashed changes
         }
     }
     
 	//This displays the door cost if the player approaches it
     private void OnTriggerEnter(Collider col)
     {
-        Debug.Log("ok");
         if (col.gameObject.tag == "Player" && isOpen == false)
         {
-            col.transform.GetComponent<HUDManager>().displayMsg("Door costs " + doorCost + " exp",2f);
+            col.transform.GetComponent<HUDManager>().displayMsg("Door requires " + doorCost + " exp and 2 keys",2f);
         }
     }
     
@@ -74,6 +78,7 @@ public class Door : MonoBehaviour
         GetComponent<UnityEngine.AI.NavMeshObstacle>().enabled = false;
         isOpen = true;
         //Update rooms list in enemy manager
+        useUpItems();
     }
 	#region getters
     public float getCost()
