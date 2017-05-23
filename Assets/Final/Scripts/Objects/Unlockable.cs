@@ -24,21 +24,31 @@ public class Unlockable : MonoBehaviour
         if (CheckIfPlayerHasAllItems())
         {
             Unlock();
-            subtractItems();
+            SubtractItems();
+            DiscontinueItems();
         }
 
     }
 
-    public void subtractItems()
+    public void SubtractItems()
     {
         foreach(Item i in itemsRequired)
         {
-            int indx = getIndxOfItem(i);
+            int indx = GetIndxOfItem(i);
             inv.SubtractItemToInventory(indx,amtRequired);
         }
     }
 
-    private int getIndxOfItem(Item i)
+    public void DiscontinueItems()
+    {
+        foreach (Item i in itemsRequired)
+        {
+            inv.InventoryList[i.ItemIDNumber].IsDiscontinued = true;
+        }
+        inv.UpdateItemsAvailableToSpawn();
+    }
+
+    private int GetIndxOfItem(Item i)
     {
         foreach (Item item in inv.InventoryList)
         {

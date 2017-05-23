@@ -19,7 +19,7 @@ public class InventoryUI : MonoBehaviour
     
 	public void UpdateInventoryUI()
 	{
-		foreach (Item i in inv.AvailableItemsList) 
+		foreach (Item i in inv.InventoryList)
 		{
 			if (i.Amt > 0) 
 			{

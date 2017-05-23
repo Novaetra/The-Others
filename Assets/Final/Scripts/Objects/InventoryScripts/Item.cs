@@ -12,7 +12,7 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	private int itemIDNumber, amt, dropRate, maxNum;
 	private Inventory inv;
 	private HUDManager hudMan;
-	private bool isPickedUp;
+	private bool isPickedUp, isDiscontinued;
     
 	void Start()
 	{
@@ -65,8 +65,20 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		dropRate = dr;
         maxNum = max;
         rooms = new ArrayList();
+		isDiscontinued = false;
+	}
 
-    }
+	public Item(string n, string desc, int id,int dr, int max, bool discontinue)
+	{
+		name = n;
+		description = desc;
+		itemIDNumber = id;
+		amt = 0;
+		dropRate = dr;
+		maxNum = max;
+		rooms = new ArrayList();
+		isDiscontinued = discontinue;
+	}
 		
 	public void PickUpItem()
 	{
@@ -120,13 +132,16 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		}
 	}
 
-    public int Max
-    {
-        get
-        {
-            return maxNum;
-        }
-    }
+	public int Max
+	{
+		get{ return maxNum; }
+	}
+
+	public bool IsDiscontinued
+	{
+		get { return isDiscontinued; }
+		set { isDiscontinued = value; }
+	}
 
     public void OnPointerEnter(PointerEventData data)
 	{
