@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
 		{
 			toggleCursorLock(!cursorLocked);
 		}
-        
+        /*
 		if (Input.GetKeyUp (KeyCode.P)) 
 		{
 			UnityEditor.EditorApplication.isPaused = true;
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
-        
+     	*/
     }
 		
 	//Updates camera rotation at the end of each frame to avoid issues

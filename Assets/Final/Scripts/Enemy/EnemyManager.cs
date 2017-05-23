@@ -7,13 +7,17 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     public bool spawnEnemies;
 	private bool roundHasStarted;
+    [SerializeField]
     public GameObject[] ENEMY_OBJECTS;
+    [SerializeField]
+    private GameObject[] enemyObjectsAvailable;
     private MeteorManager meteorMan;
     private StatsManager playerSM;
     [SerializeField]
     private int currentEnemyCount;
     [SerializeField]
     private int currentWaveCount;
+    private int nextRoundToAddEnemyType;
 	private int maxEnemies;
     [SerializeField]
     private int enemysToSpawn;
@@ -73,6 +77,9 @@ public class EnemyManager : MonoBehaviour
 			setupSpawnLists ();
 			startWaveCouroutine = StartCoroutine (waitToStartNewRound ());
 			doors = GameObject.FindObjectsOfType<Door> ();
+            enemyObjectsAvailable = new GameObject[1];
+            enemyObjectsAvailable[0] = ENEMY_OBJECTS[0];
+            nextRoundToAddEnemyType = 5;
         }
         inv = GameObject.Find("InventoryManager").GetComponent<Inventory>();
         playerSM = GameManager.currentplayer.GetComponent<StatsManager>();
@@ -234,6 +241,15 @@ public class EnemyManager : MonoBehaviour
 	    enemysToSpawn = getNumberOfEnemysToSpawnInWave(currentWaveCount,enemysToSpawn);
         currentEnemyCount = enemysToSpawn;
         spawningWaveCouroutine = StartCoroutine(spawnWave(true));
+	    if (currentWaveCount >= nextRoundToAddEnemyType && (enemyObjectsAvailable.Length+1 <= ENEMY_OBJECTS.Length))
+	    {
+	        nextRoundToAddEnemyType += currentWaveCount;
+	        enemyObjectsAvailable = new GameObject[enemyObjectsAvailable.Length+1];
+	        for (int i = 0; i < enemyObjectsAvailable.Length; i++)
+	        {
+	            enemyObjectsAvailable[i] = ENEMY_OBJECTS[i];
+	        }
+	    }
     }
 
     private int getNumberOfEnemysToSpawnInWave(int waveNumber, int enemiesSpawnedLastWave)
@@ -296,8 +312,8 @@ public class EnemyManager : MonoBehaviour
         //Change this so it uses any of the spawn points in the array
         int randIndx = (int)Random.Range(0, (spawnPointsAvailable.Count));
 		Transform spawn = spawnPointsAvailable[randIndx];
-		randIndx = (int)Random.Range(0, ENEMY_OBJECTS.Length);
-        GameObject enemy = (GameObject)GameObject.Instantiate(ENEMY_OBJECTS[randIndx], spawn.position, spawn.rotation);
+		randIndx = (int)Random.Range(0, enemyObjectsAvailable.Length);
+        GameObject enemy = (GameObject)GameObject.Instantiate(enemyObjectsAvailable[randIndx], spawn.position, spawn.rotation);
         string enemytype = (string)enemyNames[randIndx];
         setStartingStats(enemy.GetComponent<EnemyController>(),enemytype);
         allEnemies.Add(enemy);
