@@ -30,7 +30,15 @@ public class Inventory : MonoBehaviour
         //inventory[1].AddFloor("DungeonFloor01");
         inventory[1].AddFloor(GameObject.Find("Dungeon").transform.GetChild(0).name);
         SortInventoryListByDropRate();
-    }
+		//temp
+		AddTestData();
+		//temp
+	}
+
+	private void AddTestData()
+	{
+		//inventory[1].Amt = 2;
+	}
 
     //This puts all items available to spawn based on location and events so that the correct items can spawn in the correct places
     public void UpdateItemsAvailableToSpawn()
@@ -40,25 +48,28 @@ public class Inventory : MonoBehaviour
         //Adds all items from master list to available
         foreach (Item i in inventory)
         {
-            //If tthe item has room requirements and the current room isnt null
-            if (i.rooms.Count > 0)
-            {
-                if(em.CurrentRoom != null)
-                {
-                    if (i.rooms.Contains(em.CurrentRoom) && !itemHasReachedMax(i))
-                    {
-                        availableItemsList.Add(i);
-                    }
-                }
-            }
-            //If the room doesn't have room requirements...
-            else
-            {
-                if (!itemHasReachedMax(i))
-                {
-                    availableItemsList.Add(i);
-                }
-            }
+	        if (i.IsDiscontinued==false)
+	        {
+		        //If tthe item has room requirements and the current room isnt null
+		        if (i.rooms.Count > 0)
+		        {
+			        if(em.CurrentRoom != null)
+			        {
+				        if (i.rooms.Contains(em.CurrentRoom) && !itemHasReachedMax(i))
+				        {
+					        availableItemsList.Add(i);
+				        }
+			        }
+		        }
+		        //If the room doesn't have room requirements...
+		        else
+		        {
+			        if (!itemHasReachedMax(i))
+			        {
+				        availableItemsList.Add(i);
+			        }
+		        }
+	        }
         }
     }
 
