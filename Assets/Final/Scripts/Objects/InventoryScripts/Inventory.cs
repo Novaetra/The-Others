@@ -27,7 +27,8 @@ public class Inventory : MonoBehaviour
         inventory = new List<Item>();
         inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,4));
         inventory.Add(new Item("Key", "Mysterious looking key...", 1, 10,2));
-        inventory[1].AddFloor("DungeonFloor01");
+        //inventory[1].AddFloor("DungeonFloor01");
+        inventory[1].AddFloor(GameObject.Find("Dungeon").transform.GetChild(0).name);
         SortInventoryListByDropRate();
     }
 

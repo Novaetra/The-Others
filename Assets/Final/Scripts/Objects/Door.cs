@@ -5,6 +5,7 @@ public class Door : MonoBehaviour
 {
     Animation anim;
     public float doorCost;
+    [SerializeField]
     private bool isOpen;
     [Header("Last item in array must be the door")]
 
@@ -17,7 +18,6 @@ public class Door : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animation>();
-        isOpen = false;
         if (GetComponent<Unlockable>() != null)
         {
             lockComponent = GetComponent<Unlockable>();
