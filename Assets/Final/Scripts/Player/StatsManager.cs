@@ -47,8 +47,10 @@ public class StatsManager : MonoBehaviour
     private float stamCurrentTime;
     private float manaTimer;
     private float manaCurrentTime;
+    private float healthTimer;
+    private float healthCurrentTime;
 
-   // private float reviveTimer;
+    // private float reviveTimer;
     //private float currentReviveTimer;
 
     private HUDManager hudman;
@@ -80,12 +82,14 @@ public class StatsManager : MonoBehaviour
         expGained = 0f;
         //reviveDistance = 3.5f;
 
-        healthRegen = 0f;
+        healthRegen = 50f;
         manaRegen = 1.5f;
         staminaRegen = 100f;
 
         stamTimer = 2f;
         stamCurrentTime = stamTimer;
+        healthTimer = 3.5f;
+        healthCurrentTime = healthTimer;
         manaTimer = 2f;
         manaCurrentTime = manaTimer;
 
@@ -103,20 +107,10 @@ public class StatsManager : MonoBehaviour
     void Update()
     {
         updateAttributes();
-        /*
-        if (isReviving == true)
-        {
-            checkRevive();
-        }
-        */
     }
 
     private void updateAttributes()
     {
-        if (currentHealth < totalHealth)
-        {
-            currentHealth += healthRegen * Time.deltaTime;
-        }
         if (manaCurrentTime < manaTimer)
         {
             manaCurrentTime += 1 * Time.deltaTime;
@@ -136,6 +130,18 @@ public class StatsManager : MonoBehaviour
         {
             if (currentStamina < totalStamina) {
                 currentStamina += staminaRegen * Time.deltaTime;
+            }
+        }
+
+        if (healthCurrentTime < healthTimer)
+        {
+            healthCurrentTime += 1 * Time.deltaTime;
+        }
+        else
+        {
+            if (currentHealth < totalHealth)
+            {
+                currentHealth += healthRegen * Time.deltaTime;
             }
         }
     }
@@ -198,6 +204,7 @@ public class StatsManager : MonoBehaviour
         hudman.updateBars();
         checkDeath();
         hudman.RecieveDamage();
+        healthCurrentTime = 0f;
     }
 
     private void checkDeath()

@@ -37,6 +37,7 @@ public class EnemyManager : MonoBehaviour
 	//This dictionary holds all the spawn points per room
     private Dictionary<string, Transform[]> spawnPointsInRoom = new Dictionary<string, Transform[]>();
 
+    [SerializeField]
 	private Dictionary<string,float[]> statsPerEnemy = new Dictionary<string, float[]>();
     private ArrayList enemyNames = new ArrayList();
 
@@ -93,10 +94,10 @@ public class EnemyManager : MonoBehaviour
 
     private void setUpEnemyStartingStats()
     {
-        //health, exp,  damagem, 
-        statsPerEnemy["Skelly"] = new float[3] { 100f, 20f, 10f };
+        //health, exp, damagem, move speed (max of 5)
+        statsPerEnemy["Skelly"] = new float[4] { 100f, 20f, 25f, 3f};
         enemyNames.Add("Skelly");
-        statsPerEnemy["Weakling"] = new float[3] { 50f, 20f, 5f };
+        statsPerEnemy["Weakling"] = new float[4] { 50f, 20f, 20f, 3f };
         enemyNames.Add("Weakling");
     }
 
@@ -325,7 +326,7 @@ public class EnemyManager : MonoBehaviour
         enemy.setExpOnKill(statsPerEnemy[enemyName][1]);
         enemy.setMeleeDamage(statsPerEnemy[enemyName][2]);
         //enemy.setAttackProximity(statsPerEnemy[enemyName][3]);
-        //enemy.setMovementSpeed(statsPerEnemy[enemyName][3]);
+        enemy.setMovementSpeed(statsPerEnemy[enemyName][3]);
     }
 
     //Every round increase enemy health, exp value, and dmg
