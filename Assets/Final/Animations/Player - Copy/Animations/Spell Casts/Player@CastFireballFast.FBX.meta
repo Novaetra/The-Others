@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fff97c5569abb3c4c89cfdb27f1f3faf
-timeCreated: 1487538141
+guid: f33589ff22e92fd479f35d2f6230e56f
+timeCreated: 1496611006
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -74,10 +74,52 @@ ModelImporter:
     100132: Bn_R_Wrist01
     100134: Bn_SpB01
     100136: BRoot_SpA01
-    100138: CC_Global01
-    100140: CC_SOG01
-    100142: Characfter2
-    100144: //RootNode
+    100138: CC_Back_A01
+    100140: CC_Chest01
+    100142: CC_Global01
+    100144: CC_Hip01
+    100146: CC_L_Arm01
+    100148: CC_L_Elbow01
+    100150: CC_L_Foot01
+    100152: CC_L_Index01
+    100154: CC_L_Knee01
+    100156: CC_L_Middle01
+    100158: CC_L_Pinky01
+    100160: CC_L_Ring01
+    100162: CC_L_Shld01
+    100164: CC_L_Thumb01
+    100166: CC_R_Arm001
+    100168: CC_R_Elbow001
+    100170: CC_R_Foot001
+    100172: CC_R_Index001
+    100174: CC_R_Knee01
+    100176: CC_R_Middle01
+    100178: CC_R_Pinky01
+    100180: CC_R_Ring01
+    100182: CC_R_Shld001
+    100184: CC_R_Thumb01
+    100186: CC_SOG01
+    100188: Characfter2
+    100190: HiIK_L_Arm01
+    100192: HIIK_L_Leg01
+    100194: HiIK_R_Arm01
+    100196: HIIK_R_Leg01
+    100198: //RootNode
+    100200: PntCntrl_Hip01
+    100202: PntCntrl_L_Shld01
+    100204: PtCntrl_ChestA001
+    100206: PtCntrl_L_Arm01
+    100208: PtCntrl_R_Arm01
+    100210: PtCntrl_SpA01
+    100212: PTCtrl_L_Ankle01
+    100214: PTCtrl_L_Ball01
+    100216: PTCtrl_L_Heel01
+    100218: PTCtrl_L_Toe01
+    100220: PTCtrl_R_Ankle001
+    100222: PTCtrl_R_Ball001
+    100224: PTCtrl_R_Heel001
+    100226: PTCtrl_R_Shld01
+    100228: PTCtrl_R_Toe001
     400000: Be_Hip01
     400002: Be_L_HandEnd01
     400004: Be_L_IndexEnd01
@@ -147,12 +189,90 @@ ModelImporter:
     400132: Bn_R_Wrist01
     400134: Bn_SpB01
     400136: BRoot_SpA01
-    400138: CC_Global01
-    400140: CC_SOG01
-    400142: Characfter2
-    400144: //RootNode
+    400138: CC_Back_A01
+    400140: CC_Chest01
+    400142: CC_Global01
+    400144: CC_Hip01
+    400146: CC_L_Arm01
+    400148: CC_L_Elbow01
+    400150: CC_L_Foot01
+    400152: CC_L_Index01
+    400154: CC_L_Knee01
+    400156: CC_L_Middle01
+    400158: CC_L_Pinky01
+    400160: CC_L_Ring01
+    400162: CC_L_Shld01
+    400164: CC_L_Thumb01
+    400166: CC_R_Arm001
+    400168: CC_R_Elbow001
+    400170: CC_R_Foot001
+    400172: CC_R_Index001
+    400174: CC_R_Knee01
+    400176: CC_R_Middle01
+    400178: CC_R_Pinky01
+    400180: CC_R_Ring01
+    400182: CC_R_Shld001
+    400184: CC_R_Thumb01
+    400186: CC_SOG01
+    400188: Characfter2
+    400190: HiIK_L_Arm01
+    400192: HIIK_L_Leg01
+    400194: HiIK_R_Arm01
+    400196: HIIK_R_Leg01
+    400198: //RootNode
+    400200: PntCntrl_Hip01
+    400202: PntCntrl_L_Shld01
+    400204: PtCntrl_ChestA001
+    400206: PtCntrl_L_Arm01
+    400208: PtCntrl_R_Arm01
+    400210: PtCntrl_SpA01
+    400212: PTCtrl_L_Ankle01
+    400214: PTCtrl_L_Ball01
+    400216: PTCtrl_L_Heel01
+    400218: PTCtrl_L_Toe01
+    400220: PTCtrl_R_Ankle001
+    400222: PTCtrl_R_Ball001
+    400224: PTCtrl_R_Heel001
+    400226: PTCtrl_R_Shld01
+    400228: PTCtrl_R_Toe001
+    2300000: CC_L_Foot01
+    2300002: CC_L_Index01
+    2300004: CC_L_Middle01
+    2300006: CC_L_Pinky01
+    2300008: CC_L_Ring01
+    2300010: CC_L_Thumb01
+    2300012: CC_R_Foot001
+    2300014: CC_R_Index001
+    2300016: CC_R_Middle01
+    2300018: CC_R_Pinky01
+    2300020: CC_R_Ring01
+    2300022: CC_R_Thumb01
+    3300000: CC_L_Foot01
+    3300002: CC_L_Index01
+    3300004: CC_L_Middle01
+    3300006: CC_L_Pinky01
+    3300008: CC_L_Ring01
+    3300010: CC_L_Thumb01
+    3300012: CC_R_Foot001
+    3300014: CC_R_Index001
+    3300016: CC_R_Middle01
+    3300018: CC_R_Pinky01
+    3300020: CC_R_Ring01
+    3300022: CC_R_Thumb01
     4300000: Characfter2
-    7400000: CastFlamethrower
+    4300002: CC_L_Middle01
+    4300004: CC_L_Ring01
+    4300006: CC_L_Pinky01
+    4300008: CC_L_Thumb01
+    4300010: CC_L_Index01
+    4300012: CC_R_Middle01
+    4300014: CC_R_Ring01
+    4300016: CC_R_Pinky01
+    4300018: CC_R_Thumb01
+    4300020: CC_R_Index001
+    4300022: CC_L_Foot01
+    4300024: CC_R_Foot001
+    7400000: CastFireballFast
     9500000: //RootNode
     13700000: Characfter2
   materials:
@@ -177,10 +297,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: CastFlamethrower
+      name: CastFireballFast
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 100
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -200,14 +320,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.528481
-        functionName: createFlamethrower
-        data: 
+      - time: 0.37818182
+        functionName: CreateProjectile
+        data: Fireball
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.99841774
+      - time: 0.7381818
         functionName: resetAnimator
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -218,6 +338,50 @@ ModelImporter:
       - path: 
         weight: 1
       - path: CC_Global01
+        weight: 1
+      - path: CC_Global01/CC_L_Arm01
+        weight: 1
+      - path: CC_Global01/CC_L_Arm01/PtCntrl_L_Arm01
+        weight: 1
+      - path: CC_Global01/CC_L_Elbow01
+        weight: 1
+      - path: CC_Global01/CC_L_Foot01
+        weight: 1
+      - path: CC_Global01/CC_L_Foot01/PTCtrl_L_Heel01
+        weight: 1
+      - path: CC_Global01/CC_L_Foot01/PTCtrl_L_Heel01/PTCtrl_L_Toe01
+        weight: 1
+      - path: CC_Global01/CC_L_Foot01/PTCtrl_L_Heel01/PTCtrl_L_Toe01/PTCtrl_L_Ball01
+        weight: 1
+      - path: CC_Global01/CC_L_Foot01/PTCtrl_L_Heel01/PTCtrl_L_Toe01/PTCtrl_L_Ball01/PTCtrl_L_Ankle01
+        weight: 1
+      - path: CC_Global01/CC_L_Knee01
+        weight: 1
+      - path: CC_Global01/CC_L_Shld01
+        weight: 1
+      - path: CC_Global01/CC_L_Shld01/PntCntrl_L_Shld01
+        weight: 1
+      - path: CC_Global01/CC_R_Arm001
+        weight: 1
+      - path: CC_Global01/CC_R_Arm001/PtCntrl_R_Arm01
+        weight: 1
+      - path: CC_Global01/CC_R_Elbow001
+        weight: 1
+      - path: CC_Global01/CC_R_Foot001
+        weight: 1
+      - path: CC_Global01/CC_R_Foot001/PTCtrl_R_Heel001
+        weight: 1
+      - path: CC_Global01/CC_R_Foot001/PTCtrl_R_Heel001/PTCtrl_R_Toe001
+        weight: 1
+      - path: CC_Global01/CC_R_Foot001/PTCtrl_R_Heel001/PTCtrl_R_Toe001/PTCtrl_R_Ball001
+        weight: 1
+      - path: CC_Global01/CC_R_Foot001/PTCtrl_R_Heel001/PTCtrl_R_Toe001/PTCtrl_R_Ball001/PTCtrl_R_Ankle001
+        weight: 1
+      - path: CC_Global01/CC_R_Knee01
+        weight: 1
+      - path: CC_Global01/CC_R_Shld001
+        weight: 1
+      - path: CC_Global01/CC_R_Shld001/PTCtrl_R_Shld01
         weight: 1
       - path: CC_Global01/CC_SOG01
         weight: 1
@@ -303,6 +467,16 @@ ModelImporter:
         weight: 1
       - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_L_Shld01/Bn_L_Arm01/Bn_L_Elbow01/Bn_L_Wrist01/Bn_L_ThumbBase01/Bn_L_ThumbMiddle01/Bn_L_ThumbEnd01/Be_L_ThumbEnd01
         weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_L_Shld01/Bn_L_Arm01/Bn_L_Elbow01/Bn_L_Wrist01/CC_L_Index01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_L_Shld01/Bn_L_Arm01/Bn_L_Elbow01/Bn_L_Wrist01/CC_L_Middle01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_L_Shld01/Bn_L_Arm01/Bn_L_Elbow01/Bn_L_Wrist01/CC_L_Pinky01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_L_Shld01/Bn_L_Arm01/Bn_L_Elbow01/Bn_L_Wrist01/CC_L_Ring01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_L_Shld01/Bn_L_Arm01/Bn_L_Elbow01/Bn_L_Wrist01/CC_L_Thumb01
+        weight: 1
       - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_Neck01
         weight: 1
       - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_Neck01/Be_NeckEnd
@@ -359,7 +533,37 @@ ModelImporter:
         weight: 1
       - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_R_Shld01/Bn_R_Arm01/Bn_R_Elbow01/Bn_R_Wrist01/Bn_R_ThumbBase01/Bn_R_ThumbMiddle01/Bn_R_ThumbEnd01/Be_R_ThumbEnd01
         weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_R_Shld01/Bn_R_Arm01/Bn_R_Elbow01/Bn_R_Wrist01/CC_R_Index001
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_R_Shld01/Bn_R_Arm01/Bn_R_Elbow01/Bn_R_Wrist01/CC_R_Middle01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_R_Shld01/Bn_R_Arm01/Bn_R_Elbow01/Bn_R_Wrist01/CC_R_Pinky01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_R_Shld01/Bn_R_Arm01/Bn_R_Elbow01/Bn_R_Wrist01/CC_R_Ring01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/BRoot_SpA01/Bn_SpB01/Bn_Chest01/Bn_R_Shld01/Bn_R_Arm01/Bn_R_Elbow01/Bn_R_Wrist01/CC_R_Thumb01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/CC_Back_A01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/CC_Back_A01/CC_Chest01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/CC_Back_A01/CC_Chest01/PtCntrl_ChestA001
+        weight: 1
+      - path: CC_Global01/CC_SOG01/CC_Back_A01/PtCntrl_SpA01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/CC_Hip01
+        weight: 1
+      - path: CC_Global01/CC_SOG01/CC_Hip01/PntCntrl_Hip01
+        weight: 1
       - path: Characfter2
+        weight: 1
+      - path: HiIK_L_Arm01
+        weight: 1
+      - path: HIIK_L_Leg01
+        weight: 1
+      - path: HiIK_R_Arm01
+        weight: 1
+      - path: HIIK_R_Leg01
         weight: 1
       maskType: 3
       maskSource: {instanceID: 0}

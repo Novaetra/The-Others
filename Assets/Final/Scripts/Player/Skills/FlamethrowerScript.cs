@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FlamethrowerScript : MonoBehaviour {
-
-    private float currentTime;
-    [SerializeField]
-    private float totalTimer;
-    private bool doneSetup = false;
+public class FlamethrowerScript : SpellScript
+{
+    
     private SkillManager sm;
     private float dmg;
 
@@ -14,9 +11,6 @@ public class FlamethrowerScript : MonoBehaviour {
 
 	void Start ()
     {
-		currentTime = 0f;
-		totalTimer = 2f;
-
         sm = GameManager.currentplayer.GetComponent<SkillManager>();
         for (int i = 0; i < sm.getKnownSkills().Count; i++)
         {
@@ -27,30 +21,15 @@ public class FlamethrowerScript : MonoBehaviour {
         }
 
 		ps = GetComponentInParent<PlayerController> ();
-
-        doneSetup = true;
+        
 	}
     
-    void Update()
-    {
-        if (doneSetup)
-        {
-            if (currentTime < totalTimer-1f)
-            {
-                currentTime+=Time.deltaTime;
-            }
-            else
-            {
-                StartCoroutine(destroyFire());
-            }
-        }
-    }
 
-    private IEnumerator destroyFire()
+    public override IEnumerator DestroySelf()
     {
         GetComponent<ParticleSystem>().Stop();
 
-        yield return new WaitForSeconds(totalTimer);
+        yield return new WaitForSeconds(3f);
 
         Destroy(gameObject);
     }

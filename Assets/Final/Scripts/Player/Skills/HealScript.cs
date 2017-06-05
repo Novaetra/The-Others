@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HealScript : MonoBehaviour
+public class HealScript : SpellScript
 {
     private float totalHealTimer = 2f;
     private float currentHealTimer;
@@ -60,10 +60,10 @@ public class HealScript : MonoBehaviour
 
     void removeHeal()
     {
-            StartCoroutine(destroy());
+            StartCoroutine(DestroySelf());
     }
 
-    IEnumerator destroy()
+    public override IEnumerator DestroySelf()
     {
         foreach(ParticleSystem ps in GetComponentsInChildren<ParticleSystem>())
         {

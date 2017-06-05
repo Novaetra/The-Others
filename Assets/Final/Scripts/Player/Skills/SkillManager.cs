@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public enum Skills
 {
@@ -18,14 +19,15 @@ public class SkillManager : MonoBehaviour
 	//Refrences to objects/components
 	public List<Skill> allSkills;
 	public List<Skill> knownSkills;
-	private List<Item> inventoryList;
-	private Inventory inventoryClassRefrence;
 	private GameObject skillBar;
 	private StatsManager sm;
 	private Animator anim;
 	private HUDManager hudman;
+    private SkillInitializer skillInitializer;
 
-	void Start()
+    private Inventory inventoryClassRefrence;
+    private List<Item> inventoryList;
+    void Start()
 	{
 		skillBar = GameObject.Find("SkillBar").gameObject;
 		hudman = GetComponent<HUDManager>();
@@ -33,9 +35,11 @@ public class SkillManager : MonoBehaviour
 		knownSkills = new List<Skill>();
 		sm = GetComponent<StatsManager>();
 		anim = GetComponent<Animator>();
-		inventoryClassRefrence = GameObject.Find ("InventoryManager").GetComponent<Inventory> ();
-		inventoryList = inventoryClassRefrence.InventoryList;
-		setUpList();
+        skillInitializer = GetComponent<SkillInitializer>();
+
+        inventoryClassRefrence = GameObject.Find("InventoryManager").GetComponent<Inventory>();
+        inventoryList = inventoryClassRefrence.InventoryList;
+        setUpList();
 	}
 
 	void Update()
@@ -54,17 +58,22 @@ public class SkillManager : MonoBehaviour
 		skill.AddUpgrade(new Upgrade(50f,SkillAttribute.effectAmount,3));
 		skill.AddUpgrade(new Upgrade(4f,SkillAttribute.maxEnemiesHit,4));
 		skill.AddUpgrade(new Upgrade(2f,SkillAttribute.cooldown,5));
-		skill = AddToAllSkillsList("Heal", "", 50f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
+
+        skill = AddToAllSkillsList("Heal", "", 50f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
 		skill.Description = "Restores " + skill.EffectAmount + " health at the cost of " + skill.Cost + " mana.";
-		skill = AddToAllSkillsList("MeleeDamageUpgrade","", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
+
+        skill = AddToAllSkillsList("MeleeDamageUpgrade","", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
 		skill.Description = "Melee does " + skill.EffectAmount + " more damage";
-		skill = AddToAllSkillsList("Flamethrower", "", 100f*Time.deltaTime, 35f, 10f, Skills.Flamethrower, SkillType.Mana, 4,sm);
-		skill.Description = "Blasts fire in a cone in front of you that deals " + skill.EffectAmount + "/sec at the cost of " + skill.Cost + " mana.";
-		AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);
+
+        skill = AddToAllSkillsList("Flamethrower", "", 300f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
+		skill.Description = "Blasts fire in a cone in front of you that deals " + (skill.EffectAmount/Time.deltaTime) + "/sec at the cost of " + skill.Cost + " mana.";
+
+        AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);
 		//Links all the skill tree pieces to the actal skill 
 		GameObject.Find("Canvas").BroadcastMessage("setSkill");
 	}
-	//Adds upgrade to particular skill
+	
+    //Adds upgrade to particular skill
 	private Skill AddToAllSkillsList (string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm)
 	{
 		Skill skill = new Skill (name, desc, effectAmnt, c, cd, enumSkill, st, req, sm);
@@ -72,53 +81,27 @@ public class SkillManager : MonoBehaviour
 		return skill;
 	}
 
-	//Checks to see if a hotkey was pressed
-	//REDO THIS METHOD BECAUSE IT'S VERY HARDCODED
-	private void checkKeys()
+    //Adds upgrade to particular skill with holdable or not at the end
+    private Skill AddToAllSkillsList(string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm, bool tf)
+    {
+        Skill skill = new Skill(name, desc, effectAmnt, c, cd, enumSkill, st, req, sm, tf);
+        allSkills.Add(skill);
+        return skill;
+    }
+
+    //Checks to see if a hotkey was pressed
+    //REDO THIS METHOD BECAUSE IT'S VERY HARDCODED
+    private void checkKeys()
 	{
-		//Note: basic attacks are not included. Those are handled in the person controller
+		//Note: basic attacks are not included. Those are handled in the person controllers
 		foreach(Skill s in knownSkills)
 		{
-			if (s.Hotkey != null) {
-				if (Input.GetKeyUp (s.Hotkey.Code) && anim.GetInteger ("Skill") < 0) {
-					if (s.CurrentCooldown >= s.Cooldown) {
-						switch (s.SkillType) 
-						{
-							case SkillType.Mana:
-								if (sm.getCurrentMana () < s.Cost) {
-									hudman.displayMsg ("Not enough mana", 1f);
-									return;
-								} else {
-									s.Use ();
-									sm.useMana (s.Cost);
-									return;
-								}
-								break;
-							case SkillType.Stamina:
-								if (sm.getCurrentStamina () < s.Cost) {
-									hudman.displayMsg ("Not enough stamina", 1f);
-									return;
-								} else {
-									s.Use ();
-									sm.useStamina (s.Cost,false);
-									return;
-								}
-								break;
-						case SkillType.SkillCharge:
-								if (inventoryList[0].Amt < s.Cost) {
-									hudman.displayMsg ("Not enough skill charges", 1f);
-									return;
-								} else {
-									s.Use ();
-									inventoryClassRefrence.RemoveItemFromInventory(inventoryList[0]);
-									return;
-								}
-								break;
-						}
-					}
-				}
-			}
-
+            if (s.Hotkey != null)
+            {
+                CheckKeyUp(s);
+                CheckKeyDown(s);
+                CheckKeyHold(s);
+            }
 		}
 	}
 	//Updates cooldowns for each ability
@@ -138,8 +121,142 @@ public class SkillManager : MonoBehaviour
 		}
 	}
 
-	#region getters
-	private IEnumerator wait(float secs)
+    #region Key Checks
+
+
+    //Check if a skill is cast and react accordingly
+    private void CheckKeyUp(Skill s)
+    {
+        if (Input.GetKeyUp(s.Hotkey.Code))
+        {
+            //If the holdable skill was let go...
+            if (s.Hotkey.IsHoldable && anim.GetInteger("Skill") == (int)s.CurrentEnumSkill)
+            {
+                ResetAnimator();
+                ClearCurrentEffect();
+            }
+            else if (s.Hotkey.IsHoldable == false)
+            {
+                if (anim.GetInteger("Skill") < 0)
+                {
+                    if (s.CurrentCooldown >= s.Cooldown)
+                    {
+                        CheckIfEnoughResources(s, MethodIfNotEnoughForCast, MethodIfEnoughForCast);
+                    }
+                }
+            }
+        }
+    }
+
+    //Check if a holdable skill is pressed down and react accordingly
+    private void CheckKeyDown(Skill s)
+    {
+        if (Input.GetKeyDown(s.Hotkey.Code) && s.IsHoldable)
+        {
+            CheckIfEnoughResources(s, MethodIfNotEnoughForPress, MethodIfEnoughForPress);
+        }
+    }
+
+    //Check if a holdable skill is being held down and react accordingly
+    private void CheckKeyHold(Skill s)
+    {
+        if (Input.GetKey(s.Hotkey.Code) && s.CanUse && s.IsHoldable)
+        {
+            CheckIfEnoughResources(s, MethodIfNotEnoughForHold,MethodIfEnoughForHold);
+        }
+    }
+
+    //What will happen when there isn't enough resources to keep holding the spell out
+    private void MethodIfNotEnoughForHold(Skill s)
+    {
+        s.CanUse = false;
+        ResetAnimator();
+    }
+
+    //What will happen when there is enough resources to use a skill that requires hold down
+    private void MethodIfEnoughForPress(Skill s, SkillType type)
+    {
+        s.CanUse = true;
+        sm.UseResource(type, s.Cost, false);
+        s.Use();
+    }
+
+    //What will happen when there is not enough resources to use a skill that requires hold down
+    private void MethodIfNotEnoughForPress(Skill s)
+    {
+        hudman.displayMsg("Not enough", 1f);
+        s.CanUse = false;
+        ResetAnimator();
+    }
+
+    //What will happen when there is enough resources to keep holding the spell out
+    private void MethodIfEnoughForHold(Skill s, SkillType type)
+    {
+        s.CanUse = true;
+        sm.UseResource(type, s.Cost, false);
+    }
+
+    //What will happen when there is enough resources to cast a spell
+    private void MethodIfNotEnoughForCast(Skill s)
+    {
+        hudman.displayMsg("Not enough", 1f);
+    }
+
+    //What will happen when there is not enough resources to cast a spell
+    private void MethodIfEnoughForCast(Skill s, SkillType type)
+    {
+        s.Use();
+        sm.UseResource(type, s.Cost, false);
+    }
+
+    //Checks to see if player has enough resources to cast the spell and calls the methods passed according to the scenario
+    private void CheckIfEnoughResources(Skill s, Action<Skill> methodIfNotEnough, Action<Skill, SkillType> methodIfEnough)
+    {
+        switch (s.SkillType)
+        {
+            case SkillType.Mana:
+                if (sm.getCurrentMana() < s.Cost)
+                {
+                    methodIfNotEnough(s);
+                    return;
+                }
+                else
+                {
+                    methodIfEnough(s, s.SkillType);
+                    return;
+                }
+            case SkillType.Stamina:
+                if (sm.getCurrentStamina() < s.Cost)
+                {
+                    methodIfNotEnough(s);
+                    return;
+                }
+                else
+                {
+                    methodIfEnough(s, s.SkillType);
+                    return;
+                }
+            case SkillType.SkillCharge:
+                if (inventoryList[inventoryClassRefrence.GetIndxOfItem(0)].Amt < s.Cost)
+                {
+                    methodIfNotEnough(s);
+                    return;
+                }
+                else
+                {
+                    s.Use();
+                    methodIfEnough(s, s.SkillType);
+                    return;
+                }
+
+        }
+    }
+
+    #endregion
+
+
+    #region getters
+    private IEnumerator wait(float secs)
 	{
 		yield return new WaitForSeconds(secs);
 	}
@@ -163,5 +280,15 @@ public class SkillManager : MonoBehaviour
 	{
 		return knownSkills;
 	}
-	#endregion
+
+    private void ResetAnimator()
+    {
+        anim.SetInteger("Skill", -1);
+    }
+
+    private void ClearCurrentEffect()
+    {
+        skillInitializer.DestroyCurrentEffect();
+    }
+    #endregion
 }

@@ -146,6 +146,13 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth -= dmg;
         anim.SetFloat("Health", currentHealth);
+
+        if(currentHealth<=0)
+        {
+            startDeath();
+            return;
+        }
+
         if (tookDamageCount>=hitResponseFrequency)
         {
             anim.SetTrigger("TakeDamage");

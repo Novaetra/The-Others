@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FireballScript : MonoBehaviour 
+public class FireballScript : SpellScript
 {
     public GameObject SPARK;
     private SkillManager sm;
@@ -29,7 +29,7 @@ public class FireballScript : MonoBehaviour
         isDestroyed = false;
     }
 		
-	private IEnumerator destroyFire()
+	public override IEnumerator DestroySelf()
 	{
         GetComponent<ParticleSystem> ().Stop (true);
         yield return new WaitForSeconds (1f);
@@ -39,7 +39,7 @@ public class FireballScript : MonoBehaviour
     public void destroyFireball()
 	{
         isDestroyed = true;
-        StartCoroutine (destroyFire ());
+        StartCoroutine (DestroySelf ());
 	}
 
     void OnTriggerEnter(Collider col)

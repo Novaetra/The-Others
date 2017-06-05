@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8.892032, y: 3.2399378, z: 4.006844}
-  m_Center: {x: -0.32485676, y: 0.09872934, z: 1.8174015}
+  m_Size: {x: 8.892032, y: 3.2399375, z: 5.798731}
+  m_Center: {x: -0.32482344, y: 0.09902245, z: 2.7134862}
 --- !u!108 &10860280
 Light:
   m_ObjectHideFlags: 1
@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ae2bbde6b20f24987eca1f22223e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalTimer: 0
 --- !u!198 &19876550
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -146,7 +145,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 0
+  randomSeed: -1475202839
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -602,8 +601,8 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     type: 4
-    radius: 0.23
-    angle: 33.67
+    radius: 0.038521115
+    angle: 18.459812
     length: 5
     boxX: 1
     boxY: 1
@@ -724,13 +723,13 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          value: 0
+          inSlope: 0.88652086
+          outSlope: 0.88652086
           tangentMode: 0
         - serializedVersion: 2
           time: 1
-          value: 0
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0

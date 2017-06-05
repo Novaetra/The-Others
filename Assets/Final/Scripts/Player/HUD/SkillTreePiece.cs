@@ -92,10 +92,7 @@ public class SkillTreePiece : MonoBehaviour
 	public void showTooltip(PointerEventData data, GameObject go)
 	{
 		if (skill.IsUnlocked && skill.UpgradeCount < skill.Upgrades.Count) {
-			string description = "Upgrades ";
-			description += SkillAttributeToString(skill.Upgrades [skill.UpgradeCount].AttributeToUpgrade) + " by " + skill.Upgrades [skill.UpgradeCount].UpgradeAmt;
-			skill.Description = description;
-			skill.LvlRequirement = skill.Upgrades [skill.UpgradeCount].LvlRequirement;
+			
 			hudman.ShowSkillTooltip (skill, data,go);
 		} else if (skill.IsUnlocked && skill.UpgradeCount > skill.Upgrades.Count) {
 			skill.Description = originalDescription;

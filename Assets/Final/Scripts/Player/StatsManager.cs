@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StatsManager : MonoBehaviour
 {
     //Attributes
-    private float totalHealth;
-    private float currentHealth;
-    private float totalMana;
-    private float currentMana;
-    private float totalStamina;
-	private float currentStamina;
+    [SerializeField]
+    private float totalHealth,currentHealth,totalMana,currentMana,totalStamina,currentStamina;
 	[SerializeField]
 	private float sprintStamCost;
     [SerializeField]
@@ -50,6 +47,9 @@ public class StatsManager : MonoBehaviour
     private float healthTimer;
     private float healthCurrentTime;
 
+    private Inventory inventoryClassRefrence;
+    private List<Item> inventoryList;
+
     // private float reviveTimer;
     //private float currentReviveTimer;
 
@@ -83,7 +83,7 @@ public class StatsManager : MonoBehaviour
         //reviveDistance = 3.5f;
 
         healthRegen = 50f;
-        manaRegen = 1.5f;
+        manaRegen = 10f;
         staminaRegen = 100f;
 
         stamTimer = 2f;
@@ -101,6 +101,8 @@ public class StatsManager : MonoBehaviour
         pgm = GameObject.Find("Managers").GetComponent<GameManager>();
 		hudman.updateCurrentLvlTxt ();
 		GetComponent<PlayerController> ().set_Up ();
+    inventoryClassRefrence = GameObject.Find("InventoryManager").GetComponent<Inventory>();
+        inventoryList = inventoryClassRefrence.InventoryList;
 
     }
 
@@ -288,6 +290,21 @@ public class StatsManager : MonoBehaviour
         stamCurrentTime = 0f;
     }
 
+    public void UseResource(SkillType type, float amt, bool overTime)
+    {
+        switch(type)
+        {
+            case SkillType.Mana:
+                useMana(amt);
+                break;
+            case SkillType.Stamina:
+                useStamina(amt, overTime);
+                break;
+            case SkillType.SkillCharge:
+                inventoryClassRefrence.RemoveItemFromInventory(inventoryList[inventoryClassRefrence.GetIndxOfItem(0)]);
+                break;
+        }
+    }
     public void activateUnlockable()
     {
         hudman.updateUpgradePoints();

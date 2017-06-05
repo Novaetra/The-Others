@@ -5,8 +5,8 @@ using UnityEngine;
 public class Inventory : MonoBehaviour 
 {
 	[SerializeField]
-	private List<Item> availableItemsList;
-    private List<Item> inventory;
+	private List<Item> availableItemsList; //LIst of possible items that can spawn
+    private List<Item> inventory; // actual inventoyry of player
 
     private InventoryUI ui;
 	private HUDManager hudman;
@@ -27,7 +27,6 @@ public class Inventory : MonoBehaviour
         inventory = new List<Item>();
         inventory.Add (new Item ("Skill Charge","Strong energy used to cast powerful spells.",0,10,4));
         inventory.Add(new Item("Key", "Mysterious looking key...", 1, 10,2));
-        //inventory[1].AddFloor("DungeonFloor01");
         inventory[1].AddFloor(GameObject.Find("Dungeon").transform.GetChild(0).name);
         SortInventoryListByDropRate();
 		//temp
@@ -131,8 +130,8 @@ public class Inventory : MonoBehaviour
 
 	public void RemoveItemFromInventory(Item i)
 	{
-		int amt = availableItemsList[i.ItemIDNumber].Amt;
-		if (amt > 1 && Input.GetKey (KeyCode.LeftShift) || amt == 1) 
+		int amt = inventory[i.ItemIDNumber].Amt;
+		if (amt == 1) 
 		{
 			amt = 0;
 		} 
@@ -140,9 +139,38 @@ public class Inventory : MonoBehaviour
 		{
 			amt--;
 		}
-		availableItemsList [i.ItemIDNumber].Amt = amt;
+        inventory[i.ItemIDNumber].Amt = amt;
 		GetComponent<InventoryUI>().UpdateInventoryUI();
 	}
+
+    public int GetIndxOfItem(int indx)
+    {
+        int x = 0;
+        foreach (Item i in inventory)
+        {
+
+            if (i.ItemIDNumber == indx)
+            {
+                return x;
+            }
+            x++;
+        }
+        return -1;
+    }
+
+    public Item GetItemFromID(int id)
+    {
+        int x = 0;
+        foreach (Item i in inventory)
+        {
+            if (i.ItemIDNumber == id)
+            {
+                return i;
+            }
+            x++;
+        }
+        return null;
+    }
 
 	public List<Item> AvailableItemsList {
 		get {

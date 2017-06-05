@@ -5,7 +5,7 @@ using UnityEngine;
 public class Skill
 {
 	//Name and description of skill
-	private string name, description;
+	private string name, description, originalDescription;
 	//Effect amount is dmg or heal amnt, 
 	private float effectAmount,cost,cooldown,currentCooldown, duration;
 	//Lvl requirement to unlock
@@ -23,41 +23,65 @@ public class Skill
 	private StatsManager stats;
 	//Hotkey assigned to it
 	private SkillHotkey hotkey;
-
+    private HUDManager hudMan;
 	private List<Upgrade> upgrades;
 
 	private int upgradeCount;
 
-	private bool isUnlocked;
-
+	private bool isUnlocked,isHoldable, canUse;
 	//Assigns all variables
 	public Skill(string n, string d, float effectAmnt,  float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm)
 	{
 		isUnlocked = false;
 		name = n;
 		description = d;
-		effectAmount = effectAmnt;
+        originalDescription = d;
+        effectAmount = effectAmnt;
 		cost = c;
 		cooldown = cd;
 		currentCooldown = cooldown;
 		anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-		currentEnumSkill = enumSkill;
+		CurrentEnumSkill = enumSkill;
 		stats = sm;
 		lvlRequirement = req;
 		skillType = st;
 		upgrades = new List<Upgrade> ();
 		upgradeCount = 0;
-	}
+        isHoldable = false;
+        hudMan = GameObject.FindGameObjectWithTag("Player").GetComponent<HUDManager>();
+    }
+
+    //Assigns all variables
+    public Skill(string n, string d, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm, bool hold)
+    {
+        isUnlocked = false;
+        name = n;
+        description = d;
+        originalDescription = d;
+        effectAmount = effectAmnt;
+        cost = c;
+        cooldown = cd;
+        currentCooldown = cooldown;
+        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+        CurrentEnumSkill = enumSkill;
+        stats = sm;
+        lvlRequirement = req;
+        skillType = st;
+        upgrades = new List<Upgrade>();
+        upgradeCount = 0;
+        isHoldable = hold;
+        hudMan = GameObject.FindGameObjectWithTag("Player").GetComponent<HUDManager>();
+    }
 
 
-	//Method is called when skill is activated
-	//It subtracts cost from stamina/mana, plays animation, and starts cooldown
-	public void Use()
+    //Method is called when skill is activated
+    //It subtracts cost from stamina/mana, plays animation, and starts cooldown
+    public void Use()
 	{
 		//Start cooldown
 		StartCooldown();
 		//Start animation
-		anim.SetInteger("Skill", (int)currentEnumSkill);
+		anim.SetInteger("Skill", (int)CurrentEnumSkill);
 	}
 
 	public void UpgradeSkill()
@@ -85,11 +109,27 @@ public class Skill
 				maxEnemiesHit += (int)upgrade.UpgradeAmt;
 				break;
 			}
-			Debug.Log ("upgrading " + upgrade.AttributeToUpgrade);
-			upgradeCount++;
-		}
+            upgradeCount++;
+            UpdateTooltip();
+        }
 	}
 
+
+    private void UpdateTooltip()
+    {
+        if (upgradeCount < upgrades.Count)
+        {
+            string desc = "Upgrades ";
+            desc += upgrades[upgradeCount].AttributeToUpgrade + " by " + upgrades[UpgradeCount].UpgradeAmt;
+            this.description = desc;
+            LvlRequirement = Upgrades[UpgradeCount].LvlRequirement;
+        }
+        else
+        {
+            description = "Effect amount: " + effectAmount + "\nCost: " + cost + "\nCooldown: " + cooldown;
+        }
+        hudMan.UpdateToolTip(this);
+    }
 	//Sets current cooldown to 0 to start cooldown
 	private void StartCooldown()
 	{
@@ -171,8 +211,9 @@ public class Skill
 			return isUnlocked;
 		}
 		set {
-			isUnlocked = value;
-		}
+            isUnlocked = value;
+            UpdateTooltip();
+        }
 	}
 
 	public string Description {
@@ -230,6 +271,45 @@ public class Skill
 			upgradeCount = value;
 		}
 	}
-	#endregion
+
+    public bool IsHoldable
+    {
+        get
+        {
+            return isHoldable;
+        }
+
+        set
+        {
+            isHoldable = value;
+        }
+    }
+
+    public Skills CurrentEnumSkill
+    {
+        get
+        {
+            return currentEnumSkill;
+        }
+
+        set
+        {
+            currentEnumSkill = value;
+        }
+    }
+
+    public bool CanUse
+    {
+        get
+        {
+            return canUse;
+        }
+
+        set
+        {
+            canUse = value;
+        }
+    }
+    #endregion
 
 }

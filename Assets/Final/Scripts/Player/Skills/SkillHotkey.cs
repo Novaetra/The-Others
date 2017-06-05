@@ -6,14 +6,16 @@ public class SkillHotkey
 {
 	private KeyCode code;
 	private Skill skill;
+    private bool isHoldable;
 
 	public SkillHotkey(KeyCode c, Skill s)
 	{
 		code = c;
 		skill = s;
-	}
+        IsHoldable = s.IsHoldable;
+    }
 
-	public KeyCode Code {
+    public KeyCode Code {
 		get {
 			return code;
 		}
@@ -30,4 +32,17 @@ public class SkillHotkey
 			skill = value;
 		}
 	}
+
+    public bool IsHoldable
+    {
+        get
+        {
+            return isHoldable;
+        }
+
+        set
+        {
+            isHoldable = value;
+        }
+    }
 }

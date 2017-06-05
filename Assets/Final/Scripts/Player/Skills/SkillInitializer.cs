@@ -8,7 +8,7 @@ public class SkillInitializer : MonoBehaviour
     public Transform middleSpawner;
     public Transform floorSpawner;
 	private GameObject spellSpawner;
-
+    private GameObject currentEffect;
 	private Object[] spellObjects;
 
 	void Start()
@@ -47,13 +47,16 @@ public class SkillInitializer : MonoBehaviour
 		spell.transform.SetParent(floorSpawner.transform);
 		spell.transform.localEulerAngles += new Vector3(0f, 180, 0f);
 		spell.transform.localScale = new Vector3(1f, 1f, 1f);
-	}
+        currentEffect = spell;
+
+    }
 
     public void createFlamethrower()
     {
         GameObject flameThrower = (GameObject)GameObject.Instantiate(FLAMETHROWER, leftSpawner.transform.position, leftSpawner.transform.rotation);
         flameThrower.transform.SetParent(leftSpawner.transform);
         flameThrower.transform.localScale = new Vector3(1, 1, 1);
+        currentEffect = flameThrower;
     }
 
 	private GameObject GetGameObject(string name)
@@ -65,4 +68,14 @@ public class SkillInitializer : MonoBehaviour
 		}
 		return null;
 	}
+
+    public void DestroyCurrentEffect()
+    {
+        if(currentEffect!=null)
+        {
+            GameObject temp = currentEffect;
+            currentEffect = null;
+            StartCoroutine(temp.GetComponent<SpellScript>().DestroySelf());
+        }
+    }
 }

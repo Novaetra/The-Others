@@ -234,8 +234,23 @@ public class HUDManager : MonoBehaviour
 		tooltip.SetActive(true);
 	}
 
+    public void UpdateToolTip(Skill skill)
+    {
+        tooltipName.text = skill.Name;
+        tooltipDesc.text = skill.Description;
+        tooltipLvl.text = "Level: " + skill.LvlRequirement;
+        if (skill.IsUnlocked && skill.UpgradeCount < skill.Upgrades.Count)
+        {
+            tooltipNextUpgrade.enabled = true;
+        }
+        else
+        {
+            tooltipNextUpgrade.enabled = false;
+        }
+    }
 
-	private void RepositionTooltip(PointerEventData data,GameObject go)
+
+    private void RepositionTooltip(PointerEventData data,GameObject go)
 	{
 		Transform originalParent = tooltip.transform.parent;
 		RectTransform rect = tooltip.GetComponent<RectTransform> ();
