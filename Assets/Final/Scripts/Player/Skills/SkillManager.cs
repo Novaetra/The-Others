@@ -53,7 +53,7 @@ public class SkillManager : MonoBehaviour
 	{
 		//(string name, string description, float effect amount, float cost, float cd, Skills enumSkill, SkillType type int requirement, StatsManager sm)
 		Skill skill;
-		skill = AddToAllSkillsList("Fireball", "", 200f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
+		skill = AddToAllSkillsList("Fireball", "", 800f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
 		skill.Description = "Hurls a flaming ball of fire forward that deals "+skill.EffectAmount + " fire damage at the cost of " +skill.Cost + " mana";
 		skill.AddUpgrade(new Upgrade(50f,SkillAttribute.effectAmount,3));
 		skill.AddUpgrade(new Upgrade(4f,SkillAttribute.maxEnemiesHit,4));
@@ -65,7 +65,7 @@ public class SkillManager : MonoBehaviour
         skill = AddToAllSkillsList("MeleeDamageUpgrade","", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
 		skill.Description = "Melee does " + skill.EffectAmount + " more damage";
 
-        skill = AddToAllSkillsList("Flamethrower", "", 300f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
+        skill = AddToAllSkillsList("Flamethrower", "", 1000f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
 		skill.Description = "Blasts fire in a cone in front of you that deals " + (skill.EffectAmount/Time.deltaTime) + "/sec at the cost of " + skill.Cost + " mana.";
 
         AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);

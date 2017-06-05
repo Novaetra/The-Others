@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 339477f5edecd994c90acaa360ed7e22
-timeCreated: 1490756814
+guid: a0a27a1d20497d64a8fcc5edf2fa4b6b
+timeCreated: 1496689218
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -50,43 +50,47 @@ ModelImporter:
     100084: Bn_Spine02
     100086: Bn_Spine03
     100088: body001
-    100090: CC_ALL
-    100092: CC_Finger00
-    100094: CC_Finger01
-    100096: CC_Finger02
-    100098: CC_Finger03
-    100100: CC_Finger04
-    100102: CC_Finger05
-    100104: CC_Finger06
-    100106: CC_Finger07
-    100108: CC_Finger08
-    100110: CC_Finger09
-    100112: CC_Finger10
-    100114: CC_Finger11
-    100116: CC_Finger12
-    100118: CC_Finger13
-    100120: CC_Finger14
-    100122: CC_Finger15
-    100124: CC_Global01
+    100090: body002
+    100092: CC_ALL
+    100094: CC_Finger00
+    100096: CC_Finger01
+    100098: CC_Finger02
+    100100: CC_Finger03
+    100102: CC_Finger04
+    100104: CC_Finger05
+    100106: CC_Finger06
+    100108: CC_Finger07
+    100110: CC_Finger08
+    100112: CC_Finger09
+    100114: CC_Finger10
+    100116: CC_Finger11
+    100118: CC_Finger12
+    100120: CC_Finger13
+    100122: CC_Finger14
+    100124: CC_Finger15
     100126: CC_Hips
     100128: CC_L_Elbow
     100130: CC_L_Foot
     100132: CC_L_Hand
     100134: CC_L_Knee
-    100136: CC_R_Arm001
-    100138: CC_R_Elbow
-    100140: CC_R_Foot
-    100142: CC_R_Hand
-    100144: CC_R_Knee
-    100146: CC_SOG
-    100148: FullSword
-    100150: HAND
+    100136: CC_LowSpine
+    100138: CC_MidSpine
+    100140: CC_R_Elbow
+    100142: CC_R_Foot
+    100144: CC_R_Hand
+    100146: CC_R_Knee
+    100148: CC_SOG
+    100150: CC_TopSpine
     100152: L_Arm_IK
     100154: L_Leg_IK
-    100156: R_Arm_IK
-    100158: R_Leg_IK
-    100160: SCALE
-    100162: //RootNode
+    100156: LowSpineDummy
+    100158: MidSpineDummy
+    100160: MidSpineDummy001
+    100162: R_Arm_IK
+    100164: R_Leg_IK
+    100166: SCALE
+    100168: //RootNode
+    100170: UpSpineDummy
     400000: Be_L_Fore
     400002: Be_L_hand
     400004: Be_L_Index
@@ -132,53 +136,56 @@ ModelImporter:
     400084: Bn_Spine02
     400086: Bn_Spine03
     400088: body001
-    400090: CC_ALL
-    400092: CC_Finger00
-    400094: CC_Finger01
-    400096: CC_Finger02
-    400098: CC_Finger03
-    400100: CC_Finger04
-    400102: CC_Finger05
-    400104: CC_Finger06
-    400106: CC_Finger07
-    400108: CC_Finger08
-    400110: CC_Finger09
-    400112: CC_Finger10
-    400114: CC_Finger11
-    400116: CC_Finger12
-    400118: CC_Finger13
-    400120: CC_Finger14
-    400122: CC_Finger15
-    400124: CC_Global01
+    400090: body002
+    400092: CC_ALL
+    400094: CC_Finger00
+    400096: CC_Finger01
+    400098: CC_Finger02
+    400100: CC_Finger03
+    400102: CC_Finger04
+    400104: CC_Finger05
+    400106: CC_Finger06
+    400108: CC_Finger07
+    400110: CC_Finger08
+    400112: CC_Finger09
+    400114: CC_Finger10
+    400116: CC_Finger11
+    400118: CC_Finger12
+    400120: CC_Finger13
+    400122: CC_Finger14
+    400124: CC_Finger15
     400126: CC_Hips
     400128: CC_L_Elbow
     400130: CC_L_Foot
     400132: CC_L_Hand
     400134: CC_L_Knee
-    400136: CC_R_Arm001
-    400138: CC_R_Elbow
-    400140: CC_R_Foot
-    400142: CC_R_Hand
-    400144: CC_R_Knee
-    400146: CC_SOG
-    400148: FullSword
-    400150: HAND
+    400136: CC_LowSpine
+    400138: CC_MidSpine
+    400140: CC_R_Elbow
+    400142: CC_R_Foot
+    400144: CC_R_Hand
+    400146: CC_R_Knee
+    400148: CC_SOG
+    400150: CC_TopSpine
     400152: L_Arm_IK
     400154: L_Leg_IK
-    400156: R_Arm_IK
-    400158: R_Leg_IK
-    400160: SCALE
-    400162: //RootNode
-    2300000: FullSword
-    2300002: SCALE
-    3300000: FullSword
-    3300002: SCALE
+    400156: LowSpineDummy
+    400158: MidSpineDummy
+    400160: MidSpineDummy001
+    400162: R_Arm_IK
+    400164: R_Leg_IK
+    400166: SCALE
+    400168: //RootNode
+    400170: UpSpineDummy
+    2300000: SCALE
+    3300000: SCALE
     4300000: SCALE
     4300002: body001
-    4300004: FullSword
+    4300004: body002
     7400000: Take 001
     9500000: //RootNode
     13700000: body001
+    13700002: body002
   materials:
     importMaterials: 1
     materialName: 0

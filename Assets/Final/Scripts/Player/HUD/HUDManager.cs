@@ -7,13 +7,12 @@ using UnityEngine.EventSystems;
 public class HUDManager : MonoBehaviour 
 {
 	private float tooltipOffset = 20;
+    [SerializeField]
+	private Image healthbar,manabar, staminabar, expbar;
+    [SerializeField]
+    private Text healthText, staminaText, manaText;
 
-	public Image healthbar;
-	public Image manabar;
-	public Image staminabar;
-	public Image expbar;
-
-	private StatsManager sm;
+    private StatsManager sm;
 	private PlayerController pc;
 
     private Animator damageIndicator;
@@ -34,6 +33,7 @@ public class HUDManager : MonoBehaviour
 	private Text tooltipLvl;
 	private Text tooltipNextUpgrade;
 	private Text currentLvlTxt;
+
 
 	private bool setUpDone = false;
 	[SerializeField]
@@ -131,9 +131,12 @@ public class HUDManager : MonoBehaviour
         if (sm != null) 
 		{
 			healthbar.fillAmount = sm.getCurrentHealth () / sm.getTotalHealth ();
-			manabar.fillAmount = sm.getCurrentMana () / sm.getTotalMana ();
-			staminabar.fillAmount = sm.getCurrentStamina () / sm.getTotalStamina ();
-			expbar.fillAmount = sm.getCurrentExp () / sm.getGoalExp ();
+            healthText.text = (int)sm.getCurrentHealth() + "/" + (int)sm.getTotalHealth();
+            manabar.fillAmount = sm.getCurrentMana () / sm.getTotalMana ();
+            manaText.text = (int)sm.getCurrentMana() + "/" + (int)sm.getTotalMana();
+            staminabar.fillAmount = sm.getCurrentStamina () / sm.getTotalStamina ();
+            staminaText.text = (int)sm.getCurrentStamina() + "/" + (int)sm.getTotalStamina();
+            expbar.fillAmount = sm.getCurrentExp () / sm.getGoalExp ();
 			expText.text = (int)sm.getCurrentExp () + " / " + (int)sm.getGoalExp ();
 		}
 	}

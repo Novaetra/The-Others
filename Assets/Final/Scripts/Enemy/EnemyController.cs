@@ -15,6 +15,9 @@ public class EnemyController : MonoBehaviour
 	protected float attackRange = 1.5f;
 	protected float meleeDamage;
     protected float movementSpeed;
+
+    [SerializeField]
+    protected float numberOfAttacks;
     //private float totalHealth;
     [SerializeField]
     protected float totalHealth = 100;
@@ -35,6 +38,9 @@ public class EnemyController : MonoBehaviour
 	private List<Item> inventory;
 
     private EnemyManager enemyMan;
+    private bool isInside;
+    [SerializeField]
+    private GameObject blood;
 
     //Assigns the enemy's nav agent, animator, and list of players
     public void Start()
@@ -107,7 +113,7 @@ public class EnemyController : MonoBehaviour
 		agent.enabled = true;
 		agent.SetDestination(targetPlayer.position);
 		walkAnim();
-		stopAttackAnim();
+		resetAnimator();
 		rotateTowards(targetPlayer);
 	}
 
@@ -122,8 +128,9 @@ public class EnemyController : MonoBehaviour
     //If it hit a player, then apply damage
     public virtual void checkAttack()
     {
-        if (IsAlive)
+        if (IsAlive && isInside)
         {
+            /*
             RaycastHit hit;
             foreach (Raycaster caster in casters)
             {
@@ -138,6 +145,24 @@ public class EnemyController : MonoBehaviour
                     }
                 }
             }
+            */
+            GameManager.currentplayer.GetComponent<StatsManager>().recieveDamage(meleeDamage);
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.transform.tag =="Player")
+        {
+            isInside = true;
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.transform.tag == "Player")
+        {
+            isInside = false;
         }
     }
 
@@ -146,8 +171,11 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth -= dmg;
         anim.SetFloat("Health", currentHealth);
+        GameObject _blood = GameObject.Instantiate(blood,transform.FindChild("Blood Splater").transform);
+        _blood.transform.localPosition = new Vector3(0f, 0f, 0f);
+        _blood.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-        if(currentHealth<=0)
+        if (currentHealth<=0)
         {
             startDeath();
             return;
@@ -260,12 +288,14 @@ public class EnemyController : MonoBehaviour
 	//Triggers an attack animation on all clients
 	protected void attackAnim()
     {
-        GetComponent<Animator>().SetInteger("Skill", 1);
+        int attack = (int) Random.RandomRange(1, numberOfAttacks+1);
+        GetComponent<Animator>().SetInteger("Skill", attack);
     }
 
-	protected  void stopAttackAnim()
+	protected  void resetAnimator()
     {
-        GetComponent<Animator>().SetInteger("Skill", 0);
+        if(isAlive)
+            GetComponent<Animator>().SetInteger("Skill", 0);
     }
 
     //Triggers an walk animation on all clients

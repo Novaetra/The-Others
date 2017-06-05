@@ -85,7 +85,7 @@ public class SkillTree : MonoBehaviour
 		}
 		if (s.UpgradeCount < s.Upgrades.Count) 
 		{
-			if(s.Upgrades [s.UpgradeCount].LvlRequirement <= _sm.getCurrentLvl ())
+			if(s.Upgrades [s.UpgradeCount].LvlRequirement <= _sm.getCurrentLvl ()&&_sm.getUpgradePnts()>0)
 			{
 				return true;
 			}

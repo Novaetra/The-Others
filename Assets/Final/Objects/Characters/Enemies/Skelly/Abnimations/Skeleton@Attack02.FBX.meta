@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 936374f8f972c064a90a46c9294c925f
-timeCreated: 1496688600
+guid: 6e1aff23cfb3a1f4381def0400e8919c
+timeCreated: 1496688820
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -182,7 +182,7 @@ ModelImporter:
     4300000: SCALE
     4300002: body001
     4300004: body002
-    7400000: Attack01
+    7400000: Attack02
     9500000: //RootNode
     13700000: body001
     13700002: body002
@@ -208,10 +208,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack01
+      name: Attack02
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -231,14 +231,21 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.3709091
+      - time: 0.31272727
         functionName: checkAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.7672727
+      - time: 0.7018182
+        functionName: checkAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.89454544
         functionName: resetAnimator
         data: 
         objectReferenceParameter: {instanceID: 0}

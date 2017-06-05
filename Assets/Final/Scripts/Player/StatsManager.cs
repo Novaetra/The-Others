@@ -77,12 +77,12 @@ public class StatsManager : MonoBehaviour
 		baseMeleeDamage = 120f;
         currentLvl = 1;
         currentExp = 0f;
-        totalExpRequiredToLvlUp = 350f;
+        totalExpRequiredToLvlUp = 100f;
         upgradePoints = 0;
         expGained = 0f;
         //reviveDistance = 3.5f;
 
-        healthRegen = 50f;
+        healthRegen = 10f;
         manaRegen = 10f;
         staminaRegen = 100f;
 
