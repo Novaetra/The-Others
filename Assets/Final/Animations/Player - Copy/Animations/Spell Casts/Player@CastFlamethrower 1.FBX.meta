@@ -323,8 +323,8 @@ ModelImporter:
       curves: []
       events:
       - time: 0.63272727
-        functionName: createFlamethrower
-        data: 
+        functionName: CreateHoldSpell
+        data: Flamethrower
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

@@ -10,6 +10,7 @@ public class AdvancedAIController : EnemyController
 	private List<Action> actions = new List<Action>();
 	private float waitTime = 5f;
 	private bool doingAction = false;
+    
 
 	protected override void DoAdditionalSetup()
 	{
@@ -19,12 +20,6 @@ public class AdvancedAIController : EnemyController
 	private void SetUpActionsList()
 	{
 		actions.Add (attackAnim);
-		actions.Add (talk);
-	}
-
-	private void talk()
-	{
-		Debug.Log ("Hey how are ya?");
 	}
 
 	protected override void DoWithinProximity(float playerDistance)
@@ -32,6 +27,7 @@ public class AdvancedAIController : EnemyController
 		if (playerDistance < proximityRange/2) 
 		{
 			Debug.Log ("Too close");
+            anim.SetTrigger("tooClose");
 			//play 'Back up' animation
 		} 
 		else 

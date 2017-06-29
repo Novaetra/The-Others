@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SkillInitializer : MonoBehaviour 
 {
-    public GameObject SPAWNER, FIREBALL, SPARK, FLAMETHROWER, HEAL;
+    public GameObject SPAWNER, FIREBALL, EXPLOSION, FLAMETHROWER, HEAL;
 	public Transform leftSpawner;
     public Transform middleSpawner;
     public Transform floorSpawner;
@@ -51,12 +51,15 @@ public class SkillInitializer : MonoBehaviour
 
     }
 
-    public void createFlamethrower()
+    public void CreateHoldSpell(string name)
     {
-        GameObject flameThrower = (GameObject)GameObject.Instantiate(FLAMETHROWER, leftSpawner.transform.position, leftSpawner.transform.rotation);
-        flameThrower.transform.SetParent(leftSpawner.transform);
-        flameThrower.transform.localScale = new Vector3(1, 1, 1);
-        currentEffect = flameThrower;
+        //Get the spell from list of spells
+        GameObject s = GetGameObject(name);
+
+        GameObject spell = (GameObject)GameObject.Instantiate(s, leftSpawner.transform.position, leftSpawner.transform.rotation);
+        spell.transform.SetParent(leftSpawner.transform);
+        spell.transform.localScale = new Vector3(1, 1, 1);
+        currentEffect = spell;
     }
 
 	private GameObject GetGameObject(string name)

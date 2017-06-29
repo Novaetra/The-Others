@@ -14,7 +14,7 @@ public class FireballScript : SpellScript
 	void Start()
 	{
         sm = GameManager.currentplayer.GetComponent<SkillManager>();
-        SPARK = GameManager.currentplayer.GetComponent<SkillInitializer>().SPARK;
+        SPARK = GameManager.currentplayer.GetComponent<SkillInitializer>().EXPLOSION;
         for(int i = 0; i<sm.getKnownSkills().Count;i++)
         {
 			if(sm.getKnownSkills()[i].Name.Equals("Fireball"))

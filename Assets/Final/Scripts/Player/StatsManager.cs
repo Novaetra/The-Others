@@ -438,7 +438,7 @@ public class StatsManager : MonoBehaviour
 
 	public void dealMeleeDamage(RaycastHit hit)
 	{
-		hit.transform.SendMessage("recieveDamage", baseMeleeDamage);
+		hit.transform.SendMessage("RecieveDamage", baseMeleeDamage);
 	}
 
 	#endregion

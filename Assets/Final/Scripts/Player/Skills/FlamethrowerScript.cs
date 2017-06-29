@@ -39,7 +39,7 @@ public class FlamethrowerScript : SpellScript
     {
         if(col.tag == "Enemy")
         {
-            col.transform.GetComponent<EnemyController>().recieveDamage(dmg);
+            col.transform.GetComponent<EnemyController>().RecieveDamage(dmg);
         }
     }
 

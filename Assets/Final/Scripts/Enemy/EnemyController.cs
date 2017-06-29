@@ -167,7 +167,7 @@ public class EnemyController : MonoBehaviour
     }
 
 	//Lower the enemy's health by x amt
-    public void recieveDamage(float dmg)
+    public void RecieveDamage(float dmg)
     {
         currentHealth -= dmg;
         anim.SetFloat("Health", currentHealth);
