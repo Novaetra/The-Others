@@ -191,7 +191,7 @@ public class EnemyController : MonoBehaviour
 
 	private void SplatterBlood()
 	{
-		GameObject _blood = GameObject.Instantiate(blood, transform.FindChild("Blood Splatter").transform);
+		GameObject _blood = GameObject.Instantiate(blood, transform.Find("Blood Splatter").transform);
 		_blood.transform.localPosition = new Vector3(0f, 0f, 0f);
 		_blood.transform.localScale = new Vector3(1f, 1f, 1f);//(0.5f, 0.5f, 0.5f);
 	}

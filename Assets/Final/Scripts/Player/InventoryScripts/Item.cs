@@ -37,7 +37,7 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void AddFloor(string floorName)
     {
         Transform floor = GameObject.Find(floorName).transform;
-        foreach(Transform room in floor.FindChild("Rooms"))
+        foreach(Transform room in floor.Find("Rooms"))
         {
             AddRoom(room);
         }

@@ -110,7 +110,7 @@ public class EnemyManager : MonoBehaviour
 		//For each floor
         for (int i = 0; i < floors.Length; i++)
         {
-			Transform rooms = floors[i].transform.FindChild("Rooms");
+			Transform rooms = floors[i].transform.Find("Rooms");
 			//For each room
             for (int r = 0; r < rooms.childCount; r++)
             {
@@ -127,7 +127,7 @@ public class EnemyManager : MonoBehaviour
     private void addAdjacentRooms(Transform floor)
     {
 		//For each door
-        foreach(Transform door in floor.FindChild("Doors"))
+        foreach(Transform door in floor.Find("Doors"))
         {
 			//Temporary list to store adjacent rooms for later use
             List<Transform> _adjacentRoomsList = new List<Transform>(0);
@@ -156,13 +156,13 @@ public class EnemyManager : MonoBehaviour
     private void linkRoomsToSpawns(Transform room)
     {
 		//Makes sure there are spawns in the room
-        if (room.FindChild("Spawns") != null)
+        if (room.Find("Spawns") != null)
         {
 			//temporary list to store the spawn points per room for later use
-            Transform[] spawns = new Transform[room.FindChild("Spawns").childCount];
+            Transform[] spawns = new Transform[room.Find("Spawns").childCount];
             int z = 0;
 			//For each spawn in room
-            foreach (Transform spawn in room.FindChild("Spawns"))
+            foreach (Transform spawn in room.Find("Spawns"))
             {
 				//Add the spawn point to the temporary list
                 spawns[z] = spawn;

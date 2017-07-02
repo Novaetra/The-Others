@@ -55,21 +55,21 @@ public class HUDManager : MonoBehaviour
 	private void SetStartingValues()
 	{
 	    canvasObj = GameObject.Find("Canvas");
-	    messageObj = canvasObj.transform.FindChild ("ShortMessage").GetComponent<Text>();
+	    messageObj = canvasObj.transform.Find ("ShortMessage").GetComponent<Text>();
 		currentPlayer = gameObject;
 		pc = currentPlayer.GetComponent<PlayerController>();
 		sm = currentPlayer.GetComponent<StatsManager> ();
-		roundsTxt = canvasObj.transform.FindChild("RoundsTxt").GetComponent<Text>();
+		roundsTxt = canvasObj.transform.Find("RoundsTxt").GetComponent<Text>();
 		roundsTxt.enabled = false;
-		upgradePnts = GameObject.Find ("SkillTree Panel").transform.FindChild("UpgradePoints").GetComponent<Text>();
-		currentLvlTxt = GameObject.Find ("SkillTree Panel").transform.FindChild ("CurrentLevelText").GetComponent<Text> ();
-		tooltip = canvasObj.transform.FindChild ("Tooltip").gameObject;
-		tooltipName = tooltip.transform.FindChild ("Name").GetComponent<Text> ();;
-		tooltipDesc = tooltip.transform.FindChild ("Description").GetComponent<Text> ();
-		tooltipLvl = tooltip.transform.FindChild ("LvlRequired").GetComponent<Text> ();
-		tooltipNextUpgrade = tooltip.transform.FindChild ("NextUpgrade").GetComponent<Text> ();
-		expText = canvasObj.transform.FindChild ("Exp Counter").GetComponent<Text> ();
-	    damageIndicator = canvasObj.transform.FindChild("Damage Indicator").GetComponent<Animator>();
+		upgradePnts = GameObject.Find ("SkillTree Panel").transform.Find("UpgradePoints").GetComponent<Text>();
+		currentLvlTxt = GameObject.Find ("SkillTree Panel").transform.Find ("CurrentLevelText").GetComponent<Text> ();
+		tooltip = canvasObj.transform.Find ("Tooltip").gameObject;
+		tooltipName = tooltip.transform.Find ("Name").GetComponent<Text> ();;
+		tooltipDesc = tooltip.transform.Find ("Description").GetComponent<Text> ();
+		tooltipLvl = tooltip.transform.Find ("LvlRequired").GetComponent<Text> ();
+		tooltipNextUpgrade = tooltip.transform.Find ("NextUpgrade").GetComponent<Text> ();
+		expText = canvasObj.transform.Find ("Exp Counter").GetComponent<Text> ();
+	    damageIndicator = canvasObj.transform.Find("Damage Indicator").GetComponent<Animator>();
 		SetUpPanels ();
 		tooltip.SetActive (false);
 		upgradePnts.enabled = false;

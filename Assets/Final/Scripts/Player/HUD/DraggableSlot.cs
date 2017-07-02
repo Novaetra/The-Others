@@ -54,7 +54,7 @@ public class DraggableSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 		imgBeingDragged = transform.GetComponent<Image>().sprite;
 		//Sets the background image of the object being dragged
 		background = transform.parent;
-		background = background.FindChild("SlotBG").transform;
+		background = background.Find("SlotBG").transform;
 		//Sets the original parent so it can go back to it later
 		originalParent = gameObject.transform.parent.transform;
 		originalSlot = originalParent.GetChild(1);

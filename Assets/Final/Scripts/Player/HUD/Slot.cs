@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour, IDropHandler
 		manager = currentPlayer.GetComponent<SkillManager>();
 		//Gets the background object so that we can change it to gray or white
 		bg = transform.parent;
-		bg = bg.FindChild ("SlotBG");
+		bg = bg.Find ("SlotBG");
 		bg.GetComponent<Image> ().color = Color.gray;
 		//Make the slot undraggable if empty
 		dragSlot = GetComponent<DraggableSlot> ();
