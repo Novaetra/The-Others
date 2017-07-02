@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MeteorManager : MonoBehaviour
 {
-	private const string CONNECTION_URL = @"wss://meteor-tommsy.rhcloud.com:8443/websocket";
+	private const string CONNECTION_URL = @"wss://lennyparisi.com/websocket";
 	//private const string CONNECTION_URL = @"ws://localhost:3000/websocket";
 
     //Text componets to get user input

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 9ad521a992e7540f5b9812e472e406fd
-timeCreated: 1498925418
+guid: 7df4c825e7b124b27b36041beaadfb6a
+timeCreated: 1498820791
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -15,8 +15,6 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
