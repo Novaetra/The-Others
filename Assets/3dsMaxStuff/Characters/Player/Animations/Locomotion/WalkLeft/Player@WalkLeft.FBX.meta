@@ -1,0 +1,227 @@
+fileFormatVersion: 2
+guid: 3a2adba46cd144ed9839bd3dbf4d45bf
+timeCreated: 1498925409
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Be_Hip01
+    100002: Be_L_HandEnd01
+    100004: Be_L_IndexEnd01
+    100006: Be_L_MiddleMEnd01
+    100008: Be_L_PinkyEnd01
+    100010: Be_L_RingEnd01
+    100012: Be_L_ShldrEnd01
+    100014: Be_L_ThumbEnd01
+    100016: Be_L_ToeEnd01
+    100018: Be_NeckEnd
+    100020: Be_R_HandEnd01
+    100022: Be_R_IndexEnd01
+    100024: Be_R_MiddleMEnd01
+    100026: Be_R_PinkyEnd01
+    100028: Be_R_RingEnd01
+    100030: Be_R_ShldrEnd01
+    100032: Be_R_ThumbEnd01
+    100034: Be_R_ToeEnd01
+    100036: Bn_Chest01
+    100038: Bn_Hip01
+    100040: Bn_L_Ankle01
+    100042: Bn_L_Arm01
+    100044: Bn_L_BallFoot01
+    100046: Bn_L_Elbow01
+    100048: Bn_L_IndexBase01
+    100050: Bn_L_IndexEnd01
+    100052: Bn_L_IndexMiddle01
+    100054: Bn_L_MiddleBase01
+    100056: Bn_L_MiddleEnd01
+    100058: Bn_L_MiddleMiddle01
+    100060: Bn_L_PinkyBase01
+    100062: Bn_L_PinkyEnd01
+    100064: Bn_L_PinkyMiddle01
+    100066: Bn_L_RingBase01
+    100068: Bn_L_RingEnd01
+    100070: Bn_L_RingMiddle01
+    100072: Bn_L_Shin01
+    100074: Bn_L_Shld01
+    100076: Bn_L_Thigh01
+    100078: Bn_L_ThumbBase01
+    100080: Bn_L_ThumbEnd01
+    100082: Bn_L_ThumbMiddle01
+    100084: Bn_L_Wrist01
+    100086: Bn_Neck01
+    100088: Bn_R_Ankle01
+    100090: Bn_R_Arm01
+    100092: Bn_R_BallFoot01
+    100094: Bn_R_Elbow01
+    100096: Bn_R_IndexBase01
+    100098: Bn_R_IndexEnd01
+    100100: Bn_R_IndexMiddle01
+    100102: Bn_R_MiddleBase01
+    100104: Bn_R_MiddleEnd01
+    100106: Bn_R_MiddleMiddle01
+    100108: Bn_R_PinkyBase01
+    100110: Bn_R_PinkyEnd01
+    100112: Bn_R_PinkyMiddle01
+    100114: Bn_R_RingBase01
+    100116: Bn_R_RingEnd01
+    100118: Bn_R_RingMiddle01
+    100120: Bn_R_Shin01
+    100122: Bn_R_Shld01
+    100124: Bn_R_Thigh01
+    100126: Bn_R_ThumbBase01
+    100128: Bn_R_ThumbEnd01
+    100130: Bn_R_ThumbMiddle01
+    100132: Bn_R_Wrist01
+    100134: Bn_SpB01
+    100136: BRoot_SpA01
+    100138: CC_Global01
+    100140: CC_SOG01
+    100142: Characfter2
+    100144: //RootNode
+    400000: Be_Hip01
+    400002: Be_L_HandEnd01
+    400004: Be_L_IndexEnd01
+    400006: Be_L_MiddleMEnd01
+    400008: Be_L_PinkyEnd01
+    400010: Be_L_RingEnd01
+    400012: Be_L_ShldrEnd01
+    400014: Be_L_ThumbEnd01
+    400016: Be_L_ToeEnd01
+    400018: Be_NeckEnd
+    400020: Be_R_HandEnd01
+    400022: Be_R_IndexEnd01
+    400024: Be_R_MiddleMEnd01
+    400026: Be_R_PinkyEnd01
+    400028: Be_R_RingEnd01
+    400030: Be_R_ShldrEnd01
+    400032: Be_R_ThumbEnd01
+    400034: Be_R_ToeEnd01
+    400036: Bn_Chest01
+    400038: Bn_Hip01
+    400040: Bn_L_Ankle01
+    400042: Bn_L_Arm01
+    400044: Bn_L_BallFoot01
+    400046: Bn_L_Elbow01
+    400048: Bn_L_IndexBase01
+    400050: Bn_L_IndexEnd01
+    400052: Bn_L_IndexMiddle01
+    400054: Bn_L_MiddleBase01
+    400056: Bn_L_MiddleEnd01
+    400058: Bn_L_MiddleMiddle01
+    400060: Bn_L_PinkyBase01
+    400062: Bn_L_PinkyEnd01
+    400064: Bn_L_PinkyMiddle01
+    400066: Bn_L_RingBase01
+    400068: Bn_L_RingEnd01
+    400070: Bn_L_RingMiddle01
+    400072: Bn_L_Shin01
+    400074: Bn_L_Shld01
+    400076: Bn_L_Thigh01
+    400078: Bn_L_ThumbBase01
+    400080: Bn_L_ThumbEnd01
+    400082: Bn_L_ThumbMiddle01
+    400084: Bn_L_Wrist01
+    400086: Bn_Neck01
+    400088: Bn_R_Ankle01
+    400090: Bn_R_Arm01
+    400092: Bn_R_BallFoot01
+    400094: Bn_R_Elbow01
+    400096: Bn_R_IndexBase01
+    400098: Bn_R_IndexEnd01
+    400100: Bn_R_IndexMiddle01
+    400102: Bn_R_MiddleBase01
+    400104: Bn_R_MiddleEnd01
+    400106: Bn_R_MiddleMiddle01
+    400108: Bn_R_PinkyBase01
+    400110: Bn_R_PinkyEnd01
+    400112: Bn_R_PinkyMiddle01
+    400114: Bn_R_RingBase01
+    400116: Bn_R_RingEnd01
+    400118: Bn_R_RingMiddle01
+    400120: Bn_R_Shin01
+    400122: Bn_R_Shld01
+    400124: Bn_R_Thigh01
+    400126: Bn_R_ThumbBase01
+    400128: Bn_R_ThumbEnd01
+    400130: Bn_R_ThumbMiddle01
+    400132: Bn_R_Wrist01
+    400134: Bn_SpB01
+    400136: BRoot_SpA01
+    400138: CC_Global01
+    400140: CC_SOG01
+    400142: Characfter2
+    400144: //RootNode
+    4300000: Characfter2
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Characfter2
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: c88aab0ad09c043d0aad19298a2470a1
+timeCreated: 1498925422
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Be_Head
+    100002: Be_L_Hand
+    100004: Be_L_Leg
+    100006: Be_L_Thumb
+    100008: Be_R_Foot
+    100010: Be_R_Foot 1
+    100012: Be_R_Hand
+    100014: Be_R_Leg
+    100016: Be_R_Thumb
+    100018: Bn_Center
+    100020: Bn_L_Arm
+    100022: Bn_L_Forearm
+    100024: Bn_L_Forearm 1
+    100026: Bn_L_LowerHand
+    100028: Bn_L_Thumb
+    100030: Bn_L_ThumbConnect
+    100032: Bn_L_UpperHand
+    100034: Bn_LowerSpine
+    100036: Bn_MidSpine
+    100038: Bn_R_Arm
+    100040: Bn_R_Calf
+    100042: Bn_R_Calf 1
+    100044: Bn_R_Foot
+    100046: Bn_R_Foot 1
+    100048: Bn_R_LowerHand
+    100050: Bn_R_Thigh
+    100052: Bn_R_Thigh 1
+    100054: Bn_R_Thumb
+    100056: Bn_R_ThumbConnect
+    100058: Bn_R_UpperHand
+    100060: Bn_TopOfHead
+    100062: Bn_TopSpine
+    100064: BOdy001
+    100066: CC_ALL
+    100068: CC_COG
+    100070: Shield
+    100072: ShieldControl
+    100074: //RootNode
+    400000: Be_Head
+    400002: Be_L_Hand
+    400004: Be_L_Leg
+    400006: Be_L_Thumb
+    400008: Be_R_Foot
+    400010: Be_R_Foot 1
+    400012: Be_R_Hand
+    400014: Be_R_Leg
+    400016: Be_R_Thumb
+    400018: Bn_Center
+    400020: Bn_L_Arm
+    400022: Bn_L_Forearm
+    400024: Bn_L_Forearm 1
+    400026: Bn_L_LowerHand
+    400028: Bn_L_Thumb
+    400030: Bn_L_ThumbConnect
+    400032: Bn_L_UpperHand
+    400034: Bn_LowerSpine
+    400036: Bn_MidSpine
+    400038: Bn_R_Arm
+    400040: Bn_R_Calf
+    400042: Bn_R_Calf 1
+    400044: Bn_R_Foot
+    400046: Bn_R_Foot 1
+    400048: Bn_R_LowerHand
+    400050: Bn_R_Thigh
+    400052: Bn_R_Thigh 1
+    400054: Bn_R_Thumb
+    400056: Bn_R_ThumbConnect
+    400058: Bn_R_UpperHand
+    400060: Bn_TopOfHead
+    400062: Bn_TopSpine
+    400064: BOdy001
+    400066: CC_ALL
+    400068: CC_COG
+    400070: Shield
+    400072: ShieldControl
+    400074: //RootNode
+    2300000: Shield
+    2300002: ShieldControl
+    3300000: Shield
+    3300002: ShieldControl
+    4300000: BOdy001
+    4300002: ShieldControl
+    4300004: Shield
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: BOdy001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
