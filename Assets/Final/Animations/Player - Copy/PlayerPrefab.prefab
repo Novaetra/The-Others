@@ -291,7 +291,6 @@ GameObject:
   - component: {fileID: 4879854316037854}
   - component: {fileID: 33333553412776962}
   - component: {fileID: 23932628743392310}
-  - component: {fileID: 114596802700736416}
   m_Layer: 13
   m_Name: SpellSpawner
   m_TagString: Untagged
@@ -2393,6 +2392,8 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -2429,6 +2430,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23269111531070120
 MeshRenderer:
@@ -2460,6 +2462,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23562121465073808
 MeshRenderer:
@@ -2491,6 +2494,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23820967221817524
 MeshRenderer:
@@ -2522,6 +2526,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23932628743392310
 MeshRenderer:
@@ -2553,6 +2558,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33204220809766604
 MeshFilter:
@@ -2664,7 +2670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SPAWNER: {fileID: 157532, guid: 980f3ffec38eb471dbc7ba35fb8b08fe, type: 2}
   FIREBALL: {fileID: 119956, guid: 79cc4d8bf8c394f439d3b2ea1ecc9613, type: 2}
-  SPARK: {fileID: 0}
+  EXPLOSION: {fileID: 0}
   FLAMETHROWER: {fileID: 199602, guid: e0d9a5405ae152845a7f1680492c2b47, type: 2}
   HEAL: {fileID: 128142, guid: 5e3b5c6e7e2ff8d4c9abacf15f9d4d94, type: 2}
   leftSpawner: {fileID: 4879854316037854}
@@ -2693,7 +2699,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75513c0d1aabb4820a5bfcd2e3e6f99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalHealth: 0
+  currentHealth: 0
+  totalMana: 0
+  currentMana: 0
+  totalStamina: 0
+  currentStamina: 0
+  sprintStamCost: 0
+  meleeCost: 0
   baseMeleeDamage: 0
+  healthUpgradeAmntOnLvlUp: 5
+  staminaUpgradeAmtOnLvlUp: 10
+  totalExpRequiredToLvlUp: 0
+  upgradePoints: 0
+  healthRegen: 0
+  manaRegen: 0
+  staminaRegen: 0
   trees: []
 --- !u!114 &114456509808913062
 MonoBehaviour:
@@ -2717,13 +2738,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acb627a32fdf24ebfa4762688f293cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TIME_SCALE: 0
   expIncreaseAmt: 50
   walkSpeed: 4
   runSpeed: 6
+  dashSpeed: 15
   currentSpeed: 0
   upperBody: {fileID: 4702277115126934}
   lastUpperRot: 0
   cursorLocked: 1
+  lyrMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114590581549680870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2739,19 +2765,10 @@ MonoBehaviour:
   manabar: {fileID: 0}
   staminabar: {fileID: 0}
   expbar: {fileID: 0}
-  revivingBar: {fileID: 0}
-  revivingBarBG: {fileID: 0}
---- !u!114 &114596802700736416
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1223328612028886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  healthText: {fileID: 0}
+  staminaText: {fileID: 0}
+  manaText: {fileID: 0}
+  isOnTooltip: 0
 --- !u!114 &114662572836322870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2853,6 +2870,7 @@ SkinnedMeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0

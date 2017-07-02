@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 {
-    public ArrayList rooms;
+	public List<Transform> rooms;
 
 	private string name, description;
     [SerializeField]
@@ -66,7 +66,7 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		amt = 0;
 		dropRate = dr;
         maxNum = max;
-        rooms = new ArrayList();
+		rooms = new List<Transform>();
 		isDiscontinued = false;
 	}
 
@@ -78,7 +78,7 @@ public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		amt = 0;
 		dropRate = dr;
 		maxNum = max;
-		rooms = new ArrayList();
+		rooms = new List<Transform>();
 		isDiscontinued = discontinue;
 	}
 		
