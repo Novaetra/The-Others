@@ -74,7 +74,7 @@ public class StatsManager : MonoBehaviour
         sprintStamCost = 20f;
         DashStamCost = .3f * totalStamina;
         meleeCost = 40f;
-		baseMeleeDamage = 120f;
+		baseMeleeDamage = 10f;
         currentLvl = 1;
         currentExp = 0f;
         totalExpRequiredToLvlUp = 100f;
@@ -84,7 +84,7 @@ public class StatsManager : MonoBehaviour
 
         healthRegen = 10f;
         manaRegen = 10f;
-        staminaRegen = 100f;
+        staminaRegen = 50f;
 
         stamTimer = 2f;
         stamCurrentTime = stamTimer;

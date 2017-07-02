@@ -13,20 +13,18 @@ public class EnemyController : MonoBehaviour
 	[SerializeField]
 	protected float proximityRange;
 	protected float attackRange = 1.5f;
+	[SerializeField]
 	protected float meleeDamage;
-    protected float movementSpeed;
+	protected float movementSpeed;
 
     [SerializeField]
     protected float numberOfAttacks;
     //private float totalHealth;
     [SerializeField]
-    protected float totalHealth = 100;
-    [SerializeField]
-	protected float currentHealth;
-	protected float expOnKill;
+    protected float totalHealth, currentHealth, expOnKill;
 
 	protected bool doneSettingUp = false;
-    private bool isAlive = true;
+	protected bool isAlive = true;
     private bool alreadySpawnedItem = false;
     //Keeps track of how many times been hit to trigger hit response every 4th hit
     private int hitResponseFrequency = 4;
@@ -42,6 +40,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private GameObject blood;
 
+	private Inventory invClass;
+
     //Assigns the enemy's nav agent, animator, and list of players
     public void Start()
     {
@@ -54,7 +54,8 @@ public class EnemyController : MonoBehaviour
         targetPlayer = GameObject.Find("Player").transform;
         //proximityRange = agent.stoppingDistance + 1f;
         movementSpeed = 1.5f;
-		inventory = GameObject.Find ("InventoryManager").GetComponent<Inventory> ().AvailableItemsList;
+		invClass = GameObject.Find("InventoryManager").GetComponent<Inventory>();
+		inventory = invClass.AvailableItemsList;
 		DoAdditionalSetup ();
         enemyMan = GameObject.Find("Managers").transform.GetComponent<EnemyManager>();
 
@@ -90,7 +91,7 @@ public class EnemyController : MonoBehaviour
             //If the distance is greater than the enemy's melee range, then walk toward the target player
             if (playerDistance > proximityRange)
                 {
-					DoNotWithinProximity ();
+				DoNotWithinProximity (playerDistance);
                 }
                 //Else if the player is within melee range, attack
                 else
@@ -102,13 +103,13 @@ public class EnemyController : MonoBehaviour
 
 	protected virtual void DoWithinProximity(float playerDistance)
 	{
-		idleAnim();
+		animatorSpeedToZero();
 		attackAnim();
 		// agent.enabled = false;
 		rotateTowards(targetPlayer);
 	}
 
-	protected virtual void DoNotWithinProximity()
+	protected virtual void DoNotWithinProximity(float playerDistance)
 	{
 		agent.enabled = true;
 		agent.SetDestination(targetPlayer.position);
@@ -117,7 +118,7 @@ public class EnemyController : MonoBehaviour
 		rotateTowards(targetPlayer);
 	}
 
-    private void rotateTowards(Transform target)
+	protected void rotateTowards(Transform target)
     {
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -146,7 +147,7 @@ public class EnemyController : MonoBehaviour
                 }
             }
             */
-            GameManager.currentplayer.GetComponent<StatsManager>().recieveDamage(meleeDamage);
+            GameManager.currentplayer.GetComponent<StatsManager>().recieveDamage(MeleeDamage);
         }
     }
 
@@ -171,9 +172,7 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth -= dmg;
         anim.SetFloat("Health", currentHealth);
-        GameObject _blood = GameObject.Instantiate(blood,transform.FindChild("Blood Splater").transform);
-        _blood.transform.localPosition = new Vector3(0f, 0f, 0f);
-        _blood.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+		SplatterBlood();
 
         if (currentHealth<=0)
         {
@@ -187,7 +186,15 @@ public class EnemyController : MonoBehaviour
             tookDamageCount = 0;
         }
         tookDamageCount++;
+		AfterTakingDamage();
     }
+
+	private void SplatterBlood()
+	{
+		GameObject _blood = GameObject.Instantiate(blood, transform.FindChild("Blood Splatter").transform);
+		_blood.transform.localPosition = new Vector3(0f, 0f, 0f);
+		_blood.transform.localScale = new Vector3(1f, 1f, 1f);//(0.5f, 0.5f, 0.5f);
+	}
 
 	//Is called from animation event and starts the die coroutine
     public void startDeath()
@@ -218,16 +225,31 @@ public class EnemyController : MonoBehaviour
                // Debug.Log(" I want to spawn a " + i.Name + " because the number is " + randNum + " and the droprate is " + i.DropRate + " and the last drop was " + lastDropRate);
                 if (randNum >= lastDropRate && randNum < i.DropRate+lastDropRate && i.Amt < i.Max)
                 {
-                    GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load(i.Name), new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
-                    Item item = obj.GetComponent<Item>();
-                    item.ItemIDNumber = i.ItemIDNumber;
-                    alreadySpawnedItem = true;
+					spawnPowerUp(i);
                     return;
                 }
                 lastDropRate = i.DropRate+1;
             }
         }
     }
+
+	protected void spawnPowerUp(Item i)
+	{
+		GameObject obj = (GameObject)GameObject.Instantiate(Resources.Load(i.Name), new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+		Item item = obj.GetComponent<Item>();
+		item.ItemIDNumber = i.ItemIDNumber;
+		alreadySpawnedItem = true;
+	}
+
+	protected void spawnPowerUp(int itemID)
+	{
+		Item i = invClass.GetItemFromID(itemID);
+
+		GameObject obj = (GameObject)GameObject.Instantiate(Resources.Load(i.Name), new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+		Item item = obj.GetComponent<Item>();
+		item.ItemIDNumber = i.ItemIDNumber;
+		alreadySpawnedItem = true;
+	}
 
 	//Firsts starts the death animation, waits x seconds, and then destroys the enemy
     private void die()
@@ -243,8 +265,12 @@ public class EnemyController : MonoBehaviour
             enemyMan.decreaseEnemyCount();
             enemyMan.RemoveEnemyFromList(gameObject);
         }
+		DoAdditionalOnDeath();
         StartCoroutine(destroy(20f));
     }
+
+	protected virtual void DoAdditionalOnDeath() { }
+
     private IEnumerator destroy(float sec)
     {
         yield return new WaitForSeconds(sec);
@@ -259,7 +285,7 @@ public class EnemyController : MonoBehaviour
 
 	public void setMeleeDamage(float d)
 	{
-		meleeDamage = d;
+		MeleeDamage = d;
 	}
 
 	public void setExpOnKill(float exp)
@@ -282,6 +308,7 @@ public class EnemyController : MonoBehaviour
 	//Send all players exp
     void sendPlayersExp()
     {
+		Debug.Log(expOnKill);
         GameManager.currentplayer.GetComponent<StatsManager>().recieveExp(expOnKill);
     }
 
@@ -292,23 +319,36 @@ public class EnemyController : MonoBehaviour
         GetComponent<Animator>().SetInteger("Skill", attack);
     }
 
-	protected  void resetAnimator()
+	protected virtual void resetAnimator()
     {
         if(isAlive)
             GetComponent<Animator>().SetInteger("Skill", 0);
     }
 
+	protected virtual void AfterTakingDamage()
+	{
+	}
+
     //Triggers an walk animation on all clients
 	protected void walkAnim()
     {
-        GetComponent<Animator>().SetFloat("Speed", 5);
+		GetComponent<Animator>().SetFloat("Speed", agent.speed);
     }
 
-	//Triggers an idle animation on all clients
-	protected void idleAnim()
+	public void animatorSpeedToZero()
     {
         GetComponent<Animator>().SetFloat("Speed", 0);
     }
+
+	protected void disableAgent()
+	{
+		agent.enabled = false;
+	}
+
+	protected void enableAgent()
+	{
+		agent.enabled = true;
+	}
 
     public bool IsAlive
     {
@@ -322,4 +362,17 @@ public class EnemyController : MonoBehaviour
             isAlive = value;
         }
     }
+
+	public float MeleeDamage
+	{
+		get
+		{
+			return meleeDamage;
+		}
+
+		set
+		{
+			meleeDamage = value;
+		}
+	}
 }

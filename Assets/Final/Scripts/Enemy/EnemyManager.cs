@@ -95,10 +95,12 @@ public class EnemyManager : MonoBehaviour
     private void setUpEnemyStartingStats()
     {
         //health, exp, damagem, move speed (max of 5)
-        statsPerEnemy["Skelly"] = new float[4] { 100f, 20f, 50f, 3f};
+        statsPerEnemy["Skelly"] = new float[4] { 7f, 20f, 50f, 3f};
         enemyNames.Add("Skelly");
-        statsPerEnemy["Weakling"] = new float[4] { 50f, 20f, 20f, 3f };
+        statsPerEnemy["Weakling"] = new float[4] { 10f, 20f, 20f, 3f };
         enemyNames.Add("Weakling");
+		statsPerEnemy["FirstBoss"] = new float[4] { 500f, 400f, 80f, 3.5f };
+		enemyNames.Add("FirstBoss");
     }
 
     //Fills the list that contains all adjacent rooms and links the room to its spawn points
@@ -186,11 +188,11 @@ public class EnemyManager : MonoBehaviour
                 for (int a = 0; a < adjacentRooms[i].Length-1; a++)
                 {
                     //If a room in the list == player current room
-                    if (adjacentRooms[i][a] == CurrentRoom)
+					if (adjacentRooms[i][a] == currentRoom)
                     {
-                        //If the door linking the two rooms is open, then it adds the spawn points of that adjacent room to the list of available points
-                        //(The last element in array will always be the door)
-                        if (adjacentRooms[i][adjacentRooms[i].Length-1].GetComponentInChildren<Door>().getOpen())
+						//If the door linking the two rooms is open, then it adds the spawn points of that adjacent room to the list of available points
+						//(The last element in array will always be the door
+						if (adjacentRooms[i][adjacentRooms[i].Length-1].GetComponentInChildren<Door>().getOpen())
                         {
                             //For each spawn point in _______ room 
                             for (int b=0; b<adjacentRooms[i].Length-1;b++)
@@ -320,6 +322,14 @@ public class EnemyManager : MonoBehaviour
         allEnemies.Add(enemy);
     }
 
+	public void spawnEnemy(GameObject enemy, Transform spawn, string enemyType)
+	{
+		GameObject _enemy = (GameObject)GameObject.Instantiate(enemy, spawn.position, spawn.rotation);
+		string enemytype = enemyType;
+		setStartingStats(enemy.GetComponent<EnemyController>(), enemytype);
+		allEnemies.Add(enemy);
+	}
+
     private void setStartingStats(EnemyController enemy, string enemyName)
     {
         enemy.setTotalHealth(statsPerEnemy[enemyName][0]);
@@ -336,7 +346,7 @@ public class EnemyManager : MonoBehaviour
         {
             for(int i = 0;i<enemyNames.Count;i++)
             {
-                statsPerEnemy[(string)enemyNames[i]][0] += 40f;
+                statsPerEnemy[(string)enemyNames[i]][0] += 5f;
                 statsPerEnemy[(string)enemyNames[i]][1] += 5f;
                 statsPerEnemy[(string)enemyNames[i]][2] += 5f;
             }

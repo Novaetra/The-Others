@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Door : MonoBehaviour
 {
-    Animation anim;
+	protected Animator anim;
     public float doorCost;
     [SerializeField]
-    private bool isOpen;
+	protected bool isOpen;
     [Header("Last item in array must be the door")]
 
     [SerializeField]
@@ -17,7 +17,7 @@ public class Door : MonoBehaviour
 	//Sets starting values
     void Start()
     {
-        anim = GetComponent<Animation>();
+		anim = GetComponent<Animator>();
         if (GetComponent<Unlockable>() != null)
         {
             lockComponent = GetComponent<Unlockable>();
@@ -25,7 +25,7 @@ public class Door : MonoBehaviour
     }
 
 	//Opens the door upon user interaction
-    public void interact(object[] parameters)
+    public virtual void interact(object[] parameters)
     {
         RaycastHit hit = (RaycastHit)parameters[0];
         GameObject player = (GameObject)parameters[1];
@@ -57,22 +57,25 @@ public class Door : MonoBehaviour
     }
     
 	//This displays the door cost if the player approaches it
-    private void OnTriggerEnter(Collider col)
+	public virtual void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player" && isOpen == false)
         {
-            col.transform.GetComponent<HUDManager>().displayMsg("Door requires " + doorCost + " exp and 2 keys",2f);
+            col.transform.GetComponent<HUDManager>().displayMsg("Door requires " + doorCost + " exp",2f);
         }
     }
     
 	//Plays the open door animation and removes the colliders
-    public void openDoor()
+    public virtual void openDoor()
     {
-        anim.Play("OpenDoor");
+		anim.SetBool("isOpen",true);
         GetComponent<BoxCollider>().enabled = false;
         GetComponent<UnityEngine.AI.NavMeshObstacle>().enabled = false;
         isOpen = true;
+		GameObject.Find("Managers").GetComponent<EnemyManager>().updateSpawnsAvailable();
     }
+
+
 	#region getters
     public float getCost()
     {
@@ -83,6 +86,12 @@ public class Door : MonoBehaviour
     {
         return isOpen;
     }
+
+	public void setOpen(bool tf)
+	{
+		isOpen = tf;
+		GameObject.Find("Managers").GetComponent<EnemyManager>().updateSpawnsAvailable();
+	}
 
     public Transform[] getAdjacentRooms()
     {

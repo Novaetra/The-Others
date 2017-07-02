@@ -46,7 +46,7 @@ public class FireballScript : SpellScript
     {
         if (col.gameObject.tag == "Enemy")
         {
-            col.transform.BroadcastMessage("recieveDamage", dmg, SendMessageOptions.RequireReceiver);
+			col.transform.GetComponent<EnemyController>().RecieveDamage(dmg);
             GameObject.Instantiate(SPARK, transform.position,transform.rotation);
 			enemiesHit++;
 			if (enemiesHit >= maxEnemiesHit) 

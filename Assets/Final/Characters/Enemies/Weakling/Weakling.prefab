@@ -242,6 +242,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1346142010936382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4184791972647408}
+  m_Layer: 0
+  m_Name: Blood Splatter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1405162424225314
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +675,19 @@ Transform:
   m_Father: {fileID: 4579346214706156}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4184791972647408
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346142010936382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4434631393545284}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4206613784647808
 Transform:
   m_ObjectHideFlags: 1
@@ -761,13 +789,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1645946678479904}
   m_LocalRotation: {x: -0.000104325736, y: 0.99532694, z: 0.0010296653, w: 0.09655712}
-  m_LocalPosition: {x: 9.461843, y: 0.024999142, z: -5.477294}
+  m_LocalPosition: {x: 3.438836, y: 26.09074, z: -17.56373}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4819019132609048}
   - {fileID: 4817497364886020}
   - {fileID: 4694911237547670}
   - {fileID: 4055337589306926}
+  - {fileID: 4184791972647408}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1182,7 +1211,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   proximityRange: 1.6
+  meleeDamage: 0
+  numberOfAttacks: 0
+  totalHealth: 0
   currentHealth: 100
+  expOnKill: 0
+  blood: {fileID: 1346142010936382}
 --- !u!114 &114964791801553806
 MonoBehaviour:
   m_ObjectHideFlags: 1

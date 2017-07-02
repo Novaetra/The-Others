@@ -28,7 +28,7 @@ public class FlamethrowerScript : SpellScript
     public override IEnumerator DestroySelf()
     {
         GetComponent<ParticleSystem>().Stop();
-
+		Destroy(GetComponent<BoxCollider>());
         yield return new WaitForSeconds(3f);
 
         Destroy(gameObject);

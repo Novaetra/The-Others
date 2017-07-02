@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,36 +7,48 @@ using UnityEngine;
 public class Unlockable : MonoBehaviour
 {
     [SerializeField]
-    private Item[] itemsRequired;
-    [SerializeField]
-    private int amtRequired;
+	protected Item[] itemsRequired;
 
-    private bool isUnlocked;
-    private Inventory inv;
+    protected bool isUnlocked;
+    protected Inventory inv;
+	protected HUDManager hudMan;
 
     void Start()
     {
         inv = GameObject.Find("InventoryManager").GetComponent<Inventory>();
+		hudMan = GameObject.Find("Player").GetComponent<HUDManager>();
+		setUpItemsRequired();
     }
 
-    public void interact(object[] parameters)
+	//Add items required here
+	protected virtual void setUpItemsRequired() { }
+
+	public void interact(object[] parameters)
     {
         GameObject player = (GameObject)parameters[1];
-        if (CheckIfPlayerHasAllItems())
-        {
-            Unlock();
-            SubtractItems();
-            DiscontinueItems();
-        }
-
+	    if (CheckIfPlayerHasAllItems()==true)
+		{
+			Unlock();
+			SubtractItems();
+			DiscontinueItems();
+		}
+		else
+		{
+			CouldNotUnlock();	
+		}
     }
+
+	protected virtual void CouldNotUnlock()
+	{
+
+	}
 
     public void SubtractItems()
     {
         foreach(Item i in itemsRequired)
         {
             int indx = GetIndxOfItem(i);
-            inv.SubtractItemToInventory(indx,amtRequired);
+            inv.SubtractItemToInventory(indx,1);
         }
     }
 
@@ -62,23 +75,36 @@ public class Unlockable : MonoBehaviour
 
     private bool CheckIfPlayerHasAllItems()
     {
+		Item lastCheckedItem = null;
+		int amtToCheck = 1;
         foreach (Item itemRequired in itemsRequired)
         {
+			try
+			{
+				if (lastCheckedItem!=null && lastCheckedItem.ItemIDNumber == itemRequired.ItemIDNumber)
+				{
+					amtToCheck++;
+				}
+			}
+			catch (NullReferenceException e) { Debug.Log("null was thrown");}
+			lastCheckedItem = itemRequired;
+
             foreach (Item i in inv.InventoryList)
             {
                 if (itemRequired.ItemIDNumber == i.ItemIDNumber)
                 {
-                    if (i.Amt >= amtRequired)
+					if (i.Amt < amtToCheck)
                     {
-                        return true;
+						return false;
                     }
                 }
             }
+
         }
-        return false;
+		return true;
     }
 
-    private void Unlock()
+	protected virtual void Unlock()
     {
         isUnlocked = true;
     }
