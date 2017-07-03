@@ -3719,7 +3719,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 675, y: 1878.0012}
+  m_AnchoredPosition: {x: 675, y: 1878.001}
   m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &74372143
@@ -14727,7 +14727,7 @@ GameObject:
   - component: {fileID: 989852885}
   - component: {fileID: 989852884}
   m_Layer: 13
-  m_Name: 'Next  Level: '
+  m_Name: NextLvl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

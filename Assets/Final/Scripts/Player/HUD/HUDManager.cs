@@ -257,7 +257,6 @@ public class HUDManager : MonoBehaviour
 
 	private void ShowUpgradePartOfTooltip()
 	{
-		Debug.Log("showing tooltip");
 		tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 150);
 		tooltipBG.GetComponent<RectTransform>().sizeDelta = new Vector2(240, 140);
 		tooltipNextUpgrade.enabled = true;

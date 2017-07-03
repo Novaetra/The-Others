@@ -59,23 +59,19 @@ public class SkillManager : MonoBehaviour
 	{
 		//(string name, string description, float effect amount, float cost, float cd, Skills enumSkill, SkillType type int requirement, StatsManager sm)
 		Skill skill;
-		skill = AddToAllSkillsList("Fireball", "", 100f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
-		skill.Description = "Hurls a flaming ball of fire forward that deals "+skill.EffectAmount + " fire damage.";
+		skill = AddToAllSkillsList("Fireball", "Hurls a flaming ball of fire forward that deals ~EffectAmount~ fire damage.", 100f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
 
 		skill.AddUpgrade(new Upgrade(50f,SkillAttribute.effectAmount,3));
 		skill.AddUpgrade(new Upgrade(4f,SkillAttribute.maxEnemiesHit,4));
 		skill.AddUpgrade(new Upgrade(2f,SkillAttribute.cooldown,5));
 
-        skill = AddToAllSkillsList("Heal", "", 100f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
-		skill.Description = "Restores " + skill.EffectAmount + " health.";
+        skill = AddToAllSkillsList("Heal", "Restores ~EffectAmount~ health.", 100f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
 
-        skill = AddToAllSkillsList("MeleeDamageUpgrade","", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
-		skill.Description = "Melee does " + skill.EffectAmount + " more damage";
+        skill = AddToAllSkillsList("MeleeDamageUpgrade","Melee does ~EffectAmount~ more damage", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
 
-        skill = AddToAllSkillsList("Flamethrower", "", 120f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
-		skill.Description = "Blasts fire in a cone in front of you that deals " + (skill.EffectAmount/Time.deltaTime) + "/second.";
+        skill = AddToAllSkillsList("Flamethrower", "Blasts fire in a cone in front of you that deals ~EffectAmount~ damage second.", 120f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
 
-		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by 10% for 30 seconds", 1.1f, 100f, 60, Skills.StormFlurry, SkillType.Mana,2,sm);
+		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by ~EffectAmount~ for 30 seconds", 1.1f, 100f, 60, Skills.StormFlurry, SkillType.Mana,2,sm);
 		skill.Duration = 30f;
 
         AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);

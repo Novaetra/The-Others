@@ -7,6 +7,7 @@ public class Skill
 {
 	//Name and description of skill
 	private string name, description, originalDescription;
+
 	//Effect amount is dmg or heal amnt, 
 	private float effectAmount,cost,cooldown,currentCooldown, duration;
 	//Lvl requirement to unlock
@@ -53,6 +54,7 @@ public class Skill
 		upgradeCount = 0;
         isHoldable = false;
         hudMan = GameObject.FindGameObjectWithTag("Player").GetComponent<HUDManager>();
+		FillInDescriptionData();
     }
 
     //Assigns all variables
@@ -75,8 +77,27 @@ public class Skill
         upgradeCount = 0;
         isHoldable = hold;
         hudMan = GameObject.FindGameObjectWithTag("Player").GetComponent<HUDManager>();
+		FillInDescriptionData();
     }
 
+
+	private void FillInDescriptionData()
+	{
+		string[] strs = originalDescription.Split('~');
+		string finalDesc = "";
+		foreach (string s in strs)
+		{
+			if (this.GetType().GetProperty(s) != null)
+			{
+				finalDesc += this.GetType().GetProperty(s).GetValue(this, null);
+			}
+			else
+			{
+				finalDesc += s;
+			}
+		}
+		description = finalDesc;
+	}
 
     //Method is called when skill is activated
     //It subtracts cost from stamina/mana, plays animation, and starts cooldown
@@ -117,14 +138,13 @@ public class Skill
 
 			if (upgradeCount < upgrades.Count)
 			{
-				Debug.Log("set next upgrade here...");
 				nextUpgrade = upgrades[upgradeCount];
 			}
 			else
 			{
 				nextUpgrade = null;
 			}
-
+			FillInDescriptionData();
 			hudMan.UpdateToolTip(this);
         }
 	}
