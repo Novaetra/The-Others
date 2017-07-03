@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using System;
 
 public class HUDManager : MonoBehaviour 
 {
@@ -19,7 +20,7 @@ public class HUDManager : MonoBehaviour
 
 	private GameObject currentPlayer;
 	private GameObject canvasObj;
-	private GameObject tooltip;
+	private GameObject tooltip, tooltipBG;
 	private List<GameObject> panels;
 	private Transform panelsOBJ;
 
@@ -28,10 +29,7 @@ public class HUDManager : MonoBehaviour
     private Text upgradePnts;
 	private Text expText;
     private Text roundsTxt;
-	private Text tooltipName;
-	private Text tooltipDesc;
-	private Text tooltipLvl;
-	private Text tooltipNextUpgrade;
+	private Text tooltipName, tooltipLvl, tooltipCost, tooltipCooldown,tooltipDesc,tooltipNextUpgrade, tooltipStaticNextLevel;
 	private Text currentLvlTxt;
 
 
@@ -64,10 +62,14 @@ public class HUDManager : MonoBehaviour
 		upgradePnts = GameObject.Find ("SkillTree Panel").transform.Find("UpgradePoints").GetComponent<Text>();
 		currentLvlTxt = GameObject.Find ("SkillTree Panel").transform.Find ("CurrentLevelText").GetComponent<Text> ();
 		tooltip = canvasObj.transform.Find ("Tooltip").gameObject;
-		tooltipName = tooltip.transform.Find ("Name").GetComponent<Text> ();;
+		tooltipStaticNextLevel = GameObject.Find("NextLvl").GetComponent<Text>();
+		tooltipBG = tooltip.transform.Find("Border").gameObject;
+		tooltipName = tooltip.transform.Find ("Name").GetComponent<Text> ();
+		tooltipLvl = tooltip.transform.Find("LvlRequired").GetComponent<Text>();
+		tooltipCost = tooltip.transform.Find("Cost").GetComponent<Text>();
+		tooltipCooldown = tooltip.transform.Find("Cooldown").GetComponent<Text>();
 		tooltipDesc = tooltip.transform.Find ("Description").GetComponent<Text> ();
-		tooltipLvl = tooltip.transform.Find ("LvlRequired").GetComponent<Text> ();
-		tooltipNextUpgrade = tooltip.transform.Find ("NextUpgrade").GetComponent<Text> ();
+		tooltipNextUpgrade = tooltip.transform.Find ("Upgrades").GetComponent<Text> ();
 		expText = canvasObj.transform.Find ("Exp Counter").GetComponent<Text> ();
 	    damageIndicator = canvasObj.transform.Find("Damage Indicator").GetComponent<Animator>();
 		SetUpPanels ();
@@ -225,14 +227,7 @@ public class HUDManager : MonoBehaviour
 	//Fills in tooltip information and adds it to screen
 	public void ShowSkillTooltip(Skill skill,PointerEventData data,GameObject go)
 	{
-		tooltipName.text = skill.Name;
-		tooltipDesc.text = skill.Description;
-		tooltipLvl.text = "Level: " + skill.LvlRequirement;
-		if (skill.IsUnlocked && skill.UpgradeCount < skill.Upgrades.Count) {
-			tooltipNextUpgrade.enabled = true;
-		} else {
-			tooltipNextUpgrade.enabled = false;
-		}
+		UpdateToolTip(skill);
 		RepositionTooltip (data,go);
 		tooltip.SetActive(true);
 	}
@@ -240,18 +235,43 @@ public class HUDManager : MonoBehaviour
     public void UpdateToolTip(Skill skill)
     {
         tooltipName.text = skill.Name;
-        tooltipDesc.text = skill.Description;
-        tooltipLvl.text = "Level: " + skill.LvlRequirement;
-        if (skill.IsUnlocked && skill.UpgradeCount < skill.Upgrades.Count)
-        {
-            tooltipNextUpgrade.enabled = true;
-        }
-        else
-        {
-            tooltipNextUpgrade.enabled = false;
-        }
+		tooltipLvl.text = "Level: " + skill.LvlRequirement;
+		tooltipCost.text = skill.Cost + " " + skill.SkillType;
+		tooltipCooldown.text = skill.Cooldown + " second cooldown";
+		tooltipDesc.text = skill.Description;
+
+		if (skill.NextUpgrade != null)
+		{
+			AddNextUpgradeToTooltip(skill.NextUpgrade, skill);
+			ShowUpgradePartOfTooltip();
+		}
+		else {
+			HideUpgradePartOfTooltip();
+		}
     }
 
+	private void AddNextUpgradeToTooltip(Upgrade up, Skill skill)
+	{
+		tooltipNextUpgrade.text = up.AttributeToUpgrade + ": " + skill.GetAttribute(up.AttributeToUpgrade) + " => " + (skill.GetAttribute(up.AttributeToUpgrade)+up.UpgradeAmt);
+	}
+
+	private void ShowUpgradePartOfTooltip()
+	{
+		Debug.Log("showing tooltip");
+		tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 150);
+		tooltipBG.GetComponent<RectTransform>().sizeDelta = new Vector2(240, 140);
+		tooltipNextUpgrade.enabled = true;
+		tooltipStaticNextLevel.enabled = true;
+	}
+
+
+	private void HideUpgradePartOfTooltip()
+	{
+		tooltip.GetComponent<RectTransform>().sizeDelta = new Vector2(250, 100);
+		tooltipBG.GetComponent<RectTransform>().sizeDelta = new Vector2(240, 90);
+		tooltipNextUpgrade.enabled = false;
+		tooltipStaticNextLevel.enabled = false;
+	}
 
     private void RepositionTooltip(PointerEventData data,GameObject go)
 	{

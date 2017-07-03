@@ -7,7 +7,7 @@ public enum SkillAttribute
 	effectAmount,cost,cooldown, duration, maxEnemiesHit
 }
 
-public class Upgrade : MonoBehaviour 
+public class Upgrade 
 {
 	private float upgradeAmt;
 	private SkillAttribute attributeToUpgrade;

@@ -42,6 +42,9 @@ public class Inventory : MonoBehaviour
 	{
 		AddItemToInventory(1);
 		AddItemToInventory(1);
+		AddItemToInventory(0);
+		AddItemToInventory(0);
+		AddItemToInventory(0);
 		hudman.displayMsg("Started with keys", 2);
 	}
 

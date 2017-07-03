@@ -6,7 +6,7 @@ using System;
 
 public enum Skills
 {
-	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4
+	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5
 };
 
 public enum SkillType
@@ -27,7 +27,8 @@ public class SkillManager : MonoBehaviour
 
     private Inventory inventoryClassRefrence;
     private List<Item> inventoryList;
-    void Start()
+
+    void Awake()
 	{
 		skillBar = GameObject.Find("SkillBar").gameObject;
 		hudman = GetComponent<HUDManager>();
@@ -37,9 +38,14 @@ public class SkillManager : MonoBehaviour
 		anim = GetComponent<Animator>();
         skillInitializer = GetComponent<SkillInitializer>();
 
-        inventoryClassRefrence = GameObject.Find("InventoryManager").GetComponent<Inventory>();
-        inventoryList = inventoryClassRefrence.InventoryList;
-        setUpList();
+        
+	}
+
+	void Start()
+	{
+		inventoryClassRefrence = GameObject.Find("InventoryManager").GetComponent<Inventory>();
+		inventoryList = inventoryClassRefrence.InventoryList;
+		setUpList();
 	}
 
 	void Update()
@@ -53,20 +59,24 @@ public class SkillManager : MonoBehaviour
 	{
 		//(string name, string description, float effect amount, float cost, float cd, Skills enumSkill, SkillType type int requirement, StatsManager sm)
 		Skill skill;
-		skill = AddToAllSkillsList("Fireball", "", 800f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
-		skill.Description = "Hurls a flaming ball of fire forward that deals "+skill.EffectAmount + " fire damage at the cost of " +skill.Cost + " mana";
+		skill = AddToAllSkillsList("Fireball", "", 100f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
+		skill.Description = "Hurls a flaming ball of fire forward that deals "+skill.EffectAmount + " fire damage.";
+
 		skill.AddUpgrade(new Upgrade(50f,SkillAttribute.effectAmount,3));
 		skill.AddUpgrade(new Upgrade(4f,SkillAttribute.maxEnemiesHit,4));
 		skill.AddUpgrade(new Upgrade(2f,SkillAttribute.cooldown,5));
 
-        skill = AddToAllSkillsList("Heal", "", 50f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
-		skill.Description = "Restores " + skill.EffectAmount + " health at the cost of " + skill.Cost + " mana.";
+        skill = AddToAllSkillsList("Heal", "", 100f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
+		skill.Description = "Restores " + skill.EffectAmount + " health.";
 
         skill = AddToAllSkillsList("MeleeDamageUpgrade","", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
 		skill.Description = "Melee does " + skill.EffectAmount + " more damage";
 
-        skill = AddToAllSkillsList("Flamethrower", "", 1000f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
-		skill.Description = "Blasts fire in a cone in front of you that deals " + (skill.EffectAmount/Time.deltaTime) + "/sec at the cost of " + skill.Cost + " mana.";
+        skill = AddToAllSkillsList("Flamethrower", "", 120f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
+		skill.Description = "Blasts fire in a cone in front of you that deals " + (skill.EffectAmount/Time.deltaTime) + "/second.";
+
+		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by 10% for 30 seconds", 1.1f, 100f, 60, Skills.StormFlurry, SkillType.Mana,2,sm);
+		skill.Duration = 30f;
 
         AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);
 		//Links all the skill tree pieces to the actal skill 
@@ -119,6 +129,18 @@ public class SkillManager : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public Skill FindSkillInKnownSkills(Skills skill)
+	{
+		foreach (Skill s in allSkills)
+		{
+			if (s.CurrentEnumSkill == skill)
+			{
+				return s;
+			}
+		}
+		return null;
 	}
 
     #region Key Checks
@@ -237,7 +259,7 @@ public class SkillManager : MonoBehaviour
                     return;
                 }
             case SkillType.SkillCharge:
-                if (inventoryList[inventoryClassRefrence.GetIndxOfItem(0)].Amt < s.Cost)
+                if (inventoryList[0].Amt < s.Cost)
                 {
                     methodIfNotEnough(s);
                     return;
@@ -248,7 +270,6 @@ public class SkillManager : MonoBehaviour
                     methodIfEnough(s, s.SkillType);
                     return;
                 }
-
         }
     }
 

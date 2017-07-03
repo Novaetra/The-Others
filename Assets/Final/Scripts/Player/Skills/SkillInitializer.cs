@@ -10,10 +10,11 @@ public class SkillInitializer : MonoBehaviour
 	private GameObject spellSpawner;
     private GameObject currentEffect;
 	private Object[] spellObjects;
-
+	private SkillManager skillManager;
 	void Start()
 	{
 		LoadResources ();
+		skillManager = GetComponent<SkillManager>();
 	}
 
 	private void LoadResources()
@@ -61,6 +62,22 @@ public class SkillInitializer : MonoBehaviour
         spell.transform.localScale = new Vector3(1, 1, 1);
         currentEffect = spell;
     }
+
+	public void CreateBuffSpell(string name)
+	{
+		switch (name)
+		{
+			case "StormFlurry":
+				StormFlurryScript storm = gameObject.AddComponent<StormFlurryScript>();
+				Skill stormSkill = skillManager.FindSkillInKnownSkills(Skills.StormFlurry);
+				if (stormSkill != null)
+				{
+					storm.SetDamageBuff(stormSkill.EffectAmount);
+					storm.SetDuration(stormSkill.Duration);
+				}
+				break;
+		}
+	}
 
 	private GameObject GetGameObject(string name)
 	{

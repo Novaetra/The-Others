@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +26,9 @@ public class Skill
 	private SkillHotkey hotkey;
     private HUDManager hudMan;
 	private List<Upgrade> upgrades;
+
+	[SerializeField]
+	private Upgrade nextUpgrade; 
 
 	private int upgradeCount;
 
@@ -110,26 +114,21 @@ public class Skill
 				break;
 			}
             upgradeCount++;
-            UpdateTooltip();
+
+			if (upgradeCount < upgrades.Count)
+			{
+				Debug.Log("set next upgrade here...");
+				nextUpgrade = upgrades[upgradeCount];
+			}
+			else
+			{
+				nextUpgrade = null;
+			}
+
+			hudMan.UpdateToolTip(this);
         }
 	}
 
-
-    private void UpdateTooltip()
-    {
-        if (upgradeCount < upgrades.Count)
-        {
-            string desc = "Upgrades ";
-            desc += upgrades[upgradeCount].AttributeToUpgrade + " by " + upgrades[UpgradeCount].UpgradeAmt;
-            this.description = desc;
-            LvlRequirement = Upgrades[UpgradeCount].LvlRequirement;
-        }
-        else
-        {
-            description = "Effect amount: " + effectAmount + "\nCost: " + cost + "\nCooldown: " + cooldown;
-        }
-        hudMan.UpdateToolTip(this);
-    }
 	//Sets current cooldown to 0 to start cooldown
 	private void StartCooldown()
 	{
@@ -212,7 +211,7 @@ public class Skill
 		}
 		set {
             isUnlocked = value;
-            UpdateTooltip();
+			hudMan.UpdateToolTip(this);
         }
 	}
 
@@ -258,9 +257,10 @@ public class Skill
 		}
 	}
 
-	public void AddUpgrade(Upgrade upgrade)
+	public void AddUpgrade(Upgrade _upgrade)
 	{
-		upgrades.Add(upgrade);
+		upgrades.Add(_upgrade);
+		nextUpgrade = upgrades[0];
 	}
 
 	public int UpgradeCount {
@@ -310,6 +310,38 @@ public class Skill
             canUse = value;
         }
     }
+
+	public Upgrade NextUpgrade
+	{
+		get
+		{
+			return nextUpgrade;
+		}
+
+		set
+		{
+			nextUpgrade = value;
+		}
+	}
+
+	public float GetAttribute(SkillAttribute at)
+	{
+		switch (at)
+		{
+			case SkillAttribute.effectAmount:
+				return effectAmount;
+			case SkillAttribute.duration:
+				return duration;
+			case SkillAttribute.cooldown:
+				return cooldown;
+			case SkillAttribute.cost:
+				return cost;
+			case SkillAttribute.maxEnemiesHit:
+				return (float)maxEnemiesHit;
+			default:
+				return -1f;
+		}
+	}
     #endregion
 
 }
