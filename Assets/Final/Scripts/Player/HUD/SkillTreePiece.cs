@@ -13,6 +13,7 @@ public class SkillTreePiece : MonoBehaviour
 	private List<Skill> skillList;
 	private Image img;
     private StatsManager sm;
+	private SkillManager skillManager;
 	private HUDManager hudman;
     private bool isUnlocked;
 
@@ -36,6 +37,7 @@ public class SkillTreePiece : MonoBehaviour
 		skillList = GameObject.FindObjectOfType<Player>().gameObject.GetComponent<SkillManager> ().allSkills;
         sm =  GameObject.Find("Player").GetComponent<StatsManager>();
         hudman = GameObject.Find("Player").GetComponent<HUDManager>();
+		skillManager = sm.GetComponent<SkillManager>();
 		img = gameObject.GetComponent<Image> ();
 		foreach (Skill s in skillList) 
 		{
@@ -60,6 +62,8 @@ public class SkillTreePiece : MonoBehaviour
 			sm.activateUnlockable ();
 			hudman.updateUpgradePoints ();
 			GetComponentInParent<SkillTree> ().unlockSkill (sm);
+			skillManager.addToKnown(skill);
+
 		} 
 		else if(isUnlocked && sm.getUpgradePnts()>0)
 		{

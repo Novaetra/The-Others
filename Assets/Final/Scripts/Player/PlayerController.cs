@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
 	{
 		anim.SetInteger ("Skill", -1);
 	}
-    
+
 	#region GettersAndProperties
 	public bool CanMove {
 		get {

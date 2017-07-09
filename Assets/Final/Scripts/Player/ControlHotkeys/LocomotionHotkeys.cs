@@ -7,6 +7,7 @@ using System.Linq;
 public class LocomotionHotkeys : ControlHotkey 
 {
 	private EnemyManager em;
+	private SkillManager skillManager;
 	private float gravity = 9.8f;
 	private float vSpeed = 0;
     private LayerMask lyrMask;
@@ -16,11 +17,14 @@ public class LocomotionHotkeys : ControlHotkey
     private float currentDashtime = 1f;
 
     private bool isDashing = false;
+	private bool damageDash = true;
+
 
 	public LocomotionHotkeys(KeyCode[] c,PlayerController cntrl, LayerMask mask)
 	{
 		codes = c; 
 		controller = cntrl;
+		skillManager = cntrl.GetComponent<SkillManager>();
 		em = GameObject.Find ("Managers").GetComponent<EnemyManager> ();
         lyrMask = mask;
 
@@ -171,6 +175,12 @@ public class LocomotionHotkeys : ControlHotkey
             controller.Anim.SetTrigger("Dash");
             currentDashtime = 0;
             isDashing = true;
+			Debug.Log(skillManager.skillIsKnown("Storm Dash"));
+			if (skillManager.skillIsKnown("Storm Dash"))
+			{
+				controller.transform.Find("DamageDash").GetComponent<StormDash>().dash();
+
+			}
         }
     }
 
@@ -179,6 +189,19 @@ public class LocomotionHotkeys : ControlHotkey
 		if (controller.Sm.getCurrentStamina() - controller.Sm.getMeleeCost() >= 0 && controller.Anim.GetInteger("Skill") != (int)Skills.BasicAttack)  
 		{
 			controller.Anim.SetInteger("Skill",(int)Skills.BasicAttack);
+		}
+	}
+
+	public bool DamageDash
+	{
+		get
+		{
+			return damageDash;
+		}
+
+		set
+		{
+			damageDash = value;
 		}
 	}
 }

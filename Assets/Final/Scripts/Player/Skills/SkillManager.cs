@@ -74,11 +74,27 @@ public class SkillManager : MonoBehaviour
 		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by ~EffectAmount~ for 30 seconds", 1.1f, 100f, 60, Skills.StormFlurry, SkillType.Mana,2,sm);
 		skill.Duration = 30f;
 
+
+		skill = AddToAllSkillsList("Storm Dash", "(Passive) Makes dash deal ~EffectAmount~ damage to enemies you pass through.", 120, 0, 0f, Skills.Empty, SkillType.Empty, 3, sm);
+
+
         AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);
 		//Links all the skill tree pieces to the actal skill 
 		GameObject.Find("Canvas").BroadcastMessage("setSkill");
 	}
-	
+
+	public bool skillIsKnown(string name)
+	{
+		foreach (Skill s in knownSkills)
+		{
+			if (s.Name.Equals(name))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
     //Adds upgrade to particular skill
 	private Skill AddToAllSkillsList (string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm)
 	{
