@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0918541, y: 4.5899973, z: -9.32403}
+  m_LocalPosition: {x: -7.868156, y: 10.90668, z: 14.414679}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -149,7 +149,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1115600987
+  randomSeed: 1543627706
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -804,10 +804,16 @@ ParticleSystem:
           outSlope: 0.88652086
           tangentMode: 0
         - serializedVersion: 2
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          time: 0.4686831
+          value: 0.6843638
+          inSlope: 0.828634
+          outSlope: 0.828634
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.9750061
+          value: 0.3783788
+          inSlope: -4.240921
+          outSlope: -4.240921
           tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1050,7 +1056,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 0.16470589, b: 0, a: 1}
         key1: {r: 0.9882353, g: 0.16078432, b: 0, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 1}
+        key2: {r: 0, g: 0, b: 0, a: 0.37254903}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -3232,7 +3238,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: c9b94374551e2427981523c4f21ee216, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
