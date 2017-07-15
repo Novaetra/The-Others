@@ -74,7 +74,7 @@ public class StatsManager : MonoBehaviour
         sprintStamCost = 20f;
         DashStamCost = .3f * totalStamina;
         meleeCost = 40f;
-		baseMeleeDamage = 10f;
+		baseMeleeDamage = 100f;
         currentLvl = 1;
         currentExp = 0f;
         totalExpRequiredToLvlUp = 100f;
@@ -200,12 +200,12 @@ public class StatsManager : MonoBehaviour
         DashStamCost = .3f * totalStamina;
     }
 
-    public void recieveDamage(float dmg)
+	public void recieveDamage(float dmg)
     {
         currentHealth -= dmg;
         hudman.updateBars();
         checkDeath();
-        hudman.RecieveDamage();
+        hudman.showRecievedDamage();
         healthCurrentTime = 0f;
     }
 
@@ -290,17 +290,17 @@ public class StatsManager : MonoBehaviour
         stamCurrentTime = 0f;
     }
 
-    public void UseResource(SkillType type, float amt, bool overTime)
+    public void UseResource(SkillResource type, float amt, bool overTime)
     {
         switch(type)
         {
-            case SkillType.Mana:
+            case SkillResource.Mana:
                 useMana(amt);
                 break;
-            case SkillType.Stamina:
+            case SkillResource.Stamina:
                 useStamina(amt, overTime);
                 break;
-            case SkillType.SkillCharge:
+            case SkillResource.SkillCharge:
                 inventoryClassRefrence.RemoveItemFromInventory(inventoryList[inventoryClassRefrence.GetIndxOfItem(0)]);
                 break;
         }
@@ -438,7 +438,7 @@ public class StatsManager : MonoBehaviour
 
 	public void dealMeleeDamage(RaycastHit hit)
 	{
-		hit.transform.SendMessage("RecieveDamage", baseMeleeDamage);
+		hit.transform.SendMessage("recieveDamage", baseMeleeDamage);
 	}
 
 	#endregion

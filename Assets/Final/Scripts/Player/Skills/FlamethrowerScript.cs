@@ -39,8 +39,20 @@ public class FlamethrowerScript : SpellScript
     {
         if(col.tag == "Enemy")
         {
-            col.transform.GetComponent<EnemyController>().RecieveDamage(dmg);
+            col.transform.GetComponent<EnemyController>().recieveDamageWithType(dmg, SkillType.Fire);
         }
     }
+
+	private void OnTriggerEnter(Collider col)
+	{
+		if (col.gameObject.tag == "Flammable")
+		{
+			FlammableObject flamObj = col.GetComponent<FlammableObject>();
+			if (flamObj.IsOnFire == false)
+			{
+				col.GetComponent<FlammableObject>().ignite();
+			}
+		}
+	}
 
 }

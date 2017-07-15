@@ -11,6 +11,7 @@ public class SkillInitializer : MonoBehaviour
     private GameObject currentEffect;
 	private Object[] spellObjects;
 	private SkillManager skillManager;
+	public LayerMask groundLayer;
 	void Start()
 	{
 		LoadResources ();
@@ -26,6 +27,16 @@ public class SkillInitializer : MonoBehaviour
 			{
 				spellSpawner = s;
 			}
+		}
+	}
+
+	public void CreateAreaObject(string name)
+	{
+		GameObject s = GetGameObject(name);
+		RaycastHit hit;
+		if(Physics.Raycast(middleSpawner.position,-middleSpawner.forward, out hit))
+		{
+			GameObject area = (GameObject)GameObject.Instantiate(s, hit.point, Quaternion.identity);
 		}
 	}
 

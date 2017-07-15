@@ -167,14 +167,39 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+	protected void checkPlayerPassives(SkillType type)
+	{
+		SkillManager skillManager = targetPlayer.GetComponent<SkillManager>();
+		if (skillManager.skillIsKnown("Ignite") && type == SkillType.Fire && transform.Find("Ignite(Clone)")==null)
+		{
+			float roll = Random.value * 10;
+			if (roll <= 2.5)
+			{
+				applyIgnite();			
+			}
+		}
+	}
+
+	private void applyIgnite()
+	{
+		GameObject igniteGO = (GameObject)Resources.Load("Spells/Ignite");;
+		GameObject ignite = (GameObject)Instantiate(igniteGO, Vector3.zero, Quaternion.identity);
+		ignite.transform.SetParent(transform);
+		ignite.transform.localPosition = new Vector3(0,0,0);
+		ignite.transform.localRotation = Quaternion.Euler(270, 0, 0);
+	}
+
 	//Lower the enemy's health by x amt
-    public void RecieveDamage(float dmg)
+	public void recieveDamageWithType(float dmg, SkillType type)
     {
         currentHealth -= dmg;
         anim.SetFloat("Health", currentHealth);
-		SplatterBlood();
-
-        if (currentHealth<=0)
+		if (type == SkillType.Empty || type == SkillType.Physical)
+		{
+			splatterBlood();
+		}
+		checkPlayerPassives(type);
+		if (currentHealth<=0 && isAlive)
         {
             startDeath();
             return;
@@ -189,7 +214,11 @@ public class EnemyController : MonoBehaviour
 		AfterTakingDamage();
     }
 
-	private void SplatterBlood()
+	public void recieveDamage(float dmg)
+	{
+		recieveDamageWithType(dmg, SkillType.Empty);
+	}
+	private void splatterBlood()
 	{
 		GameObject _blood = GameObject.Instantiate(blood, transform.Find("Blood Splatter").transform);
 		_blood.transform.localPosition = new Vector3(0f, 0f, 0f);
@@ -308,7 +337,6 @@ public class EnemyController : MonoBehaviour
 	//Send all players exp
     void sendPlayersExp()
     {
-		Debug.Log(expOnKill);
         GameManager.currentplayer.GetComponent<StatsManager>().recieveExp(expOnKill);
     }
 

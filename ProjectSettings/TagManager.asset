@@ -10,6 +10,8 @@ TagManager:
   - CraftMaterial
   - Spawn Room
   - Room
+  - Flammable
+  - Ground
   layers:
   - Default
   - TransparentFX

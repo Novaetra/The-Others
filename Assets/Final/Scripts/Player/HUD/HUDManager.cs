@@ -219,7 +219,7 @@ public class HUDManager : MonoBehaviour
         roundsTxt.text = "Round " + round;
     }
 
-    public void RecieveDamage()
+    public void showRecievedDamage()
     {
         damageIndicator.SetTrigger("recievedDamage");
     }

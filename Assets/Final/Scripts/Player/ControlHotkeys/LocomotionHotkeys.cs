@@ -175,7 +175,6 @@ public class LocomotionHotkeys : ControlHotkey
             controller.Anim.SetTrigger("Dash");
             currentDashtime = 0;
             isDashing = true;
-			Debug.Log(skillManager.skillIsKnown("Storm Dash"));
 			if (skillManager.skillIsKnown("Storm Dash"))
 			{
 				controller.transform.Find("DamageDash").GetComponent<StormDash>().dash();

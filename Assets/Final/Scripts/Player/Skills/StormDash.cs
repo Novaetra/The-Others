@@ -41,7 +41,7 @@ public class StormDash: MonoBehaviour
 	{
 		if (col.tag == "Enemy")
 		{
-			col.GetComponent<EnemyController>().RecieveDamage(sm.getMeleeDamage());
+			col.GetComponent<EnemyController>().recieveDamageWithType(sm.getMeleeDamage(),SkillType.Storm);
 		}
 	}
 }

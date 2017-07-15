@@ -2073,11 +2073,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   proximityRange: 6
-  meleeDamage: 80
+  meleeDamage: 120
   numberOfAttacks: 2
-  totalHealth: 500
-  currentHealth: 500
-  expOnKill: 400
+  totalHealth: 1040
+  currentHealth: 1040
+  expOnKill: 440
   blood: {fileID: 1928332045179192, guid: 7437008fcd8702b47bfa766c908c217b, type: 2}
   slam: {fileID: 1908599074252612, guid: 8d2d00bbaad1a483abc9b7bc73b26d49, type: 2}
 --- !u!136 &136055776722255570

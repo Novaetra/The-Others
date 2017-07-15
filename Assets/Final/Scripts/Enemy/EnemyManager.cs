@@ -96,11 +96,11 @@ public class EnemyManager : MonoBehaviour
     private void setUpEnemyStartingStats()
     {
         //health, exp, damagem, move speed (max of 5)
-        statsPerEnemy["Skelly"] = new float[4] { 7f, 20f, 50f, 3f};
+        statsPerEnemy["Skelly"] = new float[4] { 100f, 20f, 50f, 3f};
         enemyNames.Add("Skelly");
-        statsPerEnemy["Weakling"] = new float[4] { 10f, 20f, 20f, 3f };
+        statsPerEnemy["Weakling"] = new float[4] { 50f, 20f, 20f, 3f };
         enemyNames.Add("Weakling");
-		statsPerEnemy["FirstBoss"] = new float[4] { 500f, 400f, 80f, 3.5f };
+		statsPerEnemy["FirstBoss"] = new float[4] { 1000f, 400f, 80f, 3.5f };
 		enemyNames.Add("FirstBoss");
     }
 

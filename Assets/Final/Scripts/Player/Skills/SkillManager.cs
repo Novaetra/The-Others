@@ -6,13 +6,18 @@ using System;
 
 public enum Skills
 {
-	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5
+	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6
+};
+
+public enum SkillResource
+{
+	Empty,Stamina, Mana, SkillCharge
 };
 
 public enum SkillType
 {
-	Empty,Stamina, Mana, SkillCharge
-};
+	Fire, Storm, Physical, Empty
+}
 
 public class SkillManager : MonoBehaviour 
 {
@@ -46,6 +51,13 @@ public class SkillManager : MonoBehaviour
 		inventoryClassRefrence = GameObject.Find("InventoryManager").GetComponent<Inventory>();
 		inventoryList = inventoryClassRefrence.InventoryList;
 		setUpList();
+		//Temp 
+		addTestData();
+	}
+
+	void addTestData()
+	{
+		//addToKnown(allSkills[2]);
 	}
 
 	void Update()
@@ -59,26 +71,31 @@ public class SkillManager : MonoBehaviour
 	{
 		//(string name, string description, float effect amount, float cost, float cd, Skills enumSkill, SkillType type int requirement, StatsManager sm)
 		Skill skill;
-		skill = AddToAllSkillsList("Fireball", "Hurls a flaming ball of fire forward that deals ~EffectAmount~ fire damage.", 100f, 25f, 4f, Skills.Fireball, SkillType.Mana, 2,sm);
+		skill = AddToAllSkillsList("Fireball", "Hurls a flaming ball of fire forward that deals ~EffectAmount~ fire damage.", 50f, 25f, 8f, Skills.Fireball, SkillType.Fire,SkillResource.Mana, 2,sm);
 
 		skill.AddUpgrade(new Upgrade(50f,SkillAttribute.effectAmount,3));
 		skill.AddUpgrade(new Upgrade(4f,SkillAttribute.maxEnemiesHit,4));
 		skill.AddUpgrade(new Upgrade(2f,SkillAttribute.cooldown,5));
 
-        skill = AddToAllSkillsList("Heal", "Restores ~EffectAmount~ health.", 100f, 1f, 5f, Skills.Heal, SkillType.SkillCharge, 2,sm);
+		skill = AddToAllSkillsList("Ignite", "(Passive) All fire skills have a chance to ignite enemies dealing ~EffectAmount~ damage/second for ~Duration~ seconds.", 30, 0, 0, Skills.Empty, SkillType.Fire, SkillResource.Empty, 4, sm);
+		skill.Duration = 20;
+		skill = AddToAllSkillsList("Oil Pool", "Spawns a pool of oil that can be ignited. Once ignited, it deals ~EffectAmount~ damage/second to anything standing on it for ~Duration~ seconds.", 50*Time.deltaTime, 100, 80, Skills.OilPool, SkillType.Fire, SkillResource.Mana, 5, sm);
+		skill.Duration = 60;
 
-        skill = AddToAllSkillsList("MeleeDamageUpgrade","Melee does ~EffectAmount~ more damage", 100f,0f,0f,Skills.Empty,SkillType.Empty,5,sm);
+		skill = AddToAllSkillsList("Heal", "Restores ~EffectAmount~ health.", 100f, 1f, 5f, Skills.Heal, SkillType.Empty,SkillResource.SkillCharge, 2,sm);
 
-        skill = AddToAllSkillsList("Flamethrower", "Blasts fire in a cone in front of you that deals ~EffectAmount~ damage second.", 120f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Mana, 4,sm, true);
+		skill = AddToAllSkillsList("MeleeDamageUpgrade","Melee does ~EffectAmount~ more damage", 100f,0f,0f,Skills.Empty,SkillType.Empty,SkillResource.Empty,5,sm);
 
-		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by ~EffectAmount~ for 30 seconds", 1.1f, 100f, 60, Skills.StormFlurry, SkillType.Mana,2,sm);
+        skill = AddToAllSkillsList("Flamethrower", "Blasts fire in a cone in front of you that deals ~EffectAmount~ damage/second.", 50f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Fire,SkillResource.Mana, 4,sm, true);
+
+		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by ~EffectAmount~ for 30 seconds", 1.1f, 100f, 60, Skills.StormFlurry, SkillType.Storm,SkillResource.Mana,2,sm);
 		skill.Duration = 30f;
 
 
-		skill = AddToAllSkillsList("Storm Dash", "(Passive) Makes dash deal ~EffectAmount~ damage to enemies you pass through.", 120, 0, 0f, Skills.Empty, SkillType.Empty, 3, sm);
+		skill = AddToAllSkillsList("Storm Dash", "(Passive) Makes dash deal ~EffectAmount~ damage to enemies you pass through.", 120, 0, 0f, Skills.Empty, SkillType.Storm,SkillResource.Empty, 3, sm);
 
 
-        AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty, SkillType.Empty, 0,sm);
+		AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty,SkillType.Empty, SkillResource.Empty, 0,sm);
 		//Links all the skill tree pieces to the actal skill 
 		GameObject.Find("Canvas").BroadcastMessage("setSkill");
 	}
@@ -96,17 +113,17 @@ public class SkillManager : MonoBehaviour
 	}
 
     //Adds upgrade to particular skill
-	private Skill AddToAllSkillsList (string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm)
+	private Skill AddToAllSkillsList (string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType _type,SkillResource st, int req, StatsManager sm)
 	{
-		Skill skill = new Skill (name, desc, effectAmnt, c, cd, enumSkill, st, req, sm);
+		Skill skill = new Skill (name, desc, effectAmnt, c, cd, enumSkill, _type,st, req, sm);
 		allSkills.Add(skill);
 		return skill;
 	}
 
     //Adds upgrade to particular skill with holdable or not at the end
-    private Skill AddToAllSkillsList(string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm, bool tf)
+    private Skill AddToAllSkillsList(string name, string desc, float effectAmnt, float c, float cd, Skills enumSkill, SkillType _type,SkillResource st, int req, StatsManager sm, bool tf)
     {
-        Skill skill = new Skill(name, desc, effectAmnt, c, cd, enumSkill, st, req, sm, tf);
+        Skill skill = new Skill(name, desc, effectAmnt, c, cd, enumSkill, _type,st, req, sm, tf);
         allSkills.Add(skill);
         return skill;
     }
@@ -208,7 +225,7 @@ public class SkillManager : MonoBehaviour
     }
 
     //What will happen when there is enough resources to use a skill that requires hold down
-    private void MethodIfEnoughForPress(Skill s, SkillType type)
+    private void MethodIfEnoughForPress(Skill s, SkillResource type)
     {
         s.CanUse = true;
         sm.UseResource(type, s.Cost, false);
@@ -224,7 +241,7 @@ public class SkillManager : MonoBehaviour
     }
 
     //What will happen when there is enough resources to keep holding the spell out
-    private void MethodIfEnoughForHold(Skill s, SkillType type)
+    private void MethodIfEnoughForHold(Skill s, SkillResource type)
     {
         s.CanUse = true;
         sm.UseResource(type, s.Cost, false);
@@ -237,18 +254,18 @@ public class SkillManager : MonoBehaviour
     }
 
     //What will happen when there is not enough resources to cast a spell
-    private void MethodIfEnoughForCast(Skill s, SkillType type)
+    private void MethodIfEnoughForCast(Skill s, SkillResource type)
     {
         s.Use();
         sm.UseResource(type, s.Cost, false);
     }
 
     //Checks to see if player has enough resources to cast the spell and calls the methods passed according to the scenario
-    private void CheckIfEnoughResources(Skill s, Action<Skill> methodIfNotEnough, Action<Skill, SkillType> methodIfEnough)
+    private void CheckIfEnoughResources(Skill s, Action<Skill> methodIfNotEnough, Action<Skill, SkillResource> methodIfEnough)
     {
         switch (s.SkillType)
         {
-            case SkillType.Mana:
+            case SkillResource.Mana:
                 if (sm.getCurrentMana() < s.Cost)
                 {
                     methodIfNotEnough(s);
@@ -259,7 +276,7 @@ public class SkillManager : MonoBehaviour
                     methodIfEnough(s, s.SkillType);
                     return;
                 }
-            case SkillType.Stamina:
+            case SkillResource.Stamina:
                 if (sm.getCurrentStamina() < s.Cost)
                 {
                     methodIfNotEnough(s);
@@ -270,7 +287,7 @@ public class SkillManager : MonoBehaviour
                     methodIfEnough(s, s.SkillType);
                     return;
                 }
-            case SkillType.SkillCharge:
+            case SkillResource.SkillCharge:
                 if (inventoryList[0].Amt < s.Cost)
                 {
                     methodIfNotEnough(s);
@@ -292,6 +309,18 @@ public class SkillManager : MonoBehaviour
     private IEnumerator wait(float secs)
 	{
 		yield return new WaitForSeconds(secs);
+	}
+
+	public Skill getSkillFromKnown(string name)
+	{
+		foreach (Skill s in knownSkills)
+		{
+			if (s.Name.Equals(name))
+			{
+				return s;
+			}
+		}
+		return null;
 	}
 
 	public List<Skill> getAllSkills()

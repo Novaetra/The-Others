@@ -14,7 +14,6 @@ public class StormFlurryScript : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 		animSpeed = 2;
-		Debug.Log("Started storm flurry");
 	}
 
 	public void SetDuration(float dur)
@@ -28,7 +27,7 @@ public class StormFlurryScript : MonoBehaviour
 		sm = GetComponent<StatsManager>();
 		startDamge = sm.getMeleeDamage();
 		sm.setMeleeDamage(startDamge*dmg);
-		Debug.Log("set damage to: " + (sm.getMeleeDamage() * dmg));
+		Debug.Log("set damage to: " + ((sm.getMeleeDamage() * dmg)+" and before it was " + startDamge ));
 	}
 
 	private void resetDamage()

@@ -20,7 +20,8 @@ public class Skill
 	//The skill # assigned to this skill for animation purposes
 	private Skills currentEnumSkill;
 	//Skill type to determine whether to use stamina or mana
-	private SkillType skillType;
+	private SkillResource skillResource;
+	private SkillType type;
 	//Refrence to stats manager to modify and read player's stats
 	private StatsManager stats;
 	//Hotkey assigned to it
@@ -33,9 +34,9 @@ public class Skill
 
 	private int upgradeCount;
 
-	private bool isUnlocked,isHoldable, canUse;
+	private bool isUnlocked,isHoldable, canUse, isPassive = false;
 	//Assigns all variables
-	public Skill(string n, string d, float effectAmnt,  float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm)
+	public Skill(string n, string d, float effectAmnt,  float c, float cd, Skills enumSkill, SkillType _type,SkillResource st, int req, StatsManager sm)
 	{
 		isUnlocked = false;
 		name = n;
@@ -47,9 +48,14 @@ public class Skill
 		currentCooldown = cooldown;
 		anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
 		CurrentEnumSkill = enumSkill;
+		if (enumSkill < 0)
+		{
+			isPassive = true;
+		}
 		stats = sm;
 		lvlRequirement = req;
-		skillType = st;
+		skillResource = st;
+		Type = _type;
 		upgrades = new List<Upgrade> ();
 		upgradeCount = 0;
         isHoldable = false;
@@ -58,7 +64,7 @@ public class Skill
     }
 
     //Assigns all variables
-    public Skill(string n, string d, float effectAmnt, float c, float cd, Skills enumSkill, SkillType st, int req, StatsManager sm, bool hold)
+    public Skill(string n, string d, float effectAmnt, float c, float cd, Skills enumSkill, SkillType _type,SkillResource st, int req, StatsManager sm, bool hold)
     {
         isUnlocked = false;
         name = n;
@@ -70,9 +76,13 @@ public class Skill
         currentCooldown = cooldown;
         anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         CurrentEnumSkill = enumSkill;
+		if (enumSkill < 0)
+		{
+			isPassive = true;
+		}
         stats = sm;
         lvlRequirement = req;
-        skillType = st;
+        skillResource = st;
         upgrades = new List<Upgrade>();
         upgradeCount = 0;
         isHoldable = hold;
@@ -89,7 +99,13 @@ public class Skill
 		{
 			if (this.GetType().GetProperty(s) != null)
 			{
-				finalDesc += this.GetType().GetProperty(s).GetValue(this, null);
+				float amt = (float)this.GetType().GetProperty(s).GetValue(this, null);
+				if (amt < 5)
+				{
+					amt = amt / Time.deltaTime;
+				}
+					finalDesc += amt;
+
 			}
 			else
 			{
@@ -244,9 +260,9 @@ public class Skill
 		} 
 	}
 
-	public SkillType SkillType {
+	public SkillResource SkillType {
 		get {
-			return skillType;
+			return skillResource;
 		}
 	}
 
@@ -341,6 +357,19 @@ public class Skill
 		set
 		{
 			nextUpgrade = value;
+		}
+	}
+
+	public SkillType Type
+	{
+		get
+		{
+			return type;
+		}
+
+		set
+		{
+			type = value;
 		}
 	}
 

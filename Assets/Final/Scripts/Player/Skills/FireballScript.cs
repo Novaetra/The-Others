@@ -44,15 +44,24 @@ public class FireballScript : SpellScript
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Enemy")
-        {
-			col.transform.GetComponent<EnemyController>().RecieveDamage(dmg);
-            GameObject.Instantiate(SPARK, transform.position,transform.rotation);
+		if (col.gameObject.tag == "Enemy")
+		{
+			col.transform.GetComponent<EnemyController>().recieveDamageWithType(dmg, SkillType.Fire);
+			GameObject.Instantiate(SPARK, transform.position, transform.rotation);
 			enemiesHit++;
-			if (enemiesHit >= maxEnemiesHit) 
+			if (enemiesHit >= maxEnemiesHit)
 			{
-				Destroy (gameObject);
+				Destroy(gameObject);
 			}
-        }
+		}
+		else if (col.gameObject.tag == "Flammable")
+		{
+
+			FlammableObject flamObj = col.GetComponent<FlammableObject>();
+			if (flamObj.IsOnFire == false)
+			{
+				col.GetComponent<FlammableObject>().ignite();
+			}
+		}
     }
 }

@@ -135,11 +135,6 @@ public class PlayerController : MonoBehaviour
 			sm.recieveExp(expIncreaseAmt);
         }
 
-        if (Input.GetKeyUp(KeyCode.N))
-        {
-            sm.recieveDamage(10);
-        }
-
 		if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			toggleCursorLock(!cursorLocked);
