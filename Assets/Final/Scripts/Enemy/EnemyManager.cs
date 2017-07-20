@@ -21,7 +21,7 @@ public class EnemyManager : MonoBehaviour
     private int nextRoundToAddEnemyType;
 	private int maxEnemies;
     [SerializeField]
-    private int enemysToSpawn;
+    private int enemysToSpawn, enemiesSpawnedLastWave;
     [SerializeField]
     private int enemiesSpawned;
     private int enemiesKilled;
@@ -242,7 +242,8 @@ public class EnemyManager : MonoBehaviour
         updateSpawnsAvailable();
         currentWaveCount++;
         hudMan.updateRoundsTxt(currentWaveCount);
-	    enemysToSpawn = getNumberOfEnemysToSpawnInWave(currentWaveCount,enemysToSpawn);
+	    enemysToSpawn = getNumberOfEnemysToSpawnInWave();
+		enemiesSpawnedLastWave = enemysToSpawn;
         currentEnemyCount = enemysToSpawn;
         spawningWaveCouroutine = StartCoroutine(spawnWave(true));
 	    if (currentWaveCount >= nextRoundToAddEnemyType && (enemyObjectsAvailable.Length+1 <= ENEMY_OBJECTS.Length))
@@ -256,11 +257,11 @@ public class EnemyManager : MonoBehaviour
 	    }
     }
 
-    private int getNumberOfEnemysToSpawnInWave(int waveNumber, int enemiesSpawnedLastWave)
+    private int getNumberOfEnemysToSpawnInWave()
     {
         if (currentWaveCount < 10)
         {
-            return enemiesSpawnedLastWave += 3;
+            return enemiesSpawnedLastWave + 3;
         }
         else
         {

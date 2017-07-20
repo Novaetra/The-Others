@@ -218,6 +218,14 @@ public class EnemyController : MonoBehaviour
 	{
 		recieveDamageWithType(dmg, SkillType.Empty);
 	}
+	public void recieveDamage(object[] parameters)
+	{
+		float dmg = (float)parameters[0];
+		SkillType type = (SkillType)parameters[1];
+		recieveDamageWithType(dmg, type);
+	}
+
+
 	private void splatterBlood()
 	{
 		GameObject _blood = GameObject.Instantiate(blood, transform.Find("Blood Splatter").transform);

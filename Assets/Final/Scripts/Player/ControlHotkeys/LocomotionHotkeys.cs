@@ -170,7 +170,7 @@ public class LocomotionHotkeys : ControlHotkey
     {
         if (controller.Sm.getCurrentStamina() - controller.Sm.DashStamCost > 0 && !isDashing)
         {
-            controller.currentSpeed = controller.dashSpeed;
+            controller.currentSpeed += controller.dashSpeed;
             controller.Sm.useStamina((controller.Sm.DashStamCost /* - (sm.sprintStaminaCost  (sm.dexterity / 100))*/), false);
             controller.Anim.SetTrigger("Dash");
             currentDashtime = 0;

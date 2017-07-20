@@ -7,6 +7,7 @@ public class OilPool : FlammableObject
 	ParticleSystem particleSystem;
 	SkillManager skillManager;
 	float dmg;
+	float duration;
 	// Use this for initialization
 	void Start () 
 	{
@@ -14,7 +15,8 @@ public class OilPool : FlammableObject
 		particleSystem.enableEmission = false;
 		groundThePool();
 		skillManager = GameObject.Find("Player").GetComponent<SkillManager>();
-		GetComponent<DestroyObjectOnTimer>().time = skillManager.getSkillFromKnown("Oil Pool").Duration;
+		GetComponent<DestroyObjectOnTimer>().time = duration;
+		                                    duration = skillManager.getSkillFromKnown("Oil Pool").Duration;
 		dmg = skillManager.getSkillFromKnown("Oil Pool").EffectAmount;
 	}
 	
@@ -44,7 +46,8 @@ public class OilPool : FlammableObject
 
 			if (col.transform.tag == "Enemy" || col.transform.tag == "Player")
 			{
-				col.SendMessage("recieveDamage", dmg, SendMessageOptions.RequireReceiver);
+				object[] parameters = { dmg, SkillType.Fire };
+				col.SendMessage("recieveDamage", parameters, SendMessageOptions.RequireReceiver);
 			}
 		}
 	}
@@ -53,5 +56,6 @@ public class OilPool : FlammableObject
 	{
 		base.ignite();
 		particleSystem.enableEmission = true;
+		GetComponent<DestroyObjectOnTimer>().time = duration;
 	}
 }

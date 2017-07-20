@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
 	void Start()
 	{
 		//temp
-		AddTestData();
+		//AddTestData();
 		//temp
 	}
 

@@ -38,7 +38,7 @@ public class DisplayPanelHotkey : ControlHotkey
 			controller.Hudman.showPanels ();
 		} else {
 
-			controller.Hudman.HidePanels ();
+			controller.Hudman.hidePanels ();
 			controller.Hudman.HideTooltip ();
 		}
 	}

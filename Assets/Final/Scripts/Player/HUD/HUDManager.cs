@@ -78,11 +78,21 @@ public class HUDManager : MonoBehaviour
 		messageCurrentTime = 0;
 		messageTimer = 0;
 		queuedMessages = new List<Message> ();
-		HidePanels ();
 	    updateCurrentLvlTxt();
-	    setUpDone = true;
-	}
 
+		hidePanels();
+		setUpDone = true;
+		//StartCoroutine(finishSetup());
+	}
+	/*
+	IEnumerator finishSetup()
+	{
+		yield return new WaitForSeconds(.8f);
+
+		hidePanels();
+		setUpDone = true;
+	}
+	*/
 	void Update()
 	{
 		updateBars ();
@@ -236,7 +246,7 @@ public class HUDManager : MonoBehaviour
     {
         tooltipName.text = skill.Name;
 		tooltipLvl.text = "Level: " + skill.LvlRequirement;
-		tooltipCost.text = skill.Cost + " " + skill.SkillType;
+		tooltipCost.text = skill.Cost + " " + skill.SkillResource;
 		tooltipCooldown.text = skill.Cooldown + " second cooldown";
 		tooltipDesc.text = skill.Description;
 
@@ -317,7 +327,7 @@ public class HUDManager : MonoBehaviour
 	}
 
 	//Hides currentPanel
-	public void HidePanels()
+	public void hidePanels()
 	{
 		panelsOBJ.gameObject.SetActive (false);
 	}

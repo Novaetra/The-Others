@@ -37,6 +37,12 @@ public class SkillInitializer : MonoBehaviour
 		if(Physics.Raycast(middleSpawner.position,-middleSpawner.forward, out hit))
 		{
 			GameObject area = (GameObject)GameObject.Instantiate(s, hit.point, Quaternion.identity);
+			//Temporary
+			if (s.name.Equals("Fire Bomb"))
+			{
+				area.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+			}
+			//Temporary
 		}
 	}
 

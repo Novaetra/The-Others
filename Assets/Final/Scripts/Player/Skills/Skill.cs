@@ -55,12 +55,12 @@ public class Skill
 		stats = sm;
 		lvlRequirement = req;
 		skillResource = st;
-		Type = _type;
+		SkillType = _type;
 		upgrades = new List<Upgrade> ();
 		upgradeCount = 0;
         isHoldable = false;
         hudMan = GameObject.FindGameObjectWithTag("Player").GetComponent<HUDManager>();
-		FillInDescriptionData();
+		fillInDescriptionData();
     }
 
     //Assigns all variables
@@ -87,11 +87,11 @@ public class Skill
         upgradeCount = 0;
         isHoldable = hold;
         hudMan = GameObject.FindGameObjectWithTag("Player").GetComponent<HUDManager>();
-		FillInDescriptionData();
+		fillInDescriptionData();
     }
 
 
-	private void FillInDescriptionData()
+	public void fillInDescriptionData()
 	{
 		string[] strs = originalDescription.Split('~');
 		string finalDesc = "";
@@ -160,7 +160,7 @@ public class Skill
 			{
 				nextUpgrade = null;
 			}
-			FillInDescriptionData();
+			fillInDescriptionData();
 			hudMan.UpdateToolTip(this);
         }
 	}
@@ -214,6 +214,7 @@ public class Skill
 		}
 		set{
 			duration = value;
+			fillInDescriptionData();
 		}
 	}
 
@@ -260,7 +261,7 @@ public class Skill
 		} 
 	}
 
-	public SkillResource SkillType {
+	public SkillResource SkillResource {
 		get {
 			return skillResource;
 		}
@@ -360,7 +361,7 @@ public class Skill
 		}
 	}
 
-	public SkillType Type
+	public SkillType SkillType
 	{
 		get
 		{

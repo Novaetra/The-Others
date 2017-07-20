@@ -16,7 +16,7 @@ public class SkillTree : MonoBehaviour
     public void Awake()
     {
         fillTreePiecesList();
-        skillsUnlocked = 0;
+        skillsUnlocked = 1;
     }
     
 	//Populates the 'treepieces' list to refrence all of the skills within the skill tree
@@ -44,14 +44,16 @@ public class SkillTree : MonoBehaviour
         //try
         //{
             int x = 0;
+		//Debug.Log(transform + " : " + skillsUnlocked);
 			//Skills with the level requirement met by the player will light up and allow player to unlock/upgrade them if player has unlocked all previous skills
             foreach (SkillTreePiece piece in treePieces)
 			{
-				if (piece.getUnlocked() == false && piece.getSkill().LvlRequirement <= sm.getCurrentLvl() && sm.getUpgradePnts() > 0 && x <= skillsUnlocked)
+				if (piece.getUnlocked() == false && piece.getSkill().LvlRequirement <= sm.getCurrentLvl() && sm.getUpgradePnts() > 0 && piece.NumberInTree == skillsUnlocked)
 				{
-					toggles[x].interactable = true;
-                }
-				else if(canUpgradeSkill(piece.getSkill()))
+					toggles[x].interactable = true;	
+
+				}
+			else if(canUpgradeSkill(piece.getSkill()) && piece.getUnlocked())
 				{
 					toggles[x].interactable = true;
 					toggles[x].isOn = false;
@@ -65,7 +67,6 @@ public class SkillTree : MonoBehaviour
 				{
 					toggles[x].interactable = false;
 				}	
-
                 x++;
             }
 		/*}

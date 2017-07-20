@@ -54,6 +54,7 @@ public class StatsManager : MonoBehaviour
     //private float currentReviveTimer;
 
     private HUDManager hudman;
+	private SkillManager skillManager;
     private Animator anim;
     //private GameObject currentReviver;
     private GameManager pgm;
@@ -97,6 +98,7 @@ public class StatsManager : MonoBehaviour
         //currentReviveTimer = reviveTimer;
 
         hudman = GetComponent<HUDManager>();
+		skillManager = GetComponent<SkillManager>();
         anim = GetComponent<Animator>();
         pgm = GameObject.Find("Managers").GetComponent<GameManager>();
 		hudman.updateCurrentLvlTxt ();
@@ -186,7 +188,7 @@ public class StatsManager : MonoBehaviour
 	{
 		totalHealth += healthUpgradeAmntOnLvlUp;
 		totalStamina += staminaUpgradeAmtOnLvlUp;
-		if (currentLvl < 10) 
+		if (currentLvl < 3) 
 		{
 			baseMeleeDamage *= 1.5f;
 			totalMana *= 1.5f;
@@ -198,7 +200,30 @@ public class StatsManager : MonoBehaviour
 		}
 
         DashStamCost = .3f * totalStamina;
+		upgradeAllDamageSkills();
     }
+
+	private void upgradeAllDamageSkills()
+	{
+		foreach (Skill s in skillManager.getAllSkills())
+		{
+			if (s.LvlRequirement < currentLvl)
+			{
+				if (s.SkillType != SkillType.Heal)
+				{
+					if (currentLvl < 5)
+					{
+						s.EffectAmount *= 1.5f;
+					}
+					else
+					{
+						s.EffectAmount *= 1.2f;
+					}
+					s.fillInDescriptionData();
+				}
+			}
+		}
+	}
 
 	public void recieveDamage(float dmg)
     {
@@ -208,6 +233,16 @@ public class StatsManager : MonoBehaviour
         hudman.showRecievedDamage();
         healthCurrentTime = 0f;
     }
+
+	public void recieveDamage(object[] parameters)
+	{
+		float dmg = (float)parameters[0];
+		currentHealth -= dmg;
+		hudman.updateBars();
+		checkDeath();
+		hudman.showRecievedDamage();
+		healthCurrentTime = 0f;
+	}
 
     private void checkDeath()
     {

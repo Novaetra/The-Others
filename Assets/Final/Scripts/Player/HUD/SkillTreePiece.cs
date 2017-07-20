@@ -16,10 +16,13 @@ public class SkillTreePiece : MonoBehaviour
 	private SkillManager skillManager;
 	private HUDManager hudman;
     private bool isUnlocked;
+	[SerializeField]
+	private int numberInTree;
 
 	private string originalDescription;
-    
-    public void Start()
+
+
+	public void Start()
     {
         StartCoroutine(setSkillTimer());
     }
@@ -55,24 +58,34 @@ public class SkillTreePiece : MonoBehaviour
     {
 		if (!isUnlocked && sm.getUpgradePnts()>0) 
 		{
-			isUnlocked = true;
-			skill.IsUnlocked = true;
-			GetComponentInParent<Toggle> ().interactable = false;
-			sm.addUpgradePoint (-1);
-			sm.activateUnlockable ();
-			hudman.updateUpgradePoints ();
-			GetComponentInParent<SkillTree> ().unlockSkill (sm);
-			skillManager.addToKnown(skill);
+			unlockSkill();
+		}
 
-		} 
-		else if(isUnlocked && sm.getUpgradePnts()>0)
+		else if(isUnlocked && sm.getUpgradePnts() > 0)
 		{
-			skill.UpgradeSkill ();
-            sm.addUpgradePoint(-1);
-            hudman.updateUpgradePoints();
-            GetComponentInParent<SkillTree> ().DisplayUnlockables (sm);
+			upgradeSkill();
 		}
     }
+
+	private void unlockSkill()
+	{
+		isUnlocked = true;
+		skill.IsUnlocked = true;
+		GetComponentInParent<Toggle>().interactable = false;
+		sm.addUpgradePoint(-1);
+		sm.activateUnlockable();
+		hudman.updateUpgradePoints();
+		GetComponentInParent<SkillTree>().unlockSkill(sm);
+		skillManager.addToKnown(skill);
+	}
+
+	public void upgradeSkill()
+	{
+		skill.UpgradeSkill();
+		sm.addUpgradePoint(-1);
+		hudman.updateUpgradePoints();
+		GetComponentInParent<SkillTree>().DisplayUnlockables(sm);
+	}
 
 
 	//This is for one-time effects (passives)
@@ -151,5 +164,18 @@ public class SkillTreePiece : MonoBehaviour
 	public Skill getSkill()
 	{ 
 		return skill;
+	}
+
+	public int NumberInTree
+	{
+		get
+		{
+			return numberInTree;
+		}
+
+		set
+		{
+			numberInTree = value;
+		}
 	}
 }
