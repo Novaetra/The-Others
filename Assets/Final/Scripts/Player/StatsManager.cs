@@ -172,7 +172,7 @@ public class StatsManager : MonoBehaviour
 		upgradeStats ();
         currentExp = leftOver;
 		currentLvl++;
-		if (currentLvl < 10) 
+		if (currentLvl < 4) 
 		{
 			totalExpRequiredToLvlUp *= 2f;
 		} else 
@@ -211,13 +211,13 @@ public class StatsManager : MonoBehaviour
 			{
 				if (s.SkillType != SkillType.Heal)
 				{
-					if (currentLvl < 5)
+					if (currentLvl < 4)
 					{
 						s.EffectAmount *= 1.5f;
 					}
 					else
 					{
-						s.EffectAmount *= 1.2f;
+						s.EffectAmount *= 1.1f;
 					}
 					s.fillInDescriptionData();
 				}
