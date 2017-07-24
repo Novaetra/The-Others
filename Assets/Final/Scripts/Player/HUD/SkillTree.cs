@@ -38,7 +38,7 @@ public class SkillTree : MonoBehaviour
 
 	//This is called every time player levels up
 	//It shows player all the upgrades/unlocks available
-    public void DisplayUnlockables(StatsManager sm)
+    public void displayUnlockablesForOneTree(StatsManager sm)
     {
 		_sm = sm;
         //try
@@ -53,7 +53,7 @@ public class SkillTree : MonoBehaviour
 					toggles[x].interactable = true;	
 
 				}
-			else if(canUpgradeSkill(piece.getSkill()) && piece.getUnlocked())
+				else if(canUpgradeSkill(piece.getSkill()) && piece.getUnlocked())
 				{
 					toggles[x].interactable = true;
 					toggles[x].isOn = false;
@@ -98,7 +98,7 @@ public class SkillTree : MonoBehaviour
 	public void unlockSkill(StatsManager sm)
 	{
 		skillsUnlocked++;
-		DisplayUnlockables (sm);
+		//displayUnlockablesForOneTree (sm);
 	}
 
 }

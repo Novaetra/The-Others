@@ -51,12 +51,11 @@ public class FireballScript : SpellScript
 			enemiesHit++;
 			if (enemiesHit >= maxEnemiesHit)
 			{
-				Destroy(gameObject);
+				Destroy(transform.parent.gameObject);
 			}
 		}
 		else if (col.gameObject.tag == "Flammable")
 		{
-
 			FlammableObject flamObj = col.GetComponent<FlammableObject>();
 			if (flamObj.IsOnFire == false)
 			{

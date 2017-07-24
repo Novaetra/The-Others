@@ -106,7 +106,15 @@ public class StatsManager : MonoBehaviour
     inventoryClassRefrence = GameObject.Find("InventoryManager").GetComponent<Inventory>();
         inventoryList = inventoryClassRefrence.InventoryList;
 
-    }
+		//TEMPORARY ------------------------------
+		//addTestData();
+		//TEMPORARY -------------------------------
+	}
+
+	private void addTestData()
+	{
+        upgradePoints = 10;
+	}
 
     void Update()
     {
@@ -180,7 +188,7 @@ public class StatsManager : MonoBehaviour
 			totalExpRequiredToLvlUp += totalExpRequiredToLvlUp * .1f;
 		}
         upgradePoints++;
-        activateUnlockable();
+        displayUnlockablesForAllTrees();
 		hudman.updateCurrentLvlTxt ();
         displayLvlUpTxt();
     }
@@ -340,13 +348,13 @@ public class StatsManager : MonoBehaviour
                 break;
         }
     }
-    public void activateUnlockable()
+    public void displayUnlockablesForAllTrees()
     {
         hudman.updateUpgradePoints();
 
         foreach (SkillTree tree in trees)
         {
-            tree.DisplayUnlockables(this);
+            tree.displayUnlockablesForOneTree(this);
         }
     }
 

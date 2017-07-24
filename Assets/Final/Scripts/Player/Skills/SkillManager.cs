@@ -6,7 +6,7 @@ using System;
 
 public enum Skills
 {
-	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6, FireBomb = 7
+	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6, FireBomb = 7, IcePick=8, SlowingMist=9
 };
 
 public enum SkillResource
@@ -16,7 +16,7 @@ public enum SkillResource
 
 public enum SkillType
 {
-	Fire, Storm, Physical, Heal,Empty
+	Fire, Storm, Ice,Physical, Heal,Empty
 }
 
 public class SkillManager : MonoBehaviour 
@@ -24,6 +24,7 @@ public class SkillManager : MonoBehaviour
 	//Refrences to objects/components
 	public List<Skill> allSkills;
 	public List<Skill> knownSkills;
+	private List<string> passiveSkillNames;
 	private GameObject skillBar;
 	private StatsManager sm;
 	private Animator anim;
@@ -33,7 +34,7 @@ public class SkillManager : MonoBehaviour
     private Inventory inventoryClassRefrence;
     private List<Item> inventoryList;
 
-    void Awake()
+	void Awake()
 	{
 		skillBar = GameObject.Find("SkillBar").gameObject;
 		hudman = GetComponent<HUDManager>();
@@ -71,40 +72,67 @@ public class SkillManager : MonoBehaviour
 	{
 		//(string name, string description, float effect amount, float cost, float cd, Skills enumSkill, SkillType type int requirement, StatsManager sm)
 		Skill skill;
-		skill = AddToAllSkillsList("Fireball", "Hurls a flaming ball of fire forward that deals ~EffectAmount~ fire damage.", 125f, 50f, 10f, Skills.Fireball, SkillType.Fire,SkillResource.Mana, 2,sm);
+		addFireSkills();
+		addStormSkills();
+		addIceSkills();
+		skill = AddToAllSkillsList("Heal", "Restores ~EffectAmount~ health.", 100f, 1f, 5f, Skills.Heal, SkillType.Heal,SkillResource.SkillCharge, 2,sm);
+		skill = AddToAllSkillsList("MeleeDamageUpgrade","Melee does ~EffectAmount~ more damage", 100f,0f,0f,Skills.Empty,SkillType.Empty,SkillResource.Empty,5,sm);
 
-		skill.AddUpgrade(new Upgrade(50f,SkillAttribute.effectAmount,3));
-		skill.AddUpgrade(new Upgrade(4f,SkillAttribute.maxEnemiesHit,4));
-		skill.AddUpgrade(new Upgrade(2f,SkillAttribute.cooldown,5));
+        
+		AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty,SkillType.Empty, SkillResource.Empty, 0,sm);
+		//Links all the skill tree pieces to the actal skill 
+		GameObject.Find("Canvas").BroadcastMessage("setSkill");
+	}
 
-		skill = AddToAllSkillsList("Ignite", "(Passive) All fire skills have a chance to ignite enemies dealing ~EffectAmount~ damage/second for ~Duration~ seconds.", 30, 0, 0, Skills.Empty, SkillType.Fire, SkillResource.Empty, 4, sm);
+	private void addFireSkills()
+	{
+		Skill skill;
+		skill = AddToAllSkillsList("Fireball", "Hurls a flaming ball of fire forward that deals ~EffectAmount~ fire damage.", 125f, 50f, 10f, Skills.Fireball, SkillType.Fire, SkillResource.Mana, 2, sm);
+		skill.MaxEnemiesHit = 1;
+		skill.AddUpgrade(new Upgrade(50f, SkillAttribute.effectAmount, 3));
+		skill.AddUpgrade(new Upgrade(2f, SkillAttribute.cooldown, 5));
+
+		skill = AddToAllSkillsList("Flamethrower", "Blasts fire in a cone in front of you that deals ~EffectAmount~ damage/second.", 50f * Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Fire, SkillResource.Mana, 4, sm, true);
+		skill.AddUpgrade(new Upgrade(50f * Time.deltaTime, SkillAttribute.effectAmount, 5));
+
+		skill = AddToAllSkillsList("Ignite", "(Passive) All fire skills have a ~HitChance~% chance to ignite enemies dealing ~EffectAmount~ damage/second for ~Duration~ seconds.", 30, 0, 0, Skills.Empty, SkillType.Fire, SkillResource.Empty, 4, sm);
 		skill.Duration = 20;
+		skill.HitChance = 40f;
 		skill.AddUpgrade(new Upgrade(20f, SkillAttribute.effectAmount, 6));
-		skill = AddToAllSkillsList("Oil Pool", "Spawns a pool of oil that can be ignited. Once ignited, it deals ~EffectAmount~ damage/second to anything standing on it for ~Duration~ seconds.", 50*Time.deltaTime, 200, 300, Skills.OilPool, SkillType.Fire, SkillResource.Mana, 5, sm);
+
+		skill = AddToAllSkillsList("Oil Pool", "Spawns a pool of oil that can be ignited. Once ignited, it deals ~EffectAmount~ damage/second to anything standing on it for ~Duration~ seconds.", 50 * Time.deltaTime, 200, 300, Skills.OilPool, SkillType.Fire, SkillResource.Mana, 5, sm);
 		skill.Duration = 30;
+
 		skill.AddUpgrade(new Upgrade(10f, SkillAttribute.duration, 8));
 
 		skill = AddToAllSkillsList("Fire Bomb", "Creates a fire bomb that detonates after ~Duration~ seconds and deals ~EffectAmount~ damage to anything nearby.", 100, 5, 120, Skills.FireBomb, SkillType.Fire, SkillResource.Mana, 6, sm);
 		skill.Duration = 5;
 		skill.AddUpgrade(new Upgrade(50f, SkillAttribute.effectAmount, 9));
+	}
 
-		skill = AddToAllSkillsList("Heal", "Restores ~EffectAmount~ health.", 100f, 1f, 5f, Skills.Heal, SkillType.Heal,SkillResource.SkillCharge, 2,sm);
+	private void addStormSkills()
+	{
+		Skill skill;
 
-		skill = AddToAllSkillsList("MeleeDamageUpgrade","Melee does ~EffectAmount~ more damage", 100f,0f,0f,Skills.Empty,SkillType.Empty,SkillResource.Empty,5,sm);
-
-        skill = AddToAllSkillsList("Flamethrower", "Blasts fire in a cone in front of you that deals ~EffectAmount~ damage/second.", 50f*Time.deltaTime, 50f * Time.deltaTime, 0f, Skills.Flamethrower, SkillType.Fire,SkillResource.Mana, 4,sm, true);
-		skill.AddUpgrade(new Upgrade(50f*Time.deltaTime, SkillAttribute.effectAmount, 5));
-
-		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by ~EffectAmount~ for 30 seconds", 1.1f, 100f, 90, Skills.StormFlurry, SkillType.Storm,SkillResource.Mana,2,sm);
+		skill = AddToAllSkillsList("Storm Flurry", "Increases attack speed by 100% and melee damage by ~EffectAmount~ for 30 seconds", 1.1f, 100f, 90, Skills.StormFlurry, SkillType.Storm, SkillResource.Mana, 2, sm);
 		skill.Duration = 30f;
 
+		skill = AddToAllSkillsList("Storm Dash", "(Passive) Makes dash deal ~EffectAmount~ damage to enemies you pass through.", 120, 0, 0f, Skills.Empty, SkillType.Storm, SkillResource.Empty, 3, sm);
+	
+		skill = AddToAllSkillsList("Paralyzing Strike", "(Passive) Each melee attack has a ~HitChance~% chance to paralyze the enemy for ~Duration~ seconds.", 0, 0, 0f, Skills.Empty, SkillType.Storm, SkillResource.Empty, 4, sm);
+		skill.HitChance = 40f;
+		skill.Duration = 2f;
+	}
 
-		skill = AddToAllSkillsList("Storm Dash", "(Passive) Makes dash deal ~EffectAmount~ damage to enemies you pass through.", 120, 0, 0f, Skills.Empty, SkillType.Storm,SkillResource.Empty, 3, sm);
+	private void addIceSkills()
+	{
+		Skill skill;
 
+		skill = AddToAllSkillsList("Ice Pick", "Launches an ice pick forward dealing ~EffectAmount~ to the first enemy hit.", 125f, 25f, 10, Skills.IcePick, SkillType.Ice, SkillResource.Mana, 2, sm);
+		skill.AddUpgrade(new Upgrade(20f, SkillAttribute.maxEnemiesHit, 4));
 
-		AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty,SkillType.Empty, SkillResource.Empty, 0,sm);
-		//Links all the skill tree pieces to the actal skill 
-		GameObject.Find("Canvas").BroadcastMessage("setSkill");
+		skill = AddToAllSkillsList("Slowing Mist", "Creates a field of icy mist that slows enemies down by ~EffectAmount~ and lasts for ~Duration~", .6f, 100f, 90, Skills.SlowingMist, SkillType.Ice, SkillResource.Mana, 3, sm);
+		skill.Duration = 30f;
 	}
 
 	public bool skillIsKnown(string name)
@@ -359,5 +387,18 @@ public class SkillManager : MonoBehaviour
     {
         skillInitializer.DestroyCurrentEffect();
     }
+	public List<string> PassiveSkillNames
+	{
+		get
+		{
+			return passiveSkillNames;
+		}
+
+		set
+		{
+			passiveSkillNames = value;
+		}
+	}
+
     #endregion
 }

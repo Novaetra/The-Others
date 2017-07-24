@@ -5,20 +5,19 @@ using UnityEngine;
 public class OilPool : FlammableObject 
 {
 	ParticleSystem particleSystem;
-	SkillManager skillManager;
-	float dmg;
-	float duration;
-	// Use this for initialization
-	void Start () 
+	private float effectAmt;
+	private float duration;
+
+	protected override void doAdditionalSetupOnStart()
 	{
+		duration = currentSkill.Duration;
+		GetComponent<DestroyObjectOnTimer>().time = duration;
+		effectAmt = currentSkill.EffectAmount;
 		particleSystem = GetComponentInChildren<ParticleSystem>();
 		particleSystem.enableEmission = false;
 		groundThePool();
-		skillManager = GameObject.Find("Player").GetComponent<SkillManager>();
-		GetComponent<DestroyObjectOnTimer>().time = duration;
-		                                    duration = skillManager.getSkillFromKnown("Oil Pool").Duration;
-		dmg = skillManager.getSkillFromKnown("Oil Pool").EffectAmount;
 	}
+
 	
 	// Update is called once per frame
 	void Update () 
@@ -46,7 +45,7 @@ public class OilPool : FlammableObject
 
 			if (col.transform.tag == "Enemy" || col.transform.tag == "Player")
 			{
-				object[] parameters = { dmg, SkillType.Fire };
+				object[] parameters = { currentSkill.EffectAmount, SkillType.Fire };
 				col.SendMessage("recieveDamage", parameters, SendMessageOptions.RequireReceiver);
 			}
 		}
@@ -54,6 +53,7 @@ public class OilPool : FlammableObject
 
 	public override void ignite()
 	{
+		Debug.Log("Ignited");
 		base.ignite();
 		particleSystem.enableEmission = true;
 		GetComponent<DestroyObjectOnTimer>().time = duration;

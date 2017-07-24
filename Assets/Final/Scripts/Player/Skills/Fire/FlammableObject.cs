@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlammableObject : MonoBehaviour 
+public class FlammableObject : SkillGameObject 
 {
 	private bool isOnFire;
 

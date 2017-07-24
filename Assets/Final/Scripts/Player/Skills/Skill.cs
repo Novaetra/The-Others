@@ -33,8 +33,10 @@ public class Skill
 	private Upgrade nextUpgrade; 
 
 	private int upgradeCount;
+	private float hitChance;
 
-	private bool isUnlocked,isHoldable, canUse, isPassive = false;
+	private bool isUnlocked,isHoldable, canUse;
+	private bool isPassive = false;
 	//Assigns all variables
 	public Skill(string n, string d, float effectAmnt,  float c, float cd, Skills enumSkill, SkillType _type,SkillResource st, int req, StatsManager sm)
 	{
@@ -50,7 +52,7 @@ public class Skill
 		CurrentEnumSkill = enumSkill;
 		if (enumSkill < 0)
 		{
-			isPassive = true;
+			IsPassive = true;
 		}
 		stats = sm;
 		lvlRequirement = req;
@@ -78,7 +80,7 @@ public class Skill
         CurrentEnumSkill = enumSkill;
 		if (enumSkill < 0)
 		{
-			isPassive = true;
+			IsPassive = true;
 		}
         stats = sm;
         lvlRequirement = req;
@@ -371,6 +373,32 @@ public class Skill
 		set
 		{
 			type = value;
+		}
+	}
+
+	public bool IsPassive
+	{
+		get
+		{
+			return isPassive;
+		}
+
+		set
+		{
+			isPassive = value;
+		}
+	}
+
+	public float HitChance
+	{
+		get
+		{
+			return hitChance;
+		}
+
+		set
+		{
+			hitChance = value;
 		}
 	}
 

@@ -60,7 +60,7 @@ public class LocomotionHotkeys : ControlHotkey
 					Sprint ();
 				}
 
-				if (Input.GetKeyUp (c)) {
+				if (Input.GetKeyUp (c) && controller.IsSlowed==false) {
 					ResetMoveSpeed ();
 				}
 			} else if (c == Codes [1]) {
@@ -69,7 +69,7 @@ public class LocomotionHotkeys : ControlHotkey
 				}
 			} else if (c == Codes [2]) {
 				if (Input.GetKeyUp (c) && controller.cursorLocked) {
-					Melee ();
+					melee ();
 				}
 			} else if (c == Codes [3]) {
 				if (Input.GetKeyUp (c) && controller.Sm.getCurrentExp() - controller.Sm.getGoalExp() >=0) 
@@ -150,12 +150,12 @@ public class LocomotionHotkeys : ControlHotkey
 	private void Sprint()
 	{
 		//Sprint
-		if (controller.Sm.getCurrentStamina() > 0) 
+		if (controller.Sm.getCurrentStamina() > 0 && controller.IsSlowed == false) 
 		{
 			controller.currentSpeed = controller.runSpeed;
 			controller.Sm.useStamina ((controller.Sm.getSprintStamCost() /* - (sm.sprintStaminaCost  (sm.dexterity / 100))*/),true);
 		} 
-		else 
+		else if(controller.IsSlowed == false)
 		{
 			ResetMoveSpeed ();
 		}
@@ -183,7 +183,7 @@ public class LocomotionHotkeys : ControlHotkey
         }
     }
 
-    private void Melee()
+	private void melee()
 	{
 		if (controller.Sm.getCurrentStamina() - controller.Sm.getMeleeCost() >= 0 && controller.Anim.GetInteger("Skill") != (int)Skills.BasicAttack)  
 		{

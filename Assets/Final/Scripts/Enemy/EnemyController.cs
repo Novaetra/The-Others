@@ -23,9 +23,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     protected float totalHealth, currentHealth, expOnKill;
 
-	protected bool doneSettingUp = false;
+	protected bool doneSettingUp = false,isParalyzed=false;
 	protected bool isAlive = true;
-    private bool alreadySpawnedItem = false;
+	private bool alreadySpawnedItem = false;
     //Keeps track of how many times been hit to trigger hit response every 4th hit
     private int hitResponseFrequency = 4;
     private int tookDamageCount = 0;
@@ -105,17 +105,25 @@ public class EnemyController : MonoBehaviour
 	{
 		animatorSpeedToZero();
 		attackAnim();
-		// agent.enabled = false;
 		rotateTowards(targetPlayer);
 	}
 
 	protected virtual void DoNotWithinProximity(float playerDistance)
 	{
-		agent.enabled = true;
-		agent.SetDestination(targetPlayer.position);
-		walkAnim();
-		resetAnimator();
-		rotateTowards(targetPlayer);
+		if (isParalyzed == false)
+		{
+			agent.enabled = true;
+			agent.SetDestination(targetPlayer.position);
+			walkAnim();
+			resetAnimator();
+			rotateTowards(targetPlayer);
+		}
+		else
+		{
+			agent.enabled = false;
+			resetAnimator();
+			animatorSpeedToZero();
+		}
 	}
 
 	protected void rotateTowards(Transform target)
@@ -151,6 +159,20 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+	public void applySlow(float amt)
+	{
+		agent.speed = agent.speed - (agent.speed * amt);
+		anim.speed = amt;
+	}
+
+	public void revertSlow(float amt)
+	{
+		float oldSpeed = agent.speed / (1 - amt);
+		agent.speed = oldSpeed;
+		anim.speed = 1;
+	}
+
+
     void OnTriggerEnter(Collider col)
     {
         if(col.transform.tag =="Player")
@@ -170,14 +192,35 @@ public class EnemyController : MonoBehaviour
 	protected void checkPlayerPassives(SkillType type)
 	{
 		SkillManager skillManager = targetPlayer.GetComponent<SkillManager>();
-		if (skillManager.skillIsKnown("Ignite") && type == SkillType.Fire && transform.Find("Ignite(Clone)")==null)
+		if (skillManager.skillIsKnown("Ignite") && type == SkillType.Fire && transform.Find("Ignite(Clone)") == null)
 		{
-			float roll = Random.value * 10;
-			if (roll <= 2.5)
+			foreach (Skill _skill in skillManager.getKnownSkills())
 			{
-				applyIgnite();			
+				if (_skill.Name == "Ignite")
+				{
+					float roll = Random.value * 100;
+					if (roll <= _skill.HitChance)
+					{
+						applyIgnite();
+					}
+				}
 			}
+
 		}
+	}
+
+	public void applyParalyze(float duration)
+	{
+		isParalyzed = true;
+		agent.enabled = false;
+		StartCoroutine(startNavAgent(duration));
+	}
+
+	private IEnumerator startNavAgent(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		agent.enabled = true;
+		isParalyzed = false;
 	}
 
 	private void applyIgnite()
@@ -352,13 +395,13 @@ public class EnemyController : MonoBehaviour
 	protected void attackAnim()
     {
         int attack = (int) Random.RandomRange(1, numberOfAttacks+1);
-        GetComponent<Animator>().SetInteger("Skill", attack);
+		anim.SetInteger("Skill", attack);
     }
 
 	protected virtual void resetAnimator()
     {
         if(isAlive)
-            GetComponent<Animator>().SetInteger("Skill", 0);
+			anim.SetInteger("Skill", 0);
     }
 
 	protected virtual void AfterTakingDamage()
@@ -368,12 +411,12 @@ public class EnemyController : MonoBehaviour
     //Triggers an walk animation on all clients
 	protected void walkAnim()
     {
-		GetComponent<Animator>().SetFloat("Speed", agent.speed);
+		anim.SetFloat("Speed", agent.speed);
     }
 
 	public void animatorSpeedToZero()
     {
-        GetComponent<Animator>().SetFloat("Speed", 0);
+		anim.SetFloat("Speed", 0);
     }
 
 	protected void disableAgent()

@@ -56,6 +56,7 @@ public class SkillTreePiece : MonoBehaviour
 	//Unlocks/Upgrades skills
 	public void unlockOrUpgradeSkill()
     {
+		Debug.Log("Unlock or upgrading " + sm.getUpgradePnts());
 		if (!isUnlocked && sm.getUpgradePnts()>0) 
 		{
 			unlockSkill();
@@ -69,14 +70,20 @@ public class SkillTreePiece : MonoBehaviour
 
 	private void unlockSkill()
 	{
+		Debug.Log("Ok i STARTED unlocking the skill");
 		isUnlocked = true;
 		skill.IsUnlocked = true;
-		GetComponentInParent<Toggle>().interactable = false;
 		sm.addUpgradePoint(-1);
-		sm.activateUnlockable();
 		hudman.updateUpgradePoints();
+		Debug.Log("OK I UNLOCKED IT FROM THE SCRIPT");
 		GetComponentInParent<SkillTree>().unlockSkill(sm);
 		skillManager.addToKnown(skill);
+
+		Debug.Log("OK I ADDED IT TO KNOWN IT FROM THE SCRIPT");
+		GetComponentInParent<Toggle>().interactable = false;
+		Debug.Log("Ok i unlocked the skill");
+		sm.displayUnlockablesForAllTrees();
+		Debug.Log("Ok I refreshed");
 	}
 
 	public void upgradeSkill()
@@ -84,7 +91,7 @@ public class SkillTreePiece : MonoBehaviour
 		skill.UpgradeSkill();
 		sm.addUpgradePoint(-1);
 		hudman.updateUpgradePoints();
-		GetComponentInParent<SkillTree>().DisplayUnlockables(sm);
+		sm.displayUnlockablesForAllTrees();
 	}
 
 

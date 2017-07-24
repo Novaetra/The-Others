@@ -55,7 +55,7 @@ public class SkillInitializer : MonoBehaviour
 		//spellSpawner.transform.rotation += new Vector3 (0f, 90f);
 		GameObject projectile = (GameObject)GameObject.Instantiate (s, spellSpawnerInstance.transform.position, spellSpawnerInstance.transform.rotation);
 		projectile.transform.SetParent(spellSpawnerInstance.transform);
-		projectile.transform.localScale = new Vector3(1f,1f,1f);
+		//projectile.transform.localScale = new Vector3(1f,1f,1f);
 	}
 
 	public void CreateFloorSpell(string name)

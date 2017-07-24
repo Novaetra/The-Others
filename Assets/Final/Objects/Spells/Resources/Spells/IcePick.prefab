@@ -9,48 +9,47 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1295379228855098}
+  m_RootGameObject: {fileID: 1742910565308682}
   m_IsPrefabParent: 1
---- !u!1 &1295379228855098
+--- !u!1 &1742910565308682
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4400894173019372}
-  - component: {fileID: 33155785629502184}
-  - component: {fileID: 23897636315143654}
-  - component: {fileID: 114065790001068322}
-  - component: {fileID: 135532523436118582}
-  - component: {fileID: 135875636399015538}
-  - component: {fileID: 54384997905280032}
+  - component: {fileID: 4465881073964792}
+  - component: {fileID: 33621576142242244}
+  - component: {fileID: 23334494091717876}
+  - component: {fileID: 95808561197632634}
+  - component: {fileID: 114407473874611040}
+  - component: {fileID: 65162215798137974}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: IcePick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4400894173019372
+--- !u!4 &4465881073964792
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -4.2718344, y: 0.95, z: -5.33621}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_GameObject: {fileID: 1742910565308682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.5339193, y: 0.615, z: -6.498063}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23897636315143654
+--- !u!23 &23334494091717876
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
+  m_GameObject: {fileID: 1742910565308682}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8baa21549894f4695b2fa568a1a4efe0, type: 2}
+  - {fileID: 2100000, guid: c62fa939424784f579bfc0c339413a66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,60 +76,51 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33155785629502184
+--- !u!33 &33621576142242244
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
-  m_Mesh: {fileID: 4300000, guid: cad8e6ea3e9394b5896ac8fdbc72278f, type: 3}
---- !u!54 &54384997905280032
-Rigidbody:
+  m_GameObject: {fileID: 1742910565308682}
+  m_Mesh: {fileID: 4300000, guid: e13da6310ad9b4da19b8e434565c6889, type: 3}
+--- !u!65 &65162215798137974
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &114065790001068322
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08de473e5ddec41128c6e5a251c318fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!135 &135532523436118582
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
+  m_GameObject: {fileID: 1742910565308682}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.12
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135875636399015538
-SphereCollider:
+  m_Size: {x: 0.026047897, y: 0.026047897, z: 0.07193034}
+  m_Center: {x: 0, y: 0, z: -0.011644179}
+--- !u!95 &95808561197632634
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295379228855098}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 1742910565308682}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.01
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 587810e47c8f54dd0b3abe5482bb4380, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114407473874611040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742910565308682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae669ee26fe8c441b88cfa471ef0d0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameOfSkill: Ice Pick

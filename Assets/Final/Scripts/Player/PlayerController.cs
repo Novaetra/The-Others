@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 	private float meleeDistance = 1.95f;
 	private float interactDistance = 2f;
 	private StatsManager sm;
+	private SkillManager skillManager;
 	private HUDManager hudman;
     [SerializeField]
     private LayerMask lyrMask;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private Raycaster[] raycasters;
 
     private GameObject personReviving;
+
+	private bool isSlowed = false;
 
     private bool isSettingUp = true;
 	[SerializeField]
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
 	{
         lyrMask = ~lyrMask;
         cs = GetComponent<CharacterController> ();
+		skillManager = GetComponent<SkillManager>();
 		hudman = GetComponent<HUDManager> ();
 		currentSpeed = walkSpeed;
 		anim = GetComponent<Animator> ();
@@ -118,6 +122,7 @@ public class PlayerController : MonoBehaviour
 					if (hit.transform.tag == "Enemy")
 					{
 						sm.dealMeleeDamage (hit);
+						applyOnHitEffects(hit.transform.GetComponent<EnemyController>());
 						return;
 					}
 				}
@@ -125,6 +130,30 @@ public class PlayerController : MonoBehaviour
 		}
 		//Uses stamina for the attack
 		Sm.useStamina (Sm.getMeleeCost(),false);
+	}
+
+	private void applyOnHitEffects(EnemyController enemy)
+	{
+		foreach (Skill _skill in skillManager.getKnownSkills())
+		{
+			if (_skill.IsPassive && willApplyEffect(_skill.HitChance))
+			{
+				if (_skill.Name == "Paralyzing Strike")
+				{
+					enemy.SendMessage("applyParalyze",_skill.Duration,SendMessageOptions.DontRequireReceiver);
+				}
+			}
+		}
+	}
+
+	private bool willApplyEffect(float hitChance)
+	{
+		float roll = Random.value * 100;
+		if (roll <= hitChance)
+		{
+			return true;
+		}
+		return false;
 	}
     
 	//temporary
@@ -193,6 +222,27 @@ public class PlayerController : MonoBehaviour
             //upperBody.transform.Rotate((lastUpperRot), 0f, 0f);
             upperBody.transform.Rotate(0f, 0f, (lastUpperRot));
         }
+	}
+
+	public void applySlow(float amt)
+	{
+		if (currentSpeed >= runSpeed)
+		{
+			currentSpeed = walkSpeed;
+		}
+		currentSpeed = currentSpeed - (currentSpeed * amt);
+		IsSlowed = true;
+	}
+
+	public void revertSlow(float amt)
+	{
+		float oldSpeed = currentSpeed / (1 - amt);
+		currentSpeed = oldSpeed;
+		if (currentSpeed >= runSpeed)
+		{
+			currentSpeed = walkSpeed;
+		}
+		IsSlowed = false;
 	}
 
 	public void toggleCursorLock(bool val)
@@ -284,5 +334,18 @@ public class PlayerController : MonoBehaviour
             return dashSpeed;
         }
     }
+
+	public bool IsSlowed
+	{
+		get
+		{
+			return isSlowed;
+		}
+
+		set
+		{
+			isSlowed = value;
+		}
+	}
 	#endregion
 }
