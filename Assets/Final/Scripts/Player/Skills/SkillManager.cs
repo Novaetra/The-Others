@@ -6,7 +6,7 @@ using System;
 
 public enum Skills
 {
-	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6, FireBomb = 7, IcePick=8, SlowingMist=9
+	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6, FireBomb = 7, IcePick=8, SlowingMist=9,IcePull=10
 };
 
 public enum SkillResource
@@ -132,6 +132,9 @@ public class SkillManager : MonoBehaviour
 		skill.AddUpgrade(new Upgrade(20f, SkillAttribute.maxEnemiesHit, 4));
 
 		skill = AddToAllSkillsList("Slowing Mist", "Creates a field of icy mist that slows enemies down by ~EffectAmount~ and lasts for ~Duration~", .6f, 100f, 90, Skills.SlowingMist, SkillType.Ice, SkillResource.Mana, 3, sm);
+		skill.Duration = 30f;
+
+		skill = AddToAllSkillsList("Ice Pull", "Creates a field of ice that pulls enemies to the center for ~Duration~", 0, 100f, 90, Skills.IcePull, SkillType.Ice, SkillResource.Mana, 4, sm);
 		skill.Duration = 30f;
 	}
 
