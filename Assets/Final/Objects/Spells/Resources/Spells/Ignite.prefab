@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fba7a99526f21e43bad43122c529165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1000
+  time: 0
 --- !u!114 &114119058335414646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9c22526abfd40adad8e0780c03acd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameOfSkill: Ignite
 --- !u!198 &198104641343017308
 ParticleSystem:
   m_ObjectHideFlags: 1

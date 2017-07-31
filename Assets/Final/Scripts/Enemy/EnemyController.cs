@@ -189,25 +189,40 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-	protected void checkPlayerPassives(SkillType type)
+	protected void checkPlayerPassives(SkillType skillType)
 	{
 		SkillManager skillManager = targetPlayer.GetComponent<SkillManager>();
-		if (skillManager.skillIsKnown("Ignite") && type == SkillType.Fire && transform.Find("Ignite(Clone)") == null)
+
+		foreach (Skill _skill in skillManager.getKnownSkills())
 		{
-			foreach (Skill _skill in skillManager.getKnownSkills())
+			if (_skill.Name.Equals("Ignite")&&skillType == SkillType.Fire)
 			{
-				if (_skill.Name == "Ignite")
+				if (tryToAddPassive(_skill) && transform.Find("Ignite(Clone)") == null)
 				{
-					float roll = Random.value * 100;
-					if (roll <= _skill.HitChance)
-					{
-						applyIgnite();
-					}
+					applyIgnite();
 				}
 			}
-
+			else if (_skill.Name.Equals("Frost")&&skillType == SkillType.Ice )
+			{
+				if (tryToAddPassive(_skill)&&transform.Find("Frost(Clone)") == null)
+				{
+					applyFrost();
+				}
+			}
 		}
 	}
+
+	private bool tryToAddPassive(Skill _skill)
+	{
+		float roll = Random.value * 100;
+		if (roll <= _skill.HitChance)
+		{
+			return true;
+		}
+		return false;
+	}
+
+
 
 	public void applyParalyze(float duration)
 	{
@@ -223,6 +238,7 @@ public class EnemyController : MonoBehaviour
 		isParalyzed = false;
 	}
 
+	#region overtimeEffects
 	private void applyIgnite()
 	{
 		GameObject igniteGO = (GameObject)Resources.Load("Spells/Ignite");;
@@ -231,6 +247,17 @@ public class EnemyController : MonoBehaviour
 		ignite.transform.localPosition = new Vector3(0,0,0);
 		ignite.transform.localRotation = Quaternion.Euler(270, 0, 0);
 	}
+
+	private void applyFrost()
+	{
+		GameObject frostGO = (GameObject)Resources.Load("Spells/Frost"); ;
+		GameObject frost = (GameObject)Instantiate(frostGO, Vector3.zero, Quaternion.identity);
+		frost.transform.SetParent(transform);
+		frost.transform.localPosition = new Vector3(0, 0, 0);
+		frost.transform.localRotation = Quaternion.Euler(270, 0, 0);
+	}
+
+	#endregion
 
 	//Lower the enemy's health by x amt
 	public void recieveDamageWithType(float dmg, SkillType type)

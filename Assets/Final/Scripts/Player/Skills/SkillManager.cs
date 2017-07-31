@@ -6,7 +6,7 @@ using System;
 
 public enum Skills
 {
-	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6, FireBomb = 7, IcePick=8, SlowingMist=9,IcePull=10
+	Empty = -1, BasicAttack = 0, Fireball = 2, Heal = 3, Flamethrower=4, StormFlurry=5, OilPool=6, FireBomb = 7, IcePick=8, SlowingMist=9,IcePull=10,IceWall=11
 };
 
 public enum SkillResource
@@ -43,8 +43,6 @@ public class SkillManager : MonoBehaviour
 		sm = GetComponent<StatsManager>();
 		anim = GetComponent<Animator>();
         skillInitializer = GetComponent<SkillInitializer>();
-
-        
 	}
 
 	void Start()
@@ -53,12 +51,15 @@ public class SkillManager : MonoBehaviour
 		inventoryList = inventoryClassRefrence.InventoryList;
 		setUpList();
 		//Temp 
-		addTestData();
+		//addTestData();
 	}
 
 	void addTestData()
 	{
-		//addToKnown(allSkills[2]);
+		allSkills[allSkills.Count - 4].EffectAmount = 1f;
+		allSkills[0].EffectAmount = 1f;
+		allSkills[allSkills.Count-1].HitChance=90f;
+		allSkills[2].HitChance=90f;
 	}
 
 	void Update()
@@ -74,12 +75,12 @@ public class SkillManager : MonoBehaviour
 		Skill skill;
 		addFireSkills();
 		addStormSkills();
-		addIceSkills();
 		skill = AddToAllSkillsList("Heal", "Restores ~EffectAmount~ health.", 100f, 1f, 5f, Skills.Heal, SkillType.Heal,SkillResource.SkillCharge, 2,sm);
 		skill = AddToAllSkillsList("MeleeDamageUpgrade","Melee does ~EffectAmount~ more damage", 100f,0f,0f,Skills.Empty,SkillType.Empty,SkillResource.Empty,5,sm);
 
         
 		AddToAllSkillsList("", "Empty", 0f, 0f, 0f, Skills.Empty,SkillType.Empty, SkillResource.Empty, 0,sm);
+		addIceSkills();
 		//Links all the skill tree pieces to the actal skill 
 		GameObject.Find("Canvas").BroadcastMessage("setSkill");
 	}
@@ -97,7 +98,7 @@ public class SkillManager : MonoBehaviour
 
 		skill = AddToAllSkillsList("Ignite", "(Passive) All fire skills have a ~HitChance~% chance to ignite enemies dealing ~EffectAmount~ damage/second for ~Duration~ seconds.", 30, 0, 0, Skills.Empty, SkillType.Fire, SkillResource.Empty, 4, sm);
 		skill.Duration = 20;
-		skill.HitChance = 40f;
+		skill.HitChance = 45f;
 		skill.AddUpgrade(new Upgrade(20f, SkillAttribute.effectAmount, 6));
 
 		skill = AddToAllSkillsList("Oil Pool", "Spawns a pool of oil that can be ignited. Once ignited, it deals ~EffectAmount~ damage/second to anything standing on it for ~Duration~ seconds.", 50 * Time.deltaTime, 200, 300, Skills.OilPool, SkillType.Fire, SkillResource.Mana, 5, sm);
@@ -120,7 +121,7 @@ public class SkillManager : MonoBehaviour
 		skill = AddToAllSkillsList("Storm Dash", "(Passive) Makes dash deal ~EffectAmount~ damage to enemies you pass through.", 120, 0, 0f, Skills.Empty, SkillType.Storm, SkillResource.Empty, 3, sm);
 	
 		skill = AddToAllSkillsList("Paralyzing Strike", "(Passive) Each melee attack has a ~HitChance~% chance to paralyze the enemy for ~Duration~ seconds.", 0, 0, 0f, Skills.Empty, SkillType.Storm, SkillResource.Empty, 4, sm);
-		skill.HitChance = 40f;
+		skill.HitChance = 45f;
 		skill.Duration = 2f;
 	}
 
@@ -136,6 +137,13 @@ public class SkillManager : MonoBehaviour
 
 		skill = AddToAllSkillsList("Ice Pull", "Creates a field of ice that pulls enemies to the center for ~Duration~", 0, 100f, 90, Skills.IcePull, SkillType.Ice, SkillResource.Mana, 4, sm);
 		skill.Duration = 30f;
+
+		skill = AddToAllSkillsList("Ice Wall", "Creates a wall of ice that blocks enemies for ~Duration~", 0, 100f, 90, Skills.IceWall, SkillType.Ice, SkillResource.Mana, 5, sm);
+		skill.Duration = 10f;
+
+		skill = AddToAllSkillsList("Frost", "(Passive)Every ice skill has a chance to slow down enemies by ~EffectAmount~ for ~Duration~ seconds", .6f, 0, 0, Skills.Empty, SkillType.Ice, SkillResource.Empty, 6, sm);
+		skill.Duration = 10f;
+		skill.HitChance = 45f;
 	}
 
 	public bool skillIsKnown(string name)

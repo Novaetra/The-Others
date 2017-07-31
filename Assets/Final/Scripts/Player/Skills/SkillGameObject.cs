@@ -19,4 +19,9 @@ public class SkillGameObject : MonoBehaviour
 	{
 
 	}
+
+	public virtual void onDestroy()
+	{
+
+	}
 }

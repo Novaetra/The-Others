@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IgniteScript : MonoBehaviour 
+public class IgniteScript : SkillGameObject 
 {
 	private float dmg;
-	private SkillManager skillManager;
 	private EnemyController enemyController;
 
 	float currentTime, timerTime;
 
-
-	void Start()
+	protected override void doAdditionalSetupOnStart()
 	{
-		skillManager = GameObject.Find("Player").GetComponent<SkillManager>();
-		GetComponent<DestroyObjectOnTimer>().time = skillManager.getSkillFromKnown("Ignite").Duration;
-		skillManager = GameObject.Find("Player").GetComponent<SkillManager>();
 		enemyController = GetComponentInParent<EnemyController>();
-		dmg = skillManager.getSkillFromKnown("Ignite").EffectAmount;
+		GetComponent<DestroyObjectOnTimer>().time = currentSkill.Duration;
+		dmg = currentSkill.EffectAmount;
 		timerTime = 1f;
 		currentTime = timerTime;
 	}

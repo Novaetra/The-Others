@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fba7a99526f21e43bad43122c529165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 1000
+  time: 0
 --- !u!198 &198383690652330480
 ParticleSystem:
   m_ObjectHideFlags: 1
